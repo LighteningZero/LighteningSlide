@@ -55,7 +55,7 @@ extension::JSContainer::~JSContainer() {
     jerry_cleanup();
 }
 
-void extension::JSContainer::CommitGC(int x = 1) {
+void extension::JSContainer::CommitGC(int x) {
     this->GC_now_pending += x;
     if (this->GC_now_pending > extension::JSContainer::GC_ratio) {
         jerry_gc(JERRY_GC_PRESSURE_LOW);

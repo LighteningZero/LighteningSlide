@@ -18,17 +18,37 @@
 #ifndef JS_RUNNER_H
 #define JS_RUNNER_H
 
+#include <string>
+#include <jerryscript.h>
 namespace extension {
 
 class JSContainer {
 public:
     static JSContainer* getInstance();
+    void setScript(const std::string& script);
+    void runScript();
+    void runFunction(const std::string& function_name, const jerry_value_t function_args[], size_t length_args);
+    std::string getResualtAsString();
+
 private:
     JSContainer();
     ~JSContainer();
+
+    // void _updateParsedScript(jerry_value_t value);
+    // void _updateRunResualt(jerry_value_t value);
+
     static JSContainer* _instance;
+
+    int GC_now_pending;
+    void CommitGC(int x = 1);
+
+    jerry_value_t* _parsed_script;
+    jerry_value_t* _run_resualt;
+
+public:
+    static const int GC_ratio;
 };
 
-} // namespace extantion
+} // namespace extension
 
 #endif // JS_RUNNER_H

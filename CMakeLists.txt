@@ -6,7 +6,7 @@ INCLUDE_DIRECTORIES(
     include/
 )
 
-set(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_STANDARD 17)
 
 SET(SRC_LIST 
     src/main.cc
@@ -14,14 +14,14 @@ SET(SRC_LIST
     src/js-runner/exceptions.cc
 )
 
-find_package(PkgConfig)
+FIND_PACKAGE(PkgConfig)
 
-pkg_search_module(FMT REQUIRED fmt)
+PKG_SEARCH_MODULE(FMT REQUIRED fmt)
 
-pkg_search_module(JERRYSCRIPTCORE REQUIRED libjerry-core)
-pkg_search_module(JERRYSCRIPTEXT REQUIRED libjerry-ext)
-pkg_search_module(JERRYSCRIPTLIBM REQUIRED libjerry-libm)
-pkg_search_module(JERRYSCRIPTPORTDEFAULT REQUIRED libjerry-port-default)
+PKG_SEARCH_MODULE(JERRYSCRIPTCORE REQUIRED libjerry-core)
+PKG_SEARCH_MODULE(JERRYSCRIPTEXT REQUIRED libjerry-ext)
+PKG_SEARCH_MODULE(JERRYSCRIPTLIBM REQUIRED libjerry-libm)
+PKG_SEARCH_MODULE(JERRYSCRIPTPORTDEFAULT REQUIRED libjerry-port-default)
 
 LINK_LIBRARIES(
     ${FMT_LIBRARIES}

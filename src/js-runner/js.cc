@@ -124,3 +124,23 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
 
     this->CommitGC(60);
 }
+
+std::string extension::JSContainer::getResualtAsString() {
+    if (this->_run_resualt == nullptr)
+        throw std::logic_error(fmt::format("[{}] Trying to get resualt before run any script!", __FUNCTION__));
+
+    jerry_value_t str_value = jerry_value_to_string(*this->_run_resualt);
+    jerry_size_t str_size = jerry_get_utf8_string_size(str_value);
+    jerry_char_t *str_buffer = new jerry_char_t[str_size + 5];
+    
+    jerry_size_t bytes_copied = jerry_string_to_utf8_char_buffer(str_value, str_buffer, str_size);
+    str_buffer[bytes_copied] = '\0';
+
+    std::string resualt((const char *)str_buffer);
+
+    delete[] str_buffer;
+    jerry_release_value(str_value);
+    this->CommitGC(1);
+
+    return resualt;
+}

@@ -40,8 +40,3 @@ TEST(GoogleTestFrameworkTests, BooleanTest) {
     EXPECT_FALSE(false);
     EXPECT_FALSE(0);
 }
-
-int main(int argc, char* argv[]) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

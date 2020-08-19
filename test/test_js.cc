@@ -31,17 +31,44 @@ TEST(JSRunnerEngineTest, RunCodeTest) {
 
 TEST(JSRunnerEngineTest, RunFunctionTest) {
     auto runner = extension::JSContainer::getInstance();
-    std::string script = "function add(x) {\n\treturn x+1;\n};";
+    std::string script = "function RunFunctionTest_add(x) {\n\treturn x+1;\n};";
     runner->setScript(script);
     runner->runScript();
     
     jerry_value_t a = jerry_create_number(5);
-    runner->runFunction(std::string("add"), &a, 1);
+    runner->runFunction(std::string("RunFunctionTest_add"), &a, 1);
 
     std::string res = runner->getResualtAsString();
     ASSERT_EQ(std::string("6"), res);
 
     jerry_release_value(a);
+}
+
+TEST(JSRunnerEngineTest, ES5ArrowFunctionTest) {
+    auto runner = extension::JSContainer::getInstance();
+    std::string script = "var ES5LetVarTest_foo = x => x * 2;ES5LetVarTest_foo(123)";
+    runner->setScript(script);
+    runner->runScript();
+    std::string res = runner->getResualtAsString();
+    ASSERT_EQ(std::string("246"), res);
+}
+
+TEST(JSRunnerEngineTest, ES5LetVarTest) {
+    auto runner = extension::JSContainer::getInstance();
+    std::string script = "let ES5LetVarTest_x = 4;ES5LetVarTest_x += 1;ES5LetVarTest_x * 2";
+    runner->setScript(script);
+    runner->runScript();
+    std::string res = runner->getResualtAsString();
+    ASSERT_EQ(std::string("10"), res);
+}
+
+TEST(JSRunnerEngineTest, ES5ConstVarTest) {
+    auto runner = extension::JSContainer::getInstance();
+    std::string script = "const ES5ConstVarTest_x = 4;ES5ConstVarTest_x * 2";
+    runner->setScript(script);
+    runner->runScript();
+    std::string res = runner->getResualtAsString();
+    ASSERT_EQ(std::string("8"), res);
 }
 
 int main(int argc, char* argv[]) {

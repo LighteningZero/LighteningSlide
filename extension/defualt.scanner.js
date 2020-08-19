@@ -32,6 +32,10 @@ function Scanner(text) {
     this.text = text;
     this.pointer = 0;
 
+    this.resetPointer = function() {
+        this.pointer = 0;
+    }
+
     this.skipSpace = function() {
         let resualt = false;
         while (this.text[this.pointer] == ' ') {

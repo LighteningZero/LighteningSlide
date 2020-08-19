@@ -58,6 +58,10 @@ function Scanner(text) {
         return resualt;
     };
 
+    this.skipChar = function(length=1) {
+        this.pointer += length;
+    };
+
     this.getChar = function() {
         return this.text[this.pointer];
     };

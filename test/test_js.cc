@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#include <string>
 #include <gtest/gtest.h>
 
-#include <string>
 #include "js-runner/js.h"
 
 TEST(JSRunnerEngineTest, RunCodeTest) {

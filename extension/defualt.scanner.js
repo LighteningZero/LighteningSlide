@@ -15,12 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+function isDigit(x) {
+    if (typeof(x) !== "string") {
+        return false;
+    }
+
+    // OPTIMIZE '0' and '9' to ASCII code
+    if ("0".charCodeAt() <= x.charCodeAt() && x.charCodeAt() <= "9".charCodeAt()) {
+        return true;
+    }
+
+    return false;
+}
+
 function Scanner(text) {
     this.text = text;
     this.pointer = 0;
 
     this.skipSpace = function() {
-        var resualt = false;
+        let resualt = false;
         while (this.text[this.pointer] == ' ') {
             this.pointer += 1;
             resualt = true;
@@ -30,7 +43,7 @@ function Scanner(text) {
     };
 
     this.skipTab = function() {
-        var resualt = false;
+        let resualt = false;
         while (this.text[this.pointer] == '\t') {
             this.pointer += 1;
             resualt = true;
@@ -40,7 +53,7 @@ function Scanner(text) {
     };
 
     this.skipReturn = function() {
-        var resualt = false;
+        let resualt = false;
         while (this.text[this.pointer] == '\r' || this.text[this.pointer] == '\n') {
             this.pointer += 1;
             resualt = true;
@@ -50,7 +63,7 @@ function Scanner(text) {
     };
 
     this.skipEmpty = function() {
-        var resualt = false;
+        let resualt = false;
         while (this.skipSpace() || this.skipTab()) {
             resualt = true;
         }
@@ -70,6 +83,18 @@ function Scanner(text) {
         this.pointer += 1;
         return this.text[this.pointer - 1];
     };
+
+    this.scanNumber = function() {
+        let resualt = 0;
+        
+        this.skipEmpty();
+        while (isDigit(this.getChar())) {
+            resualt *= 10;
+            resualt += Number(this.scanChar());
+        }
+
+        return resualt;
+    }
 
     return this;
 }

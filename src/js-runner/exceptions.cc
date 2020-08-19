@@ -21,7 +21,7 @@ extension::JSParsingError::JSParsingError(const std::string& msg) {
     this->_msg = msg;
 }
 
-const char* extension::JSParsingError::what() {
+const char* extension::JSParsingError::what() const throw() {
     return this->_msg.c_str();
 }
 
@@ -29,7 +29,7 @@ extension::JSRuntimeError::JSRuntimeError(const std::string& msg) {
     this->_msg = msg;
 }
 
-const char* extension::JSRuntimeError::what() {
+const char* extension::JSRuntimeError::what() const throw() {
     return this->_msg.c_str();
 }
 
@@ -37,6 +37,6 @@ extension::JSTypeError::JSTypeError(const std::string& msg) {
     this->_msg = msg;
 }
 
-const char* extension::JSTypeError::what() {
+const char* extension::JSTypeError::what() const throw() {
     return this->_msg.c_str();
 }

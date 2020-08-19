@@ -70,8 +70,9 @@ void extension::JSContainer::setScript(const std::string& script) {
         jerry_release_value(*this->_parsed_script);
 
     jerry_char_t* j_script = new jerry_char_t[(script.size() + 1) * sizeof(char)];
-    jerry_length_t j_script_length = sizeof(jerry_char_t) * sizeof(char) * (script.size() + 1);
+    size_t j_script_length = sizeof(char) * (script.size());
     memcpy((char*)j_script, script.c_str(), j_script_length);
+    j_script[j_script_length + 1] = '\0';
 
     jerry_value_t value = jerry_parse(nullptr, 0, j_script, j_script_length, JERRY_PARSE_NO_OPTS);
 
@@ -131,12 +132,12 @@ std::string extension::JSContainer::getResualtAsString() {
 
     jerry_value_t str_value = jerry_value_to_string(*this->_run_resualt);
     jerry_size_t str_size = jerry_get_utf8_string_size(str_value);
-    jerry_char_t *str_buffer = new jerry_char_t[str_size + 5];
-    
+    jerry_char_t* str_buffer = new jerry_char_t[str_size + 5];
+
     jerry_size_t bytes_copied = jerry_string_to_utf8_char_buffer(str_value, str_buffer, str_size);
     str_buffer[bytes_copied] = '\0';
 
-    std::string resualt((const char *)str_buffer);
+    std::string resualt((const char*)str_buffer);
 
     delete[] str_buffer;
     jerry_release_value(str_value);

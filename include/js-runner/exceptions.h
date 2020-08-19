@@ -26,7 +26,7 @@ namespace extension {
 class JSParsingError : public std::exception {
 public:
     JSParsingError(const std::string& msg);
-    const char* what();
+    const char* what() const throw();
 
 private:
     std::string _msg;
@@ -35,7 +35,7 @@ private:
 class JSRuntimeError : public std::exception {
 public:
     JSRuntimeError(const std::string& msg);
-    const char* what();
+    const char* what() const throw();
 
 private:
     std::string _msg;
@@ -44,7 +44,7 @@ private:
 class JSTypeError : public std::exception {
 public:
     JSTypeError(const std::string& msg);
-    const char* what();
+    const char* what() const throw();
 
 private:
     std::string _msg;

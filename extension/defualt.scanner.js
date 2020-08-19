@@ -28,6 +28,18 @@ function isDigit(x) {
     return false;
 }
 
+function isBlankChar(x) {
+    if (typeof(x) !== "string") {
+        return false;
+    }
+
+    if (x == ' ' || x == '\t' || x == '\n' || x == '\r') {
+        return true;
+    }
+
+    return false;
+}
+
 function Scanner(text) {
     this.text = text;
     this.pointer = 0;
@@ -75,6 +87,15 @@ function Scanner(text) {
         return resualt;
     };
 
+    this.skipBlank = () => {
+        let resualt = false;
+        while (this.skipEmpty() || this.skipReturn()) {
+            resualt = true;
+        }
+
+        return resualt;
+    }
+
     this.skipChar = (length=1) => {
         this.pointer += length;
     };
@@ -88,13 +109,52 @@ function Scanner(text) {
         return this.text[this.pointer - 1];
     };
 
+    this.isEnd = () => {
+        if (this.text[this.pointer] === undefined) {
+            return true;
+        }
+
+        return false;
+    }
+
     this.scanNumber = () => {
-        let resualt = 0;
+        let resualt = new Number(0);
         
         this.skipEmpty();
         while (isDigit(this.getChar())) {
             resualt *= 10;
             resualt += Number(this.scanChar());
+            if (this.isEnd()) {
+                break;
+            }
+        }
+
+        return resualt;
+    }
+
+    this.scanToken = () => {
+        let resualt = new String();
+
+        this.skipEmpty();
+        while (!isBlankChar(this.getChar()) && this.getChar() != undefined) {
+            resualt += this.scanChar();
+            if (this.isEnd()) {
+                break;
+            }
+        }
+
+        return resualt;
+    }
+
+    this.scanLine = () => {
+        let resualt = new String();
+        this.skipEmpty();
+
+        while (this.getChar() !== '\n' && this.getChar() !== '\r' && this.getChar() != undefined) {
+            resualt += this.scanChar();
+            if (this.isEnd()) {
+                break;
+            }
         }
 
         return resualt;

@@ -61,7 +61,7 @@ void extension::JSContainer::CommitGC(int x) {
         jerry_gc(JERRY_GC_PRESSURE_LOW);
 
         while (this->GC_now_pending > extension::JSContainer::GC_ratio)
-            x -= extension::JSContainer::GC_ratio;
+            this->GC_now_pending -= extension::JSContainer::GC_ratio;
     }
 }
 

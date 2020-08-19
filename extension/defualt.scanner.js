@@ -32,11 +32,11 @@ function Scanner(text) {
     this.text = text;
     this.pointer = 0;
 
-    this.resetPointer = function() {
+    this.resetPointer = () => {
         this.pointer = 0;
     }
 
-    this.skipSpace = function() {
+    this.skipSpace = () => {
         let resualt = false;
         while (this.text[this.pointer] == ' ') {
             this.pointer += 1;
@@ -46,7 +46,7 @@ function Scanner(text) {
         return resualt;
     };
 
-    this.skipTab = function() {
+    this.skipTab = () => {
         let resualt = false;
         while (this.text[this.pointer] == '\t') {
             this.pointer += 1;
@@ -56,7 +56,7 @@ function Scanner(text) {
         return resualt;
     };
 
-    this.skipReturn = function() {
+    this.skipReturn = () => {
         let resualt = false;
         while (this.text[this.pointer] == '\r' || this.text[this.pointer] == '\n') {
             this.pointer += 1;
@@ -66,7 +66,7 @@ function Scanner(text) {
         return resualt;
     };
 
-    this.skipEmpty = function() {
+    this.skipEmpty = () => {
         let resualt = false;
         while (this.skipSpace() || this.skipTab()) {
             resualt = true;
@@ -75,20 +75,20 @@ function Scanner(text) {
         return resualt;
     };
 
-    this.skipChar = function(length=1) {
+    this.skipChar = (length=1) => {
         this.pointer += length;
     };
 
-    this.getChar = function() {
+    this.getChar = () => {
         return this.text[this.pointer];
     };
 
-    this.scanChar = function() {
+    this.scanChar = () => {
         this.pointer += 1;
         return this.text[this.pointer - 1];
     };
 
-    this.scanNumber = function() {
+    this.scanNumber = () => {
         let resualt = 0;
         
         this.skipEmpty();

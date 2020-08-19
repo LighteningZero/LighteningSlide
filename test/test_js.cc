@@ -29,6 +29,21 @@ TEST(JSRunnerEngineTest, RunCodeTest) {
     ASSERT_EQ(std::string("6"), res);
 }
 
+TEST(JSRunnerEngineTest, RunFunctionTest) {
+    auto runner = extension::JSContainer::getInstance();
+    std::string script = "function add(x) {return x+1;};";
+    runner->setScript(script);
+    runner->runScript();
+    
+    jerry_value_t a = jerry_create_number(5);
+    runner->runFunction(std::string("add"), &a, 1);
+
+    std::string res = runner->getResualtAsString();
+    ASSERT_EQ(std::string("6"), res);
+
+    jerry_release_value(a);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

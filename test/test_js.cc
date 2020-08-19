@@ -11,3 +11,8 @@ TEST(JSRunnerEngineTest, RunCodeTest) {
     std::string res = runner->getResualtAsString();
     ASSERT_EQ(std::string("6"), res);
 }
+
+int main(int argc, char* argv[]) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}

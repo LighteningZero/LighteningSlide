@@ -31,7 +31,7 @@ TEST(JSRunnerEngineTest, RunCodeTest) {
 
 TEST(JSRunnerEngineTest, RunFunctionTest) {
     auto runner = extension::JSContainer::getInstance();
-    std::string script = "function add(x) {return x+1;};";
+    std::string script = "function add(x) {\n\treturn x+1;\n};";
     runner->setScript(script);
     runner->runScript();
     

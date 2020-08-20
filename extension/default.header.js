@@ -16,7 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 var render = [origin => {
-    let count = str => {
+    let countSharpNumber = str => {
         let c = 0;
         for (let i = 0; i < str.length; i += 1) {
             if (str[i] !== "#") {

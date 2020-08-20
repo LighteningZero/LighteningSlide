@@ -69,5 +69,4 @@ jobs:
         cd build
         cmake ..
         make -j4
-        test/test_js
         make test

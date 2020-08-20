@@ -16,43 +16,43 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 var render = [markdown => {
-  let s = new Scanner(markdown);
-  let result = new String();
-  let lastLineIsBlockquote = false;
-  s.setLineBreakToLFMode();
-  s.makeMarkHere();
-  while (true) {
-      let str = s.scanToken();
-      if (str === ">" || (str !== "" && lastLineIsBlockquote)) {
-        let content = new String();
-        if(str === ">") {
-          content = s.scanLine();
+    let s = new Scanner(markdown);
+    let result = new String();
+    let lastLineIsBlockquote = false;
+    s.setLineBreakToLFMode();
+    s.makeMarkHere();
+    while (true) {
+        let str = s.scanToken();
+        if (str === ">" || (str !== "" && lastLineIsBlockquote)) {
+            let content = new String();
+            if(str === ">") {
+                content = s.scanLine();
+            } else {
+                content = str + s.scanLine();
+            }
+            if (!lastLineIsBlockquote) {
+                result += '<blockquote>' + content;
+                lastLineIsBlockquote = true;
+            } else {
+                result += '\n' + content;
+            }
         } else {
-          content = str + s.scanLine();
+            if(lastIsBlockquote) {
+                lastLineIsBlockquote = false;
+                result += '</blockquote>';
+            }
+            result += s.getTextFormMark();
         }
-        if (!lastLineIsBlockquote) {
-          result += '<blockquote>' + content;
-          lastLineIsBlockquote = true;
-        } else {
-          result += '\n' + content;
+        
+        s.skipOneReturn();
+        s.makeMarkHere();
+        if (s.isEnd()) {
+            if(lastLineIsBlockquote) {
+                result += '</blockquote>';
+            }
+            break;
         }
-      } else {
-        if(lastIsBlockquote) {
-          lastLineIsBlockquote = false;
-          result += '</blockquote>';
-        }
-        result += s.getTextFormMark();
-      }
-      
-      s.skipOneReturn();
-      s.makeMarkHere();
-      if (s.isEnd()) {
-          if(lastLineIsBlockquote) {
-            result += '</blockquote>';
-          }
-          break;
-      }
-  }
+    }
 
-  return result;
+    return result;
 }];

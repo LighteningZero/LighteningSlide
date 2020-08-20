@@ -50,6 +50,11 @@ function Scanner(text) {
         this.mark = undefined;
     }
 
+    this.setLineBreakToLFMode = () => {
+        this.text.replaceAll("\r\n", "\n");
+        this.text.replaceAll("\r", "\n");
+    }
+
     this.skipSpace = () => {
         let resualt = false;
         while (this.text[this.pointer] == ' ') {

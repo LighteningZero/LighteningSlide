@@ -26,7 +26,7 @@ var render = [origin => {
             resualt += s.getTextFormMark();
         } else {
             let content = s.scanLine();
-            res += '<h1>' + content + '</h1>';
+            resualt += '<h1>' + content + '</h1>\n';
         }
 
         if (s.isEnd()) {

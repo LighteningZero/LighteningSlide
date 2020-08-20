@@ -63,7 +63,11 @@ jobs:
     - name: reset env
       run: cd ../../LighteningSlide
 
-    - name: Build CMake
-      uses: ashutoshvarma/action-cmake-build@v1
-      with:
-        run-test: true
+    - name: Build With CMake
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make -j4
+        test/test_js
+        make test

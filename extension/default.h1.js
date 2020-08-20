@@ -20,7 +20,6 @@ var render = [origin => {
     let resualt = new String();
     s.makeMarkHere();
     while (true) {
-        s.skipBlank();
         let str = s.scanToken();
         if (str !== "#") {
             resualt += s.getTextFormMark();
@@ -28,7 +27,9 @@ var render = [origin => {
             let content = s.scanLine();
             resualt += '<h1>' + content + '</h1>\n';
         }
-
+        
+        s.skipBlank();
+        s.makeMarkHere();
         if (s.isEnd()) {
             break;
         }

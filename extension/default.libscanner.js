@@ -51,8 +51,8 @@ function Scanner(text) {
     }
 
     this.setLineBreakToLFMode = () => {
-        this.text.replaceAll("\r\n", "\n");
-        this.text.replaceAll("\r", "\n");
+        this.text = this.text.replaceAll("\r\n", "\n");
+        this.text = this.text.replaceAll("\r", "\n");
     }
 
     this.skipSpace = () => {

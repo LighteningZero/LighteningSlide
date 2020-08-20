@@ -39,7 +39,7 @@ var render = [origin => {
             result += s.getTextFormMark();
         } else {
             let content = s.scanLine();
-            result += '<h' + counter + '>' + content + '</h' + counter + '>\n';
+            result += '<h' + sharpNumber + '>' + content + '</h' + sharpNumber + '>\n';
         }
         
         s.skipBlank();

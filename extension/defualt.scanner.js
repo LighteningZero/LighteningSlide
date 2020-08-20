@@ -43,9 +43,11 @@ function isBlankChar(x) {
 function Scanner(text) {
     this.text = text;
     this.pointer = 0;
+    this.mark = undefined;
 
-    this.resetPointer = () => {
+    this.resetScanner = () => {
         this.pointer = 0;
+        this.mark = undefined;
     }
 
     this.skipSpace = () => {
@@ -158,6 +160,26 @@ function Scanner(text) {
         }
 
         return resualt;
+    }
+
+    this.makeMark = (point) => {
+        this.mark = point;
+    }
+
+    this.makeMarkHere = () => {
+        this.mark = this.pointer;
+    }
+
+    this.clearMark = () => {
+        this.mark = undefined;
+    }
+
+    this.getTextFormMark = () => {
+        if (this.mark === undefined) {
+            return undefined;
+        }
+        
+        return this.text.substr(this.mark, this.pointer - this.mark + 1);
     }
 
     return this;

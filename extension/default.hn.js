@@ -15,17 +15,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+function count(str) {
+    let c = 0;
+    for (let i = 0; i < str.length; i += 1) {
+        if (str[i] !== "#") {
+            return 0;
+        } else {
+            c += 1;
+            if (c > 6) return 0;
+        }
+    }
+    return c;
+}
+
 var render = [origin => {
     let s = new Scanner(origin);
     let result = new String();
     s.makeMarkHere();
     while (true) {
         let str = s.scanToken();
-        if (str !== "#") {
+        let res = count(str);
+        if (!res) {
             result += s.getTextFormMark();
         } else {
             let content = s.scanLine();
-            result += '<h1>' + content + '</h1>\n';
+            result += '<h' + res + '>' + content + '</h' + res + '>\n';
         }
         
         s.skipBlank();

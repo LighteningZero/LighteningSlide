@@ -17,15 +17,15 @@
 
 var render = [origin => {
     let s = new Scanner(origin);
-    let resualt = new String();
+    let result = new String();
     s.makeMarkHere();
     while (true) {
         let str = s.scanToken();
         if (str !== "#") {
-            resualt += s.getTextFormMark();
+            result += s.getTextFormMark();
         } else {
             let content = s.scanLine();
-            resualt += '<h1>' + content + '</h1>\n';
+            result += '<h1>' + content + '</h1>\n';
         }
         
         s.skipBlank();
@@ -35,5 +35,5 @@ var render = [origin => {
         }
     }
 
-    return resualt;
+    return result;
 }];

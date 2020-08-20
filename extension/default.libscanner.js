@@ -56,51 +56,61 @@ function Scanner(text) {
     }
 
     this.skipSpace = () => {
-        let resualt = false;
+        let result = false;
         while (this.text[this.pointer] == ' ') {
             this.pointer += 1;
-            resualt = true;
+            result = true;
         }
 
-        return resualt;
+        return result;
     };
 
     this.skipTab = () => {
-        let resualt = false;
+        let result = false;
         while (this.text[this.pointer] == '\t') {
             this.pointer += 1;
-            resualt = true;
+            result = true;
         }
 
-        return resualt;
+        return result;
     };
 
     this.skipReturn = () => {
-        let resualt = false;
+        let result = false;
         while (this.text[this.pointer] == '\r' || this.text[this.pointer] == '\n') {
             this.pointer += 1;
-            resualt = true;
+            result = true;
         }
 
-        return resualt;
+        return result;
+    };
+
+    this.skipOneReturn = () => {
+        let result = false;
+        if (this.text[this.pointer] == '\r' || this.text[this.pointer] == '\n') {
+            this.pointer += 1;
+            result = true;
+        }
+
+        return result;
     };
 
     this.skipEmpty = () => {
-        let resualt = false;
+        let result = false;
         while (this.skipSpace() || this.skipTab()) {
-            resualt = true;
+            result = true;
         }
 
-        return resualt;
+        return result;
     };
 
     this.skipBlank = () => {
-        let resualt = false;
+        let result = false;
         while (this.skipEmpty() || this.skipReturn()) {
-            resualt = true;
+            result = true;
         }
 
-        return resualt;
+        return result;
     }
 
     this.skipChar = (length=1) => {
@@ -125,46 +135,46 @@ function Scanner(text) {
     }
 
     this.scanNumber = () => {
-        let resualt = new Number(0);
+        let result = new Number(0);
         
         this.skipEmpty();
         while (isDigit(this.getChar())) {
-            resualt *= 10;
-            resualt += Number(this.scanChar());
+            result *= 10;
+            result += Number(this.scanChar());
             if (this.isEnd()) {
                 break;
             }
         }
 
-        return resualt;
+        return result;
     }
 
     this.scanToken = () => {
-        let resualt = new String();
+        let result = new String();
 
         this.skipEmpty();
         while (!isBlankChar(this.getChar()) && this.getChar() != undefined) {
-            resualt += this.scanChar();
+            result += this.scanChar();
             if (this.isEnd()) {
                 break;
             }
         }
 
-        return resualt;
+        return result;
     }
 
     this.scanLine = () => {
-        let resualt = new String();
+        let result = new String();
         this.skipEmpty();
 
         while (this.getChar() !== '\n' && this.getChar() !== '\r' && this.getChar() != undefined) {
-            resualt += this.scanChar();
+            result += this.scanChar();
             if (this.isEnd()) {
                 break;
             }
         }
 
-        return resualt;
+        return result;
     }
 
     this.makeMark = (point) => {

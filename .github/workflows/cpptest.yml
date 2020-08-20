@@ -1,0 +1,72 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on: [pull_request]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+        ref: ${{ github.head_ref }}
+    
+    - name: required software ensure
+      run: |
+        sudo apt install wget pkg-config build-essential cmake unzip python3
+    
+    - name: install jerryscript
+      run: |
+        cd ../..
+        wget https://github.com/jerryscript-project/jerryscript/archive/v2.3.0.zip
+        unzip v2.3.0.zip
+        cd jerryscript-2.3.0
+        python3 tools/build.py --profile=es2015-subset
+        cd build
+        sudo make install
+    
+    - name: install gtest
+      run: |
+        cd ../..
+        wget https://github.com/google/googletest/archive/release-1.10.0.zip
+        unzip release-1.10.0.zip
+        cd googletest-release-1.10.0
+        mkdir build
+        cd build
+        cmake ..
+        make -j4
+        sudo make install
+    
+    - name: install libfmt
+      run: |
+        cd ..
+        wget https://github.com/fmtlib/fmt/releases/download/7.0.3/fmt-7.0.3.zip
+        unzip fmt-7.0.3.zip
+        cd fmt-7.0.3
+        mkdir build
+        cd build
+        cmake -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE ..
+        make -j8
+        sudo make install
+        
+    - name: reset env
+      run: cd ../../LighteningSlide
+
+    - name: Build With CMake
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make -j4
+        make test

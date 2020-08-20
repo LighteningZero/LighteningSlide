@@ -35,12 +35,12 @@ var render = [origin => {
     s.makeMarkHere();
     while (true) {
         let str = s.scanToken();
-        let res = count(str);
-        if (!res) {
+        let counter = count(str);
+        if (counter === 0) {
             result += s.getTextFormMark();
         } else {
             let content = s.scanLine();
-            result += '<h' + res + '>' + content + '</h' + res + '>\n';
+            result += '<h' + counter + '>' + content + '</h' + counter + '>\n';
         }
         
         s.skipBlank();

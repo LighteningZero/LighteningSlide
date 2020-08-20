@@ -34,6 +34,7 @@ jobs:
         unzip release-1.10.0.zip
         cd googletest-release-1.10.0
         mkdir build
+        cd build
         cmake ..
         make -j4
         sudo make install

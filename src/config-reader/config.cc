@@ -19,7 +19,6 @@
 #include <stdexcept>
 
 #include <fstream>
-#include <ostream>
 #include <sstream>
 #include <string>
 #include <vector>

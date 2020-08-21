@@ -83,6 +83,27 @@ int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
     return item.asInt();
 }
 
+unsigned int extension::ConfigContainer::getItemAsUnsignedInt(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asUInt();
+}
+
+long long extension::ConfigContainer::getItemAsInt64(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asInt64();
+}
+
+unsigned long long extension::ConfigContainer::getItemAsuUsignedInt64(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asUInt64();
+}
+
 std::string extension::ConfigContainer::getItemAsString(const std::string& itemPath) {
     Json::Value item;
     item = getItem(itemPath);
@@ -95,4 +116,18 @@ bool extension::ConfigContainer::getItemAsBool(const std::string& itemPath) {
     item = getItem(itemPath);
 
     return item.asBool();
+}
+
+float extension::ConfigContainer::getItemAsFloat(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asFloat();
+}
+
+double extension::ConfigContainer::getItemAsDouble(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asDouble();
 }

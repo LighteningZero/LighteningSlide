@@ -27,7 +27,12 @@ public:
     void loadFromString(const std::string& jsonContent);
     void loadFromFile(const std::string& filePath);
     int getItemAsInt(const std::string& itemPath);
+    unsigned int getItemAsUnsignedInt(const std::string& itemPath);
+    long long getItemAsInt64(const std::string& itemPath);
+    unsigned long long getItemAsuUsignedInt64(const std::string& itemPath);
     bool getItemAsBool(const std::string& itemPath);
+    float getItemAsFloat(const std::string& itemPath);
+    double getItemAsDouble(const std::string& itemPath);
     std::string getItemAsString(const std::string& itemPath);
     void addItem(const std::string& itemPath);
 

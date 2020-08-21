@@ -81,5 +81,5 @@ std::string extension::ConfigContainer::getItemAsString(const std::string& itemP
         currentItem = nextItem;
     }
 
-    return 0;
+    return "";
 }

@@ -38,6 +38,25 @@ TEST(ConfigReaderTest, getItemAsInt) {
     ASSERT_EQ(14, res);
 }
 
+TEST(ConfigReaderTest, loadFromFile) {
+    std::string JsonContent = "{"
+                              "\"name\":\"10\","
+                              "\"age\":14,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    FILE* file = fopen("config_test.json", "w");
+    fprintf(file, "%s\n", JsonContent.c_str());
+    fclose(file);
+    extension::ConfigContainer config;
+    config.loadFromFile("config_test.json");
+    std::string res = config.getItemAsString("major:AI2");
+    ASSERT_EQ("DeepLearning", res);
+}
+
 TEST(ConfigReaderTest, getItemAsInt2) {
     std::string JsonContent = "{"
                               "\"name\":\"10\","
@@ -86,23 +105,20 @@ TEST(ConfigReaderTest, getItemAsString2) {
     ASSERT_EQ("DeepLearning", res);
 }
 
-TEST(ConfigReaderTest, loadFromFile) {
+TEST(ConfigReaderTest, getItemAsBool) {
     std::string JsonContent = "{"
                               "\"name\":\"10\","
-                              "\"age\":14,"
+                              "\"male\":true,"
                               "\"major\":{"
                               "\"AI1\":101,"
                               "\"AI2\":\"DeepLearning\","
                               "\"AI3\":\"ComputerVision\""
                               "}"
                               "}";
-    FILE* file =  fopen("config_test.json", "w");
-    fprintf(file, "%s\n", JsonContent.c_str());
-    fclose(file);
     extension::ConfigContainer config;
-    config.loadFromFile("config_test.json");
-    std::string res = config.getItemAsString("major:AI2");
-    ASSERT_EQ("DeepLearning", res);
+    config.loadFromString(JsonContent);
+    bool res = config.getItemAsBool("male");
+    ASSERT_EQ(true, res);
 }
 
 int main(int argc, char* argv[]) {

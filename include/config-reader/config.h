@@ -27,6 +27,7 @@ public:
     void loadFromString(const std::string& jsonContent);
     void loadFromFile(const std::string& filePath);
     int getItemAsInt(const std::string& itemPath);
+    bool getItemAsBool(const std::string& itemPath);
     std::string getItemAsString(const std::string& itemPath);
     void addItem(const std::string& itemPath);
 

@@ -89,3 +89,21 @@ std::string extension::ConfigContainer::getItemAsString(const std::string& itemP
 
     return "";
 }
+
+bool extension::ConfigContainer::getItemAsBool(const std::string& itemPath) {
+    std::vector<std::string> itemName = parseJsonPath(itemPath);
+    Json::Value currentItem;
+    currentItem = this->jsonRoot;
+    for (size_t i = 0; i < itemName.size(); i += 1) {
+        Json::Value nextItem = currentItem[itemName[i]];
+        if (nextItem.empty() == true)
+            throw std::invalid_argument(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
+
+        if (i == itemName.size() - 1)
+            return nextItem.asBool();
+
+        currentItem = nextItem;
+    }
+
+    return false;
+}

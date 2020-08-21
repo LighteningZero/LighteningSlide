@@ -28,7 +28,7 @@
 #include <fmt/core.h>
 #include <json/json.h>
 
-void extension::ConfigContainer::readFromString(const std::string& jsonContent) {
+void extension::ConfigContainer::loadFromString(const std::string& jsonContent) {
     std::stringstream json_string_stream;
     json_string_stream << jsonContent;
     json_string_stream >> this->jsonRoot;
@@ -43,15 +43,20 @@ int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
             name_start = i + 1;
         }
     }
+    itemName.push_back(itemPath.substr(name_start, itemPath.size() - name_start));
 
     Json::Value currentItem;
     currentItem = this->jsonRoot;
     for (size_t i = 0; i < itemName.size(); i += 1) {
         Json::Value nextItem = currentItem[itemName[i]];
-        if (nextItem.empty())
+        if (nextItem.empty() == true)
             throw std::invalid_argument(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
 
         if (i == itemName.size() - 1)
             return nextItem.asInt();
+
+        currentItem = nextItem;
     }
+
+    return 0;
 }

@@ -25,12 +25,14 @@ namespace extension {
 class ConfigContainer {
 public:
     void loadFromString(const std::string& jsonContent);
+    void loadFromFile(const std::string& filePath);
     int getItemAsInt(const std::string& itemPath);
     std::string getItemAsString(const std::string& itemPath);
     void addItem(const std::string& itemPath);
 
 private:
     Json::Value jsonRoot;
+    std::vector<std::string> parseJsonPath(const std::string& itemPath);
 };
 
 } // extension

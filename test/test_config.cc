@@ -15,7 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#include <fstream>
 #include <string>
+
 #include <gtest/gtest.h>
 
 #include "config-reader/config.h"
@@ -50,6 +52,57 @@ TEST(ConfigReaderTest, getItemAsInt2) {
     config.loadFromString(JsonContent);
     int res = config.getItemAsInt("major:AI1");
     ASSERT_EQ(101, res);
+}
+
+TEST(ConfigReaderTest, getItemAsString) {
+    std::string JsonContent = "{"
+                              "\"name\":\"10\","
+                              "\"age\":14,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    std::string res = config.getItemAsString("name");
+    ASSERT_EQ("10", res);
+}
+
+TEST(ConfigReaderTest, getItemAsString2) {
+    std::string JsonContent = "{"
+                              "\"name\":\"10\","
+                              "\"age\":14,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    std::string res = config.getItemAsString("major:AI2");
+    ASSERT_EQ("DeepLearning", res);
+}
+
+TEST(ConfigReaderTest, loadFromFile) {
+    std::string JsonContent = "{"
+                              "\"name\":\"10\","
+                              "\"age\":14,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    FILE* file =  fopen("config_test.json", "w");
+    fprintf(file, "%s\n", JsonContent.c_str());
+    fclose(file);
+    extension::ConfigContainer config;
+    config.loadFromFile("config_test.json");
+    std::string res = config.getItemAsString("major:AI2");
+    ASSERT_EQ("DeepLearning", res);
 }
 
 int main(int argc, char* argv[]) {

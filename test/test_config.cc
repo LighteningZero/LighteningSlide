@@ -121,6 +121,70 @@ TEST(ConfigReaderTest, getItemAsBool) {
     ASSERT_EQ(true, res);
 }
 
+TEST(ConfigReaderTest, getItemAsUInt) {
+    std::string JsonContent = "{"
+                              "\"name\":10,"
+                              "\"male\":true,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    unsigned res = config.getItemAsUnsignedInt("name");
+    ASSERT_EQ(10, res);
+}
+
+TEST(ConfigReaderTest, getItemAsInt64) {
+    std::string JsonContent = "{"
+                              "\"name\":21474826488,"
+                              "\"male\":true,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    long long res = config.getItemAsInt64("name");
+    ASSERT_EQ(21474826488, res);
+}
+
+TEST(ConfigReaderTest, getItemAsUInt64) {
+    std::string JsonContent = "{"
+                              "\"name\": 21474826488,"
+                              "\"male\":true,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    unsigned long long res = config.getItemAsUnsignedInt64("name");
+    ASSERT_EQ(21474826488, res);
+}
+
+TEST(ConfigReaderTest, getItemAsDouble) {
+    std::string JsonContent = "{"
+                              "\"name\": 3.1415,"
+                              "\"male\":true,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    double res = config.getItemAsDouble("name");
+    ASSERT_EQ(3.1415, res);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

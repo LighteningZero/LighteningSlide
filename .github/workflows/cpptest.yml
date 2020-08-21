@@ -27,6 +27,18 @@ jobs:
         sudo apt install wget pkg-config build-essential cmake unzip python3
     
     - name: install jerryscript
+    run: |
+      cd ../..
+      wget https://github.com/open-source-parsers/jsoncpp/archive/1.9.3.zip
+      unzip 1.9.3.zip
+      cd jsoncpp-1.9.3
+      mkdir build
+      cd build
+      cmake ..
+      make -j8
+      sudo make install
+
+    - name: install jerryscript
       run: |
         cd ../..
         wget https://github.com/jerryscript-project/jerryscript/archive/v2.3.0.zip
@@ -57,7 +69,7 @@ jobs:
         mkdir build
         cd build
         cmake -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE ..
-        make -j8
+        make -j16
         sudo make install
         
     - name: reset env

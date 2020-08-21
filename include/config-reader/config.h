@@ -15,42 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef JS_RUNNER_EXCEPTION_H
-#define JS_RUNNER_EXCEPTION_H
+#ifndef CONFIG_READER_H
+#define CONFIG_READER_H
 
-#include <exception>
-#include <stdexcept>
-#include <string>
+#include <json/json.h>
 
 namespace extension {
 
-class JSParsingError : public std::exception {
+class ConfigContainer {
 public:
-    JSParsingError(const std::string& msg);
-    const char* what() const throw();
+    void loadFromString(const std::string& jsonContent);
+    int getItemAsInt(const std::string& itemPath);
+    std::string getItemAsString(const std::string& itemPath);
+    void addItem(const std::string& itemPath);
 
 private:
-    std::string _msg;
+    Json::Value jsonRoot;
 };
 
-class JSRuntimeError : public std::exception {
-public:
-    JSRuntimeError(const std::string& msg);
-    const char* what() const throw();
+} // extension
 
-private:
-    std::string _msg;
-};
-
-class JSTypeError : public std::exception {
-public:
-    JSTypeError(const std::string& msg);
-    const char* what() const throw();
-
-private:
-    std::string _msg;
-};
-
-} // namespace extension
-
-#endif // JS_RUNNER_EXCEPTION_H
+#endif // CONFIG_READER_H

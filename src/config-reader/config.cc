@@ -54,38 +54,73 @@ std::vector<std::string> extension::ConfigContainer::parseJsonPath(const std::st
     return itemName;
 }
 
-int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
+Json::Value extension::ConfigContainer::getItem(const std::string& itemPath) {
     std::vector<std::string> itemName = parseJsonPath(itemPath);
+
     Json::Value currentItem;
     currentItem = this->jsonRoot;
+
     for (size_t i = 0; i < itemName.size(); i += 1) {
         Json::Value nextItem = currentItem[itemName[i]];
+
         if (nextItem.empty() == true)
             throw std::invalid_argument(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
 
         if (i == itemName.size() - 1)
-            return nextItem.asInt();
+            return nextItem;
 
         currentItem = nextItem;
     }
 
-    return 0;
+    Json::Value null;
+    return null;
+}
+
+int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asInt();
+}
+
+unsigned int extension::ConfigContainer::getItemAsUnsignedInt(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asUInt();
+}
+
+long long extension::ConfigContainer::getItemAsInt64(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asInt64();
+}
+
+unsigned long long extension::ConfigContainer::getItemAsUnsignedInt64(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asUInt64();
 }
 
 std::string extension::ConfigContainer::getItemAsString(const std::string& itemPath) {
-    std::vector<std::string> itemName = parseJsonPath(itemPath);
-    Json::Value currentItem;
-    currentItem = this->jsonRoot;
-    for (size_t i = 0; i < itemName.size(); i += 1) {
-        Json::Value nextItem = currentItem[itemName[i]];
-        if (nextItem.empty() == true)
-            throw std::invalid_argument(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
+    Json::Value item;
+    item = getItem(itemPath);
 
-        if (i == itemName.size() - 1)
-            return nextItem.asString();
+    return item.asString();
+}
 
-        currentItem = nextItem;
-    }
+bool extension::ConfigContainer::getItemAsBool(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
 
-    return "";
+    return item.asBool();
+}
+
+double extension::ConfigContainer::getItemAsDouble(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.asDouble();
 }

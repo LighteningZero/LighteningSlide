@@ -27,12 +27,18 @@ public:
     void loadFromString(const std::string& jsonContent);
     void loadFromFile(const std::string& filePath);
     int getItemAsInt(const std::string& itemPath);
+    unsigned int getItemAsUnsignedInt(const std::string& itemPath);
+    long long getItemAsInt64(const std::string& itemPath);
+    unsigned long long getItemAsUnsignedInt64(const std::string& itemPath);
+    bool getItemAsBool(const std::string& itemPath);
+    double getItemAsDouble(const std::string& itemPath);
     std::string getItemAsString(const std::string& itemPath);
     void addItem(const std::string& itemPath);
 
 private:
     Json::Value jsonRoot;
     std::vector<std::string> parseJsonPath(const std::string& itemPath);
+    Json::Value getItem(const std::string& itemPath);
 };
 
 } // extension

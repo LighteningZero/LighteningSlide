@@ -34,7 +34,7 @@ void extension::ConfigContainer::loadFromString(const std::string& jsonContent) 
     json_string_stream >> this->jsonRoot;
 }
 
-int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
+std::vector<std::string> extension::ConfigContainer::parseJsonPath(const std::string& itemPath) {
     std::vector<std::string> itemName;
     int name_start = 0;
     for (size_t i = 0; i < itemPath.size(); i += 1) {
@@ -43,8 +43,13 @@ int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
             name_start = i + 1;
         }
     }
-    itemName.push_back(itemPath.substr(name_start, itemPath.size() - name_start));
 
+    itemName.push_back(itemPath.substr(name_start, itemPath.size() - name_start));
+    return itemName;
+}
+
+int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
+    std::vector<std::string> itemName = parseJsonPath(itemPath);
     Json::Value currentItem;
     currentItem = this->jsonRoot;
     for (size_t i = 0; i < itemName.size(); i += 1) {
@@ -54,6 +59,24 @@ int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
 
         if (i == itemName.size() - 1)
             return nextItem.asInt();
+
+        currentItem = nextItem;
+    }
+
+    return 0;
+}
+
+std::string extension::ConfigContainer::getItemAsString(const std::string& itemPath) {
+    std::vector<std::string> itemName = parseJsonPath(itemPath);
+    Json::Value currentItem;
+    currentItem = this->jsonRoot;
+    for (size_t i = 0; i < itemName.size(); i += 1) {
+        Json::Value nextItem = currentItem[itemName[i]];
+        if (nextItem.empty() == true)
+            throw std::invalid_argument(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
+
+        if (i == itemName.size() - 1)
+            return nextItem.asString();
 
         currentItem = nextItem;
     }

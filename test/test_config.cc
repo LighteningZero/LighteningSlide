@@ -52,6 +52,38 @@ TEST(ConfigReaderTest, getItemAsInt2) {
     ASSERT_EQ(101, res);
 }
 
+TEST(ConfigReaderTest, getItemAsString) {
+    std::string JsonContent = "{"
+                              "\"name\":\"10\","
+                              "\"age\":14,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    std::string res = config.getItemAsString("name");
+    ASSERT_EQ("10", res);
+}
+
+TEST(ConfigReaderTest, getItemAsString2) {
+    std::string JsonContent = "{"
+                              "\"name\":\"10\","
+                              "\"age\":14,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    std::string res = config.getItemAsString("major:AI2");
+    ASSERT_EQ("DeepLearning", res);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

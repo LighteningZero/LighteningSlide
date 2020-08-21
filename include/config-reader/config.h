@@ -31,6 +31,7 @@ public:
 
 private:
     Json::Value jsonRoot;
+    std::vector<std::string> parseJsonPath(const std::string& itemPath);
 };
 
 } // extension

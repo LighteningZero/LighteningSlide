@@ -18,6 +18,8 @@
 #include <exception>
 #include <stdexcept>
 
+#include <fstream>
+#include <ostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -32,6 +34,11 @@ void extension::ConfigContainer::loadFromString(const std::string& jsonContent) 
     std::stringstream json_string_stream;
     json_string_stream << jsonContent;
     json_string_stream >> this->jsonRoot;
+}
+
+void extension::ConfigContainer::loadFromFile(const std::string& filePath) {
+    std::ifstream config_file(filePath, std::ifstream::binary);
+    config_file >> this->jsonRoot;
 }
 
 std::vector<std::string> extension::ConfigContainer::parseJsonPath(const std::string& itemPath) {

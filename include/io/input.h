@@ -30,7 +30,7 @@ public:
     std::string scanAll();
 
 private:
-    FILE* file;
+    FILE* _file;
 };
 
 } // namespace frontend

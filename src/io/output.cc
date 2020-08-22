@@ -22,7 +22,7 @@
 #include <fmt/core.h>
 
 frontend::FileWriter::FileWriter(std::string filename) {
-    this->_file = fopen(filename.c_str(), "rb");
+    this->_file = fopen(filename.c_str(), "wb");
     if (this->_file == nullptr)
         throw std::invalid_argument(fmt::format("[{}] Cannot open file '{}': [Err {}] {}", __FUNCTION__, filename,
                                                 errno, std::strerror(errno)));

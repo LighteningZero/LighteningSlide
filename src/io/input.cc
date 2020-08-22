@@ -38,8 +38,8 @@ std::string frontend::FileScanner::scanAll() {
     char* data = new char[length + 1]; // new need space(+1 for '\0')
     rewind(this->_file);               // jump back to begin
 
-    length = fread(data, length, 1, this->_file);
-    data[length + 1] = '\0';
+    length = fread(data, 1, length, this->_file);
+    data[length] = '\0';
     std::string result(data);
 
     delete[] data;

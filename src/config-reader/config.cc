@@ -110,7 +110,7 @@ unsigned long long extension::ConfigContainer::getItemAsUnsignedInt64(const std:
     Json::Value item;
     item = getItem(itemPath);
 
-    if (item.isUInt64() == false)
+    if (!item.isUInt64())
         throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not unsigned long long"));
 
     return item.asUInt64();

@@ -185,6 +185,22 @@ TEST(ConfigReaderTest, getItemAsDouble) {
     ASSERT_EQ(3.1415, res);
 }
 
+TEST(ConfigReaderTest, getItemAsDoubleFromArray) {
+    std::string JsonContent = "{"
+                              "\"name\": 3.1415,"
+                              "\"male\":true,"
+                              "\"major\":["
+                              "{\"AI1\":101},"
+                              "{\"AI2\":\"DeepLearning\"},"
+                              "{\"AI3\":3.1415}"
+                              "]"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    double res = config.getItemAsDouble("major:2:AI3");
+    ASSERT_EQ(3.1415, res);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <cstdio>
 #include <string>
+#include <cstdio>
 
 #include <gtest/gtest.h>
 
@@ -38,7 +38,7 @@ TEST(FrontendIOTest, FileWriterTest) {
     f.flush();
 
     FILE* file = fopen("b.txt", "r");
-    char *data = new char[16];
+    char* data = new char[16];
     fscanf(file, "%s", data);
     std::string content(data);
     delete[] data;

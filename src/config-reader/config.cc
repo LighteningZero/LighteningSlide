@@ -90,7 +90,7 @@ unsigned int extension::ConfigContainer::getItemAsUnsignedInt(const std::string&
     Json::Value item;
     item = getItem(itemPath);
 
-    if (item.isUInt() == false)
+    if (!item.isUInt())
         throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not unsigned int"));
 
     return item.asUInt();

@@ -51,9 +51,11 @@ jobs:
         git config --global user.email "segmentoj@outlook.com"
         git add .
         git commit -sm "format c++ codes" -a
+      continue-on-error: true
     
     - name: Push change back
       uses: ad-m/github-push-action@v0.6.0
       with:
         github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
         branch: ${{ github.head_ref }}
+      continue-on-error: true

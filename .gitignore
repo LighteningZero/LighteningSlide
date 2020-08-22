@@ -36,3 +36,5 @@
 
 # CMake Build
 build/
+
+debug/

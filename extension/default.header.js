@@ -34,7 +34,7 @@ var render = [origin => {
     s.makeMarkHere();
     while (true) {
         let str = s.scanToken();
-        let sharpNumber = count(str);
+        let sharpNumber = countSharpNumber(str);
         if (sharpNumber === 0) {
             result += s.getTextFormMark();
         } else {

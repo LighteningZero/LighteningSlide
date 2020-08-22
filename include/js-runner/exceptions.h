@@ -16,6 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #ifndef JS_RUNNER_EXCEPTION_H
+#define JS_RUNNER_EXCEPTION_H
 
 #include <exception>
 #include <stdexcept>

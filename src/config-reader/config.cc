@@ -17,17 +17,17 @@
 
 #include <exception>
 #include <stdexcept>
-
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
 #include <stdio.h>
 
-#include "config-reader/config.h"
-
 #include <fmt/core.h>
 #include <json/json.h>
+
+#include "config-reader/config.h"
+#include "config-reader/exceptions.h"
 
 void extension::ConfigContainer::loadFromString(const std::string& jsonContent) {
     std::stringstream json_string_stream;
@@ -63,8 +63,8 @@ Json::Value extension::ConfigContainer::getItem(const std::string& itemPath) {
     for (size_t i = 0; i < itemName.size(); i += 1) {
         Json::Value nextItem = currentItem[itemName[i]];
 
-        if (nextItem.empty() == true)
-            throw std::invalid_argument(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
+        if (nextItem.empty())
+            throw extension::JsonParsingError(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
 
         if (i == itemName.size() - 1)
             return nextItem;
@@ -80,12 +80,18 @@ int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
     Json::Value item;
     item = getItem(itemPath);
 
+    if (!item.isInt())
+        throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not int"));
+
     return item.asInt();
 }
 
 unsigned int extension::ConfigContainer::getItemAsUnsignedInt(const std::string& itemPath) {
     Json::Value item;
     item = getItem(itemPath);
+
+    if (!item.isUInt())
+        throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not unsigned int"));
 
     return item.asUInt();
 }
@@ -94,12 +100,18 @@ long long extension::ConfigContainer::getItemAsInt64(const std::string& itemPath
     Json::Value item;
     item = getItem(itemPath);
 
+    if (!item.isInt64())
+        throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not long long"));
+
     return item.asInt64();
 }
 
 unsigned long long extension::ConfigContainer::getItemAsUnsignedInt64(const std::string& itemPath) {
     Json::Value item;
     item = getItem(itemPath);
+
+    if (!item.isUInt64())
+        throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not unsigned long long"));
 
     return item.asUInt64();
 }
@@ -108,6 +120,9 @@ std::string extension::ConfigContainer::getItemAsString(const std::string& itemP
     Json::Value item;
     item = getItem(itemPath);
 
+    if (!item.isString())
+        throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not string"));
+
     return item.asString();
 }
 
@@ -115,12 +130,18 @@ bool extension::ConfigContainer::getItemAsBool(const std::string& itemPath) {
     Json::Value item;
     item = getItem(itemPath);
 
+    if (!item.isBool())
+        throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not bool"));
+
     return item.asBool();
 }
 
 double extension::ConfigContainer::getItemAsDouble(const std::string& itemPath) {
     Json::Value item;
     item = getItem(itemPath);
+
+    if (!item.isDouble())
+        throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not double"));
 
     return item.asDouble();
 }

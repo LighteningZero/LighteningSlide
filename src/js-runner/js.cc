@@ -128,7 +128,7 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
 
 std::string extension::JSContainer::getResualtAsString() {
     if (this->_run_resualt == nullptr)
-        throw std::logic_error(fmt::format("[{}] Trying to get resualt before run any script!", __FUNCTION__));
+        throw std::logic_error(fmt::format("[{}] Trying to get resualt before run any script", __FUNCTION__));
 
     jerry_value_t str_value = jerry_value_to_string(*this->_run_resualt);
     jerry_size_t str_size = jerry_get_utf8_string_size(str_value);

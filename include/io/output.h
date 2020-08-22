@@ -27,7 +27,7 @@ class FileWriter {
 public:
     FileWriter(std::string filename);
     ~FileWriter();
-    void write(std::string format, ...);
+    void write(std::string content);
 
 protected:
     FILE* file;

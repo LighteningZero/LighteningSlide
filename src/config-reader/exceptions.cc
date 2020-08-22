@@ -24,15 +24,6 @@ extension::JsonParsingError::JsonParsingError(const std::string& msg) {
 const char* extension::JsonParsingError::what() const throw() {
     return this->_msg.c_str();
 }
-
-extension::JsonRuntimeError::JsonRuntimeError(const std::string& msg) {
-    this->_msg = msg;
-}
-
-const char* extension::JsonRuntimeError::what() const throw() {
-    return this->_msg.c_str();
-}
-
 extension::JsonTypeError::JsonTypeError(const std::string& msg) {
     this->_msg = msg;
 }

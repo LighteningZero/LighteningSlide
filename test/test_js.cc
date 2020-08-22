@@ -34,7 +34,7 @@ TEST(JSRunnerEngineTest, RunFunctionTest) {
     std::string script = "function RunFunctionTest_add(x) {\n\treturn x+1;\n};";
     runner->setScript(script);
     runner->runScript();
-    
+
     jerry_value_t a = jerry_create_number(5);
     runner->runFunction(std::string("RunFunctionTest_add"), &a, 1);
 

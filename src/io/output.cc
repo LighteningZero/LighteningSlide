@@ -16,8 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "io/output.h"
-#include <stdexcept>
 #include <exception>
+#include <stdexcept>
 #include <cerrno>
 #include <fmt/core.h>
 

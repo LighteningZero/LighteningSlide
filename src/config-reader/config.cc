@@ -29,6 +29,15 @@
 #include "config-reader/config.h"
 #include "config-reader/exceptions.h"
 
+int toInt(std::string& str) {
+    int res = 0;
+
+    for (size_t i = 0; i < str.size(); i += 1)
+        res = res * 10 + str[i] - '0';
+
+    return res;
+}
+
 void extension::ConfigContainer::loadFromString(const std::string& jsonContent) {
     std::stringstream json_string_stream;
     json_string_stream << jsonContent;
@@ -61,7 +70,12 @@ Json::Value extension::ConfigContainer::getItem(const std::string& itemPath) {
     currentItem = this->jsonRoot;
 
     for (size_t i = 0; i < itemName.size(); i += 1) {
-        Json::Value nextItem = currentItem[itemName[i]];
+        Json::Value nextItem;
+
+        if (currentItem.isArray())
+            nextItem = currentItem[toInt(itemName[i])];
+        else
+            nextItem = currentItem[itemName[i]];
 
         if (nextItem.empty())
             throw extension::JsonParsingError(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));

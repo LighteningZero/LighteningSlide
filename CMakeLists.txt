@@ -12,6 +12,7 @@ SET(SRC_LIB_LIST
     ${PROJECT_SOURCE_DIR}/src/js-runner/js.cc
     ${PROJECT_SOURCE_DIR}/src/js-runner/exceptions.cc
     ${PROJECT_SOURCE_DIR}/src/config-reader/config.cc
+    ${PROJECT_SOURCE_DIR}/src/config-reader/exceptions.cc
 )
 
 SET(SRC_MAIN_LST

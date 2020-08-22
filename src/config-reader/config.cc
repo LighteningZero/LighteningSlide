@@ -130,7 +130,7 @@ bool extension::ConfigContainer::getItemAsBool(const std::string& itemPath) {
     Json::Value item;
     item = getItem(itemPath);
 
-    if (item.isBool() == false)
+    if (!item.isBool())
         throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not bool"));
 
     return item.asBool();

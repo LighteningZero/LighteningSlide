@@ -21,7 +21,7 @@
 #include <string>
 #include <cstdio>
 
-namespace io {
+namespace frontend {
 
 class FileWriter {
 public:
@@ -33,6 +33,6 @@ protected:
     FILE* file;
 };
 
-} // namespace io
+} // namespace frontend
 
 #endif // IO_INPUT_H

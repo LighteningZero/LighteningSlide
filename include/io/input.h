@@ -18,14 +18,14 @@
 #ifndef IO_INPUT_H
 #define IO_INPUT_H
 
-namespace io {
-
 #include <string>
 #include <cstdio>
 
+namespace frontend {
+
 class FileScanner {
 public:
-    FileScanner(const char*);
+    FileScanner(std::string filename);
     ~FileScanner();
     std::string scanAll();
 
@@ -33,6 +33,6 @@ private:
     FILE* file;
 };
 
-} // namespace io
+} // namespace frontend
 
 #endif // IO_OUTPUT_H

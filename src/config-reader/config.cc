@@ -80,7 +80,7 @@ int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
     Json::Value item;
     item = getItem(itemPath);
 
-    if (item.isInt() == false)
+    if (!item.isInt())
         throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not int"));
 
     return item.asInt();

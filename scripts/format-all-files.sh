@@ -1,18 +1,42 @@
 #!/bin/bash 
+echo $1
 
-function dfs_dirs(){  
-    for file in ` ls $1 `  
+function dfs_dirs() {
+    echo scanning $1
+    for file in ` echo $1"/"*.cc `
+    do
+        if [ ! -f "$file" ]
+        then
+            echo "skipping .cc files in $1"
+        else
+            echo formatting $file
+            clang-format $file > /tmp/formatted.cc
+            cat /tmp/formatted.cc > $file
+        fi
+    done
+
+    for file in ` echo *.h `
+    do
+        if [ ! -f "$file" ]
+        then
+            echo "skipping .h files in $1"
+        else
+            echo formatting $file
+            clang-format $file > /tmp/formatted.cc
+            cat /tmp/formatted.cc > $file
+        fi
+    done
+
+    for file in ` ls $1 `
     do
         if [ -d $1"/"$file ]   
-        then  
+        then
             dfs_dirs $1"/"$file  
-        else  
-            clang-format $1 > /tmp/formatted.cc
-            cat /tmp/formatted.cc > $1
         fi
     done
 }
 
 cd `dirname $0`
-INIT_PATH="$(pwd)/.."  
+cd ..
+INIT_PATH="$(pwd)"  
 dfs_dirs $INIT_PATH

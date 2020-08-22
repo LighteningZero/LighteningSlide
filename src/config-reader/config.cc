@@ -100,7 +100,7 @@ long long extension::ConfigContainer::getItemAsInt64(const std::string& itemPath
     Json::Value item;
     item = getItem(itemPath);
 
-    if (item.isInt64() == false)
+    if (!item.isInt64())
         throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not long long"));
 
     return item.asInt64();

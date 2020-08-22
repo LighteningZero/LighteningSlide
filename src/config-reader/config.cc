@@ -140,7 +140,7 @@ double extension::ConfigContainer::getItemAsDouble(const std::string& itemPath) 
     Json::Value item;
     item = getItem(itemPath);
 
-    if (item.isDouble() == false)
+    if (!item.isDouble())
         throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not double"));
 
     return item.asDouble();

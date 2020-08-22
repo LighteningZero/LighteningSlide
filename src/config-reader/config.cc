@@ -120,7 +120,7 @@ std::string extension::ConfigContainer::getItemAsString(const std::string& itemP
     Json::Value item;
     item = getItem(itemPath);
 
-    if (item.isString() == false)
+    if (!item.isString())
         throw extension::JsonTypeError(fmt::format("JSON path '{}' value's type is not string"));
 
     return item.asString();

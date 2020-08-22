@@ -63,7 +63,7 @@ Json::Value extension::ConfigContainer::getItem(const std::string& itemPath) {
     for (size_t i = 0; i < itemName.size(); i += 1) {
         Json::Value nextItem = currentItem[itemName[i]];
 
-        if (nextItem.empty() == true)
+        if (nextItem.empty())
             throw extension::JsonParsingError(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
 
         if (i == itemName.size() - 1)

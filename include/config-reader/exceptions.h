@@ -33,15 +33,6 @@ private:
     std::string _msg;
 };
 
-class JsonRuntimeError : public std::exception {
-public:
-    JsonRuntimeError(const std::string& msg);
-    const char* what() const throw();
-
-private:
-    std::string _msg;
-};
-
 class JsonTypeError : public std::exception {
 public:
     JsonTypeError(const std::string& msg);

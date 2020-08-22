@@ -15,25 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef IO_OUTPUT_H
-#define IO_OUTPUT_H
+#include "io/output.h"
+#include <stdexcept>
+#include <exception>
+#include <cerrno>
+#include <fmt/core.h>
 
-#include <string>
-#include <cstdio>
+frontend::FileWriter::FileWriter(std::string filename) {
+    this->_file = fopen(filename.c_str(), "rb");
+    if (this->_file == nullptr)
+        throw std::invalid_argument(fmt::format("[{}] Cannot open file '{}': [Err {}] {}", __FUNCTION__, filename,
+                                                errno, std::strerror(errno)));
+}
 
-namespace frontend {
+frontend::FileWriter::~FileWriter() {
+    fclose(this->_file);
+}
 
-class FileWriter {
-public:
-    FileWriter(std::string filename);
-    ~FileWriter();
-    void write(std::string content);
-    void flush();
+void frontend::FileWriter::write(std::string content) {
+    fmt::print(this->_file, content);
+}
 
-protected:
-    FILE* _file;
-};
-
-} // namespace frontend
-
-#endif // IO_INPUT_H
+void frontend::FileWriter::flush() {
+    fflush(this->_file);
+}

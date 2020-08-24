@@ -51,6 +51,6 @@ private:
 
 } // namespace extension
 
-#include "../src/config-reader/config-writer.cc"
+#include "../src/config-reader/config-writer.tpp"
 
 #endif // CONFIG_READER_H

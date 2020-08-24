@@ -16,11 +16,10 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <exception>
-#include <sstream>
 #include <stdexcept>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <stdio.h>
 
 #include <fmt/core.h>
 #include <json/json.h>

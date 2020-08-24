@@ -45,6 +45,22 @@ void extension::ConfigContainer::loadFromFile(const std::string& filePath) {
     loadFromString(file_content);          // Load from string
 }
 
+// Write JSON to file
+std::string extension::ConfigContainer::writeToString() {
+    std::string str;
+    Json::StreamWriterBuilder writer;
+    std::stringstream json_string_stream;
+    json_string_stream << Json::writeString(writer, this->jsonRoot);
+    json_string_stream >> str;
+
+    return str;
+}
+
+void extension::ConfigContainer::writeToFile(const std::string& filePath) {
+    frontend::FileWriter file_writer(filePath);
+    file_writer.write(writeToString());
+}
+
 // Parse JSON path from string path
 std::vector<std::string> extension::ConfigContainer::parseJsonPath(const std::string& itemPath) {
     std::vector<std::string> itemName;

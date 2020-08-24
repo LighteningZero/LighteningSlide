@@ -28,6 +28,10 @@ public:
     void loadFromString(const std::string& jsonContent);
     void loadFromFile(const std::string& filePath);
 
+    // Write JSON
+    std::string writeToString();
+    void writeToFile(const std::string& filePath);
+
     // Read item
     Json::Value getItem(const std::string& itemPath);
     int getItemAsInt(const std::string& itemPath);

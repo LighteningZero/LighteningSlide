@@ -20,6 +20,7 @@
 
 #include <gtest/gtest.h>
 
+#include "io/io.h"
 #include "config-reader/config.h"
 
 TEST(ConfigReaderTest, getItemAsInt) {
@@ -216,6 +217,48 @@ TEST(ConfigReaderTest, setItem) {
     config.setItem("name", 123);
     int res = config.getItemAsInt("name");
     ASSERT_EQ(123, res);
+}
+
+TEST(ConfigReaderTest, setItem2) {
+    std::string JsonContent = "{"
+                              "\"name\": \"321\","
+                              "\"male\":true,"
+                              "\"major\":["
+                              "{\"AI1\":101},"
+                              "{\"AI2\":\"DeepLearning\"},"
+                              "{\"AI3\":3.1415}"
+                              "]"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    config.setItem("type", "test");
+    std::string res = config.getItemAsString("type");
+    ASSERT_EQ("test", res);
+}
+
+TEST(ConfigReaderTest, setItem3) {
+    std::string JsonContent = "{"
+                              "\"name\": \"321\","
+                              "\"male\":true,"
+                              "\"major\":["
+                              "{\"AI1\":101},"
+                              "{\"AI2\":\"DeepLearning\"},"
+                              "{\"AI3\":3.1415},"
+                              "{\"AI4\":3.1415},"
+                              "{\"AI5\":3.1415},"
+                              "{\"AI6\":3.1415},"
+                              "{\"AI7\":3.1415},"
+                              "{\"AI8\":3.1415},"
+                              "{\"AI9\":3.1415},"
+                              "{\"AI10\":3.1415},"
+                              "{\"AI11\":3.1415},"
+                              "]"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    config.setItem("major:11", "test");
+    std::string res = config.getItemAsString("major:11");
+    ASSERT_EQ("test", res);
 }
 
 int main(int argc, char* argv[]) {

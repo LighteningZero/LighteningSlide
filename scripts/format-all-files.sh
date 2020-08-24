@@ -21,27 +21,39 @@ echo $1
 
 function dfs_dirs() {
     echo scanning $1
-    for file in ` echo $1"/"*.cc `
+    for file_cc in ` echo $1"/"*.cc `
     do
-        if [ ! -f "$file" ]
+        if [ ! -f "$file_cc" ]
         then
             echo "skipping .cc files in $1"
         else
-            echo formatting $file
-            clang-format $file > /tmp/formatted.cc
-            cat /tmp/formatted.cc > $file
+            echo formatting $file_cc
+            clang-format $file_cc > /tmp/formatted.cc
+            cat /tmp/formatted.cc > $file_cc
         fi
     done
 
-    for file in ` echo *.h `
+    for file_h in ` echo $1"/"*.h `
     do
-        if [ ! -f "$file" ]
+        if [ ! -f "$file_h" ]
         then
             echo "skipping .h files in $1"
         else
-            echo formatting $file
-            clang-format $file > /tmp/formatted.cc
-            cat /tmp/formatted.cc > $file
+            echo formatting $file_h
+            clang-format $file_h > /tmp/formatted.cc
+            cat /tmp/formatted.cc > $file_h
+        fi
+    done
+
+    for file_tpp in ` echo $1"/"*.tpp `
+    do
+        if [ ! -f "$file_tpp" ]
+        then
+            echo "skipping .tpp files in $1"
+        else
+            echo formatting $file_tpp
+            clang-format $file_tpp > /tmp/formatted.cc
+            cat /tmp/formatted.cc > $file_tpp
         fi
     done
 

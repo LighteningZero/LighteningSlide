@@ -45,6 +45,21 @@ void extension::ConfigContainer::loadFromFile(const std::string& filePath) {
     loadFromString(file_content);          // Load from string
 }
 
+// Write JSON to file
+void extension::ConfigContainer::exportToFile(const std::string& filePath) {
+    std::stringstream json_string_stream;
+    Json::StreamWriterBuilder builder;
+    builder["commentStyle"] = "All";
+    builder["indentation"] = "\t";
+    builder["enableYAMLCompatibility"] = false;
+    builder["dropNullPlaceholders"] = false;
+    builder["useSpecialFloats"] = false;
+    builder["precision"] = 17;
+    std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
+    std::ofstream out(filePath);
+    writer->write(this->jsonRoot, &out);
+}
+
 // Parse JSON path from string path
 std::vector<std::string> extension::ConfigContainer::parseJsonPath(const std::string& itemPath) {
     std::vector<std::string> itemName;

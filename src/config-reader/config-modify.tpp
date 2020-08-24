@@ -16,8 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <exception>
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -28,7 +28,7 @@
 #include "config-reader/config.h"
 #include "config-reader/exceptions.h"
 
-// Set item
+// Modify item
 template <typename __T>
 void extension::ConfigContainer::setItem(const std::string& itemPath, __T val) {
     std::vector<std::string> itemName = parseJsonPath(itemPath);
@@ -47,14 +47,27 @@ void extension::ConfigContainer::setItem(const std::string& itemPath, __T val) {
             int item_number;
             to_int_string_stream >> item_number;
 
-            nextItem = &currentItem->operator[](item_number);
+            nextItem = &(*currentItem)[item_number];
         } else {
-            nextItem = &currentItem->operator[](itemName[i]);
+            nextItem = &(*currentItem)[itemName[i]];
         }
 
         // Empty item
-        if (nextItem->empty())
-            throw extension::JsonParsingError(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
+        if (nextItem->empty()) {
+            if (i == itemName.size() - 1) {
+                bool is_array = true;
+                for (size_t j = 0; j < itemName[i].size(); j += 1)
+                    if (itemName[i][j] < '0' || itemName[i][j] > '9')
+                        is_array = false;
+
+                if (is_array)
+                    currentItem->append(val);
+                else
+                    (*currentItem)[itemName[i]] = val;
+            } else {
+                throw extension::JsonParsingError(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
+            }
+        }
 
         if (i == itemName.size() - 1) {
             *nextItem = val;

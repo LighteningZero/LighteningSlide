@@ -42,7 +42,8 @@ public:
     std::string getItemAsString(const std::string& itemPath);
 
     // Modify item
-    template <typename __T> void setItem(const std::string& itemPath, __T val);
+    template <typename __T>
+    void setItem(const std::string& itemPath, __T val);
 
 private:
     Json::Value jsonRoot;

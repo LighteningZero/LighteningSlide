@@ -16,8 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <exception>
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -56,11 +56,11 @@ void extension::ConfigContainer::setItem(const std::string& itemPath, __T val) {
         if (nextItem->empty()) {
             if (i == itemName.size() - 1) {
                 bool is_array = true;
-                for (size_t j = 0; j < itemName[i].size(); j += 1) 
+                for (size_t j = 0; j < itemName[i].size(); j += 1)
                     if (itemName[i][j] < '0' || itemName[i][j] > '9')
                         is_array = false;
 
-                if (is_array) 
+                if (is_array)
                     currentItem->append(val);
                 else
                     (*currentItem)[itemName[i]] = val;

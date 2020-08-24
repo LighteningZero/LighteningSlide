@@ -40,6 +40,7 @@ void extension::ConfigContainer::loadFromFile(const std::string& filePath) {
     frontend::FileScanner file_scanner(filePath);
     std::string file_content;
     file_content = file_scanner.scanAll();
+
     std::stringstream file_content_string_stream;
     file_content_string_stream << file_content;
     file_content_string_stream >> this->jsonRoot;

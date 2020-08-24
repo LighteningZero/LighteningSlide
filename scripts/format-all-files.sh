@@ -37,7 +37,7 @@ function dfs_dirs() {
     do
         if [ ! -f "$file_h" ]
         then
-            echo "skipping .h files in $1 ($file_h)"
+            echo "skipping .h files in $1"
         else
             echo formatting $file_h
             clang-format $file_h > /tmp/formatted.cc

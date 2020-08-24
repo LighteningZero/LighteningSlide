@@ -28,7 +28,7 @@
 #include "config-reader/config.h"
 #include "config-reader/exceptions.h"
 
-// Set item
+// Modify item
 template <typename __T>
 void extension::ConfigContainer::setItem(const std::string& itemPath, __T val) {
     std::vector<std::string> itemName = parseJsonPath(itemPath);
@@ -53,8 +53,21 @@ void extension::ConfigContainer::setItem(const std::string& itemPath, __T val) {
         }
 
         // Empty item
-        if (nextItem->empty())
-            throw extension::JsonParsingError(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
+        if (nextItem->empty()) {
+            if (i == itemName.size() - 1) {
+                bool is_array = true;
+                for (size_t j = 0; j < itemName[i].size(); j += 1) 
+                    if (itemName[i][j] < '0' || itemName[i][j] > '9')
+                        is_array = false;
+
+                if (is_array) 
+                    currentItem->append(val);
+                else
+                    currentItem->operator[](itemName[i]) = val;
+            } else {
+                throw extension::JsonParsingError(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
+            }
+        }
 
         if (i == itemName.size() - 1) {
             *nextItem = val;

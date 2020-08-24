@@ -28,9 +28,9 @@ public:
     void loadFromString(const std::string& jsonContent);
     void loadFromFile(const std::string& filePath);
 
-    // Write JSON
-    std::string writeToString();
-    void writeToFile(const std::string& filePath);
+    // Export JSON
+    std::string exportToString();
+    void exportToFile(const std::string& filePath);
 
     // Read item
     Json::Value getItem(const std::string& itemPath);
@@ -42,9 +42,8 @@ public:
     double getItemAsDouble(const std::string& itemPath);
     std::string getItemAsString(const std::string& itemPath);
 
-    // Write item
+    // Modify item
     template <typename __T> void setItem(const std::string& itemPath, __T val);
-    void addItem(const std::string& itemPath);
 
 private:
     Json::Value jsonRoot;
@@ -55,6 +54,7 @@ private:
 
 } // namespace extension
 
-#include "../src/config-reader/config-writer.tpp"
+// Modify config
+#include "../src/config-reader/config-modify.tpp"
 
 #endif // CONFIG_READER_H

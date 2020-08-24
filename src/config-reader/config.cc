@@ -28,6 +28,7 @@
 
 #include "config-reader/config.h"
 #include "config-reader/exceptions.h"
+#include "io/io.h"
 
 void extension::ConfigContainer::loadFromString(const std::string& jsonContent) {
     std::stringstream json_string_stream;
@@ -36,8 +37,12 @@ void extension::ConfigContainer::loadFromString(const std::string& jsonContent) 
 }
 
 void extension::ConfigContainer::loadFromFile(const std::string& filePath) {
-    std::ifstream config_file(filePath, std::ifstream::binary);
-    config_file >> this->jsonRoot;
+    frontend::FileScanner file_scanner(filePath);
+    std::string file_content;
+    file_content = file_scanner.scanAll();
+    std::stringstream file_content_string_stream;
+    file_content_string_stream << file_content;
+    file_content_string_stream >> this->jsonRoot;
 }
 
 std::vector<std::string> extension::ConfigContainer::parseJsonPath(const std::string& itemPath) {

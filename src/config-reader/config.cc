@@ -46,19 +46,18 @@ void extension::ConfigContainer::loadFromFile(const std::string& filePath) {
 }
 
 // Write JSON to file
-std::string extension::ConfigContainer::exportToString() {
-    std::string str;
-    Json::StreamWriterBuilder writer;
-    std::stringstream json_string_stream;
-    json_string_stream << Json::writeString(writer, this->jsonRoot);
-    json_string_stream >> str;
-
-    return str;
-}
-
 void extension::ConfigContainer::exportToFile(const std::string& filePath) {
-    frontend::FileWriter file_writer(filePath);
-    file_writer.write(exportToString());
+    std::stringstream json_string_stream;
+    Json::StreamWriterBuilder builder;
+    builder["commentStyle"] = "All";
+    builder["indentation"] = "\t";
+    builder["enableYAMLCompatibility"] = false;
+    builder["dropNullPlaceholders"] = false;
+    builder["useSpecialFloats"] = false;
+    builder["precision"] = 17;
+    std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
+    std::ofstream out(filePath);
+    writer->write(this->jsonRoot, &out);
 }
 
 // Parse JSON path from string path

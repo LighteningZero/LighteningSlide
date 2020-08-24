@@ -29,7 +29,6 @@ public:
     void loadFromFile(const std::string& filePath);
 
     // Export JSON
-    std::string exportToString();
     void exportToFile(const std::string& filePath);
 
     // Read item

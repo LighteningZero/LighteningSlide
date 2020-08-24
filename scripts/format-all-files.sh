@@ -45,6 +45,18 @@ function dfs_dirs() {
         fi
     done
 
+    for file in ` echo *.tpp `
+    do
+        if [ ! -f "$file" ]
+        then
+            echo "skipping .tpp files in $1"
+        else
+            echo formatting $file
+            clang-format $file > /tmp/formatted.cc
+            cat /tmp/formatted.cc > $file
+        fi
+    done
+
     for file in ` ls $1 `
     do
         if [ -d $1"/"$file ]   

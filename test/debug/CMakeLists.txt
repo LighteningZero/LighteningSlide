@@ -1,4 +1,4 @@
-# -*- C++ -*- LighteningZero
+# -*- Cmake -*- LighteningZero
 
 # Copyright (C) 2020  Lightening Zero
 #

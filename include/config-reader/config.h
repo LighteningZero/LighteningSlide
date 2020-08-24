@@ -24,8 +24,12 @@ namespace extension {
 
 class ConfigContainer {
 public:
+    // Load JSON
     void loadFromString(const std::string& jsonContent);
     void loadFromFile(const std::string& filePath);
+
+    // Read item
+    Json::Value getItem(const std::string& itemPath);
     int getItemAsInt(const std::string& itemPath);
     unsigned int getItemAsUnsignedInt(const std::string& itemPath);
     long long getItemAsInt64(const std::string& itemPath);
@@ -33,14 +37,20 @@ public:
     bool getItemAsBool(const std::string& itemPath);
     double getItemAsDouble(const std::string& itemPath);
     std::string getItemAsString(const std::string& itemPath);
+
+    // Write item
+    template <typename __T> void setItem(const std::string& itemPath, __T val);
     void addItem(const std::string& itemPath);
 
 private:
     Json::Value jsonRoot;
+
+    // Parse JSON path
     std::vector<std::string> parseJsonPath(const std::string& itemPath);
-    Json::Value getItem(const std::string& itemPath);
 };
 
-} // extension
+} // namespace extension
+
+#include "../src/config-reader/config-writer.tpp"
 
 #endif // CONFIG_READER_H

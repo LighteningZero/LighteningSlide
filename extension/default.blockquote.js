@@ -1,4 +1,4 @@
-// -*- C++ -*- LighteningZero
+// -*- javascript -*- LighteningZero
 
 // Copyright (C) 2020  Lightening Zero
 //

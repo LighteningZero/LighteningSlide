@@ -1,4 +1,4 @@
-// -*- C++ -*- LighteningZero
+// -*- javascript -*- LighteningZero
 
 // Copyright (C) 2020  Lightening Zero
 //
@@ -121,6 +121,21 @@ function Scanner(text) {
         return this.text[this.pointer];
     };
 
+    this.skipUntil = target => {
+        let match_length = 0;
+        let result = false;
+
+        while (!this.isEnd()) {
+            if (this.scanChar() == target[match_length]) {
+                match_length += 1;
+            }
+
+            if (match_length == target)
+        }
+
+        return result;
+    }
+    
     this.scanChar = () => {
         this.pointer += 1;
         return this.text[this.pointer - 1];
@@ -177,7 +192,8 @@ function Scanner(text) {
         return result;
     }
 
-    this.makeMark = (point) => {
+
+    this.makeMark = point => {
         this.mark = point;
     }
 

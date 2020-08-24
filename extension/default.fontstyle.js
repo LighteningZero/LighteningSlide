@@ -16,38 +16,17 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 var render = [origin => {
-    let countSharpNumber = str => {
-        let c = 0;
-        for (let i = 0; i < str.length; i += 1) {
-            if (str[i] !== "#") {
-                return 0;
-            } else {
-                c += 1;
-                if (c > 6) return 0;
-            }
-        }
-        return c;
-    };
-
     let s = new Scanner(origin);
     let result = new String();
-    s.makeMarkHere();
+
+    s.setLineBreakToLFMode();
     while (true) {
-        let str = s.scanToken();
-        let sharpNumber = countSharpNumber(str);
-        if (sharpNumber === 0) {
-            result += s.getTextFormMark();
-        } else {
-            let content = s.scanLine();
-            result += '<h' + sharpNumber + '>' + content + '</h' + sharpNumber + '>\n';
-        }
+        s.skipEmpty();
         
-        s.skipBlank();
-        s.makeMarkHere();
         if (s.isEnd()) {
             break;
         }
     }
 
     return result;
-}];
+}]

@@ -47,9 +47,9 @@ void extension::ConfigContainer::setItem(const std::string& itemPath, __T val) {
             int item_number;
             to_int_string_stream >> item_number;
 
-            nextItem = &currentItem->operator[](item_number);
+            nextItem = &(*currentItem)[item_number];
         } else {
-            nextItem = &currentItem->operator[](itemName[i]);
+            nextItem = &(*currentItem)[itemName[i]];
         }
 
         // Empty item
@@ -63,7 +63,7 @@ void extension::ConfigContainer::setItem(const std::string& itemPath, __T val) {
                 if (is_array) 
                     currentItem->append(val);
                 else
-                    currentItem->operator[](itemName[i]) = val;
+                    (*currentItem)[itemName[i]] = val;
             } else {
                 throw extension::JsonParsingError(fmt::format("Invalid JSON path '{}' at '{}'", itemPath, itemName[i]));
             }

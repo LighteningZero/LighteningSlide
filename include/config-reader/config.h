@@ -42,7 +42,7 @@ public:
     std::string getItemAsString(const std::string& itemPath);
 
     // Get size
-    unsigned int getItemSize(const std::string& itemPath);
+    size_t getItemSize(const std::string& itemPath);
 
     // Modify item
     template <typename __T>

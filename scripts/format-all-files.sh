@@ -17,8 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https:#www.gnu.org/licenses/>.
 
-echo $1
-
 function dfs_dirs() {
     echo scanning $1
     for file_cc in ` echo $1"/"*.cc `

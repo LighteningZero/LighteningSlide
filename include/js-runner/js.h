@@ -34,13 +34,13 @@ private:
     JSContainer();
     ~JSContainer();
 
-    // void _updateParsedScript(jerry_value_t value);
-    // void _updateRunResualt(jerry_value_t value);
+    void freeParsedScript();
+    void freeRunResualt();
 
     static JSContainer* _instance;
 
     int GC_now_pending;
-    void CommitGC(int x = 1);
+    void commitGC(int x = 1);
 
     jerry_value_t* _parsed_script;
     jerry_value_t* _run_resualt;

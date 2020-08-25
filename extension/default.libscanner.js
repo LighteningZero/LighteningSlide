@@ -120,21 +120,6 @@ function Scanner(text) {
     this.getChar = () => {
         return this.text[this.pointer];
     };
-
-    this.skipUntil = target => {
-        let match_length = 0;
-        let result = false;
-
-        while (!this.isEnd()) {
-            if (this.scanChar() == target[match_length]) {
-                match_length += 1;
-            }
-
-            if (match_length == target)
-        }
-
-        return result;
-    }
     
     this.scanChar = () => {
         this.pointer += 1;

@@ -112,6 +112,14 @@ Json::Value extension::ConfigContainer::getItem(const std::string& itemPath) {
     return null;
 }
 
+// Get object's size
+unsigned int extension::ConfigContainer::getItemSize(const std::string& itemPath) {
+    Json::Value item;
+    item = getItem(itemPath);
+
+    return item.size();
+}
+
 // Get item as type
 int extension::ConfigContainer::getItemAsInt(const std::string& itemPath) {
     Json::Value item;

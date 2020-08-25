@@ -41,6 +41,9 @@ public:
     double getItemAsDouble(const std::string& itemPath);
     std::string getItemAsString(const std::string& itemPath);
 
+    // Get size
+    unsigned int getItemSize(const std::string& itemPath);
+
     // Modify item
     template <typename __T>
     void setItem(const std::string& itemPath, __T val);

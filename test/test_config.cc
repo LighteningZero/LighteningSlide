@@ -58,6 +58,22 @@ TEST(ConfigReaderTest, loadFromFile) {
     ASSERT_EQ("DeepLearning", res);
 }
 
+TEST(ConfigReaderTest, getItemSize) {
+    std::string JsonContent = "{"
+                              "\"name\":\"10\","
+                              "\"age\":14,"
+                              "\"major\":{"
+                              "\"AI1\":101,"
+                              "\"AI2\":\"DeepLearning\","
+                              "\"AI3\":\"ComputerVision\""
+                              "}"
+                              "}";
+    extension::ConfigContainer config;
+    config.loadFromString(JsonContent);
+    unsigned int res = config.getItemSize("major");
+    ASSERT_EQ(3, res);
+}
+
 TEST(ConfigReaderTest, getItemAsInt2) {
     std::string JsonContent = "{"
                               "\"name\":\"10\","

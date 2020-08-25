@@ -46,18 +46,33 @@ extension::JSContainer::JSContainer() {
 }
 
 extension::JSContainer::~JSContainer() {
-    if (this->_parsed_script != nullptr)
-        jerry_release_value(*this->_parsed_script);
-
-    if (this->_run_resualt != nullptr)
-        jerry_release_value(*this->_run_resualt);
+    this->freeParsedScript();
+    this->freeRunResualt();
 
     jerry_cleanup();
 }
 
-void extension::JSContainer::CommitGC(int x) {
+void extension::JSContainer::freeParsedScript() {
+    if (this->_parsed_script == nullptr)
+        return;
+
+    jerry_release_value(*this->_parsed_script);
+    delete this->_parsed_script;
+    this->commitGC();
+}
+
+void extension::JSContainer::freeRunResualt() {
+    if (this->_run_resualt == nullptr)
+        return;
+
+    jerry_release_value(*this->_run_resualt);
+    delete this->_run_resualt;
+    this->commitGC();
+}
+
+void extension::JSContainer::commitGC(int x) {
     this->GC_now_pending += x;
-    if (this->GC_now_pending > extension::JSContainer::GC_ratio) {
+    if (this->GC_now_pending >= extension::JSContainer::GC_ratio) {
         jerry_gc(JERRY_GC_PRESSURE_LOW);
 
         while (this->GC_now_pending > extension::JSContainer::GC_ratio)
@@ -66,8 +81,7 @@ void extension::JSContainer::CommitGC(int x) {
 }
 
 void extension::JSContainer::setScript(const std::string& script) {
-    if (this->_parsed_script != nullptr)
-        jerry_release_value(*this->_parsed_script);
+    this->freeParsedScript();
 
     jerry_char_t* j_script = new jerry_char_t[(script.size() + 1) * sizeof(char)];
     size_t j_script_length = sizeof(char) * (script.size());
@@ -80,24 +94,25 @@ void extension::JSContainer::setScript(const std::string& script) {
         throw extension::JSParsingError(
             fmt::format("[{}] Error Value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
-    this->_parsed_script = &value;
-    delete[] j_script;
+    this->_parsed_script = new jerry_value_t;
+    memcpy(this->_parsed_script, &value, sizeof(value));
 
-    this->CommitGC(5);
+    delete[] j_script;
+    this->commitGC(5);
 }
 
 void extension::JSContainer::runScript() {
-    if (this->_run_resualt != nullptr)
-        jerry_release_value(*this->_run_resualt);
+    this->freeRunResualt();
 
     jerry_value_t value = jerry_run(*this->_parsed_script);
     if (jerry_value_is_error(value))
         throw extension::JSRuntimeError(
             fmt::format("[{}] Error value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
-    this->_run_resualt = &value;
+    this->_run_resualt = new jerry_value_t;
+    memcpy(this->_run_resualt, &value, sizeof(value));
 
-    this->CommitGC(60);
+    this->commitGC(60);
 }
 
 void extension::JSContainer::runFunction(const std::string& function_name, const jerry_value_t function_args[],
@@ -116,14 +131,15 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
     if (this->_run_resualt != nullptr)
         jerry_release_value(*this->_run_resualt);
 
-    this->_run_resualt = &ret_val;
+    this->_run_resualt = new jerry_value_t;
+    memcpy(this->_run_resualt, &ret_val, sizeof(ret_val));
 
     jerry_release_value(global_object);
     jerry_release_value(prop_name);
     jerry_release_value(target_function);
     jerry_release_value(this_val);
 
-    this->CommitGC(60);
+    this->commitGC(60);
 }
 
 std::string extension::JSContainer::getResualtAsString() {
@@ -141,7 +157,7 @@ std::string extension::JSContainer::getResualtAsString() {
 
     delete[] str_buffer;
     jerry_release_value(str_value);
-    this->CommitGC(1);
+    this->commitGC(1);
 
     return resualt;
 }

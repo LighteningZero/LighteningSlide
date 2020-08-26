@@ -70,6 +70,20 @@ void extension::JSContainer::freeRunResult() {
     this->commitGC();
 }
 
+void extension::JSContainer::setParsedScript(const jerry_value_t &value) {
+    this->freeParsedScript();
+    this->_parsed_script = new jerry_value_t;
+    *this->_parsed_script = value;
+    this->commitGC();
+}
+
+void extension::JSContainer::setRunResult(const jerry_value_t &value) {
+    this->freeRunResult();
+    this->_run_result = new jerry_value_t;
+    *this->_run_result = value;
+    this->commitGC();
+}
+
 void extension::JSContainer::commitGC(int x) {
     this->GC_now_pending += x;
     if (this->GC_now_pending >= extension::JSContainer::GC_ratio) {
@@ -81,8 +95,6 @@ void extension::JSContainer::commitGC(int x) {
 }
 
 void extension::JSContainer::setScript(const std::string& script) {
-    this->freeParsedScript();
-
     jerry_char_t* j_script = new jerry_char_t[(script.size() + 1) * sizeof(char)];
     size_t j_script_length = sizeof(char) * (script.size());
     memcpy((char*)j_script, script.c_str(), j_script_length);
@@ -94,24 +106,19 @@ void extension::JSContainer::setScript(const std::string& script) {
         throw extension::JSParsingError(
             fmt::format("Error Value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
-    this->_parsed_script = new jerry_value_t;
-    *this->_parsed_script = value;
+    this->setParsedScript(value);
 
     delete[] j_script;
     this->commitGC(5);
 }
 
 void extension::JSContainer::runScript() {
-    this->freeRunResult();
-
     jerry_value_t value = jerry_run(*this->_parsed_script);
     if (jerry_value_is_error(value))
         throw extension::JSRuntimeError(
             fmt::format("Error value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
-    this->_run_result = new jerry_value_t;
-    *this->_run_result = value;
-
+    this->setRunResult(value);
     this->commitGC(60);
 }
 
@@ -144,9 +151,7 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
     if (jerry_value_is_error(ret_val))
         throw extension::JSRuntimeError(fmt::format("Runtime Error when running function '{}'", function_name));
 
-    this->freeRunResult();
-    this->_run_result = new jerry_value_t;
-    *this->_run_result = ret_val;
+    this->setRunResult(ret_val);
 
     jerry_release_value(global_object);
     jerry_release_value(prop_name);

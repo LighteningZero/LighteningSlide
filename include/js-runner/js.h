@@ -38,8 +38,8 @@ private:
     void freeParsedScript();
     void freeRunResult();
 
-    void setParsedScript(const jerry_value_t &value);
-    void setRunResult(const jerry_value_t &value);
+    void setParsedScript(const jerry_value_t& value);
+    void setRunResult(const jerry_value_t& value);
 
     static JSContainer* _instance;
 

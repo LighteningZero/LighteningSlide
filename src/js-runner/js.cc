@@ -70,14 +70,14 @@ void extension::JSContainer::freeRunResult() {
     this->commitGC();
 }
 
-void extension::JSContainer::setParsedScript(const jerry_value_t &value) {
+void extension::JSContainer::setParsedScript(const jerry_value_t& value) {
     this->freeParsedScript();
     this->_parsed_script = new jerry_value_t;
     *this->_parsed_script = value;
     this->commitGC();
 }
 
-void extension::JSContainer::setRunResult(const jerry_value_t &value) {
+void extension::JSContainer::setRunResult(const jerry_value_t& value) {
     this->freeRunResult();
     this->_run_result = new jerry_value_t;
     *this->_run_result = value;

@@ -86,33 +86,6 @@ TEST(JSRunnerEngineTest, ES5ConstVarTest) {
     std::string res = runner->getResultAsString();
     ASSERT_EQ(std::string("8"), res);
 }
-// TEST(JSRunnerEngineTest, LongCodeTest) {
-//     auto runner = extension::JSContainer::getInstance();
-//     std::ifstream in1("./../../extension/default.libstring.js");
-//     std::ifstream in2("./../../extension/default.libscanner.js");
-//     std::ifstream in3("./../../extension/default.header.js");
-//     std::ofstream out3("./test.js");
-//     std::string script1;
-//     std::string script2;
-//     std::string script3;
-//     in1 >> script1;
-//     in1.close();
-//     in2 >> script2;
-//     in2.close();
-//     in3 >> script3;
-//     out3 << script3;
-//     runner->setScript(script1);
-//     runner->runScript();
-//     runner->setScript(script2);
-//     runner->runScript();
-//     runner->setScript(script3);
-//     runner->runScript();
-//     jerry_value_t js_markdown[1];
-//     js_markdown[0] = jerry_create_string((const jerry_char_t *)"# abc");
-//     runner->runFunction("render[0]", js_markdown, 1);
-//     std::string res = runner->getResultAsString();
-//     ASSERT_EQ(std::string("<h1>abc</h1>"), res);
-// }
 
 TEST(JSRunnerEngineTest, FunctionInArrayTest) {
     auto runner = extension::JSContainer::getInstance();

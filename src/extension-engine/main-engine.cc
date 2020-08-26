@@ -16,13 +16,13 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "extension-engine/main-engine.h"
-#include "js-runner/js.h"
-#include "config-reader/config.h"
 #include "io/io.h"
+#include "config-reader/config.h"
+#include "js-runner/js.h"
 
-#include <string>
 #include <exception>
 #include <stdexcept>
+#include <string>
 #include <fmt/core.h>
 #include <jerryscript-core.h>
 
@@ -31,12 +31,11 @@ extension::ExtensionRunner::ExtensionRunner() {}
 extension::ExtensionRunner::~ExtensionRunner() {}
 
 std::string extension::ExtensionRunner::findExtensionFile(const std::string& filename) {
-    if(frontend::isFileExist(fmt::format("./data/extension/{}.js", filename)))
+    if (frontend::isFileExist(fmt::format("./data/extension/{}.js", filename)))
         return fmt::format("./data/extension/{}.js", filename);
 
-    if(frontend::isFileExist(fmt::format("./extension/{}.js", filename))) 
+    if (frontend::isFileExist(fmt::format("./extension/{}.js", filename)))
         return fmt::format("./extension/{}.js", filename);
-
 
     throw std::runtime_error(fmt::format("Can not find extension '{}'", filename));
 }
@@ -44,7 +43,7 @@ std::string extension::ExtensionRunner::findExtensionFile(const std::string& fil
 void extension::ExtensionRunner::runExtensions() {
     extension::ConfigContainer ConfigReader;
     ConfigReader.loadFromFile("./data/config.json");
-    for(size_t i = 0; i < ConfigReader.getItemSize("extension.lib"); i ++) {
+    for (size_t i = 0; i < ConfigReader.getItemSize("extension.lib"); i++) {
         std::string lib;
         lib = ConfigReader.getItemAsString(fmt::format("extension.lib:{}", i));
 
@@ -57,19 +56,19 @@ void extension::ExtensionRunner::runExtensions() {
         js->setScript(fileContent);
         js->runScript();
     }
-    for(size_t i = 0; i < ConfigReader.getItemSize("extension.order"); i ++) {
+    for (size_t i = 0; i < ConfigReader.getItemSize("extension.order"); i++) {
         std::string ext;
         ext = ConfigReader.getItemAsString(fmt::format("extension.order:{}", i));
 
         std::string extName, funcId;
         bool isfuncId = false;
-        for(size_t j = 0; j < ext.size(); j ++) {
-            if(ext[j] == ':') {
+        for (size_t j = 0; j < ext.size(); j++) {
+            if (ext[j] == ':') {
                 isfuncId = true;
                 continue;
             }
 
-            if(!isfuncId) {
+            if (!isfuncId) {
                 extName += ext[j];
             } else {
                 funcId += ext[j];
@@ -84,8 +83,8 @@ void extension::ExtensionRunner::runExtensions() {
         auto js = extension::JSContainer::getInstance();
         js->setScript(fileContent);
         js->runScript();
-        jerry_value_t *js_markdown = new jerry_value_t;
-        *js_markdown = jerry_create_string((const jerry_char_t *)this->markdown.c_str());
+        jerry_value_t* js_markdown = new jerry_value_t;
+        *js_markdown = jerry_create_string((const jerry_char_t*)this->markdown.c_str());
         js->runFunction(fmt::format("render[{}]", funcId), js_markdown, 1);
         jerry_release_value(*js_markdown);
 

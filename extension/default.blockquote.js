@@ -37,13 +37,13 @@ var render = [markdown => {
                 result += '\n' + content;
             }
         } else {
-            if(lastIsBlockquote) {
+            if(lastLineIsBlockquote) {
                 lastLineIsBlockquote = false;
                 result += '</blockquote>';
             }
             result += s.getTextFormMark();
         }
-        
+
         s.skipOneReturn();
         s.makeMarkHere();
         if (s.isEnd()) {

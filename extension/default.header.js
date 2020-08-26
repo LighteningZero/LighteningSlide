@@ -23,7 +23,9 @@ var render = [origin => {
                 return 0;
             } else {
                 c += 1;
-                if (c > 6) return 0;
+                if (c > 6) {
+                    return 0;
+                }
             }
         }
         return c;

@@ -53,7 +53,8 @@ extension::JSContainer::~JSContainer() {
 }
 
 void extension::JSContainer::freeParsedScript() {
-    if (this->_parsed_script == nullptr) return;
+    if (this->_parsed_script == nullptr)
+        return;
 
     jerry_release_value(*this->_parsed_script);
     delete this->_parsed_script;
@@ -61,7 +62,8 @@ void extension::JSContainer::freeParsedScript() {
 }
 
 void extension::JSContainer::freeRunResualt() {
-    if (this->_run_resualt == nullptr) return;
+    if (this->_run_resualt == nullptr)
+        return;
 
     jerry_release_value(*this->_run_resualt);
     delete this->_run_resualt;

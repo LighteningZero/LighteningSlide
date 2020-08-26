@@ -20,9 +20,45 @@ var render = [origin => {
     let result = new String();
 
     s.setLineBreakToLFMode();
+
     while (true) {
-        s.skipEmpty();
-        
+        let ch = s.scanChar();
+
+        if (ch == '_') {
+            let new_ch;
+            let mid = '';
+            let have_end = true;
+
+            while (true) {
+                new_ch = s.scanChar();
+                if (new_ch == '_') {
+                    break;
+                }
+                mid += new_ch;
+
+                if (s.isEnd()) {
+                    have_end = false;
+                    break;
+                }
+            }
+
+            if (have_end && mid != '') {
+                result += '<i>' + mid + '</i>';
+            } else {
+                if (mid == '') {
+                    result += '_';
+                }
+
+                result += '_';
+
+                if (mid != 'undefined') {
+                    result += mid;
+                }
+            }
+        } else {
+            result += ch;
+        }
+
         if (s.isEnd()) {
             break;
         }

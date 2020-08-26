@@ -86,7 +86,7 @@ void extension::JSContainer::setScript(const std::string& script) {
     jerry_char_t* j_script = new jerry_char_t[(script.size() + 1) * sizeof(char)];
     size_t j_script_length = sizeof(char) * (script.size());
     memcpy((char*)j_script, script.c_str(), j_script_length);
-    j_script[j_script_length + 1] = '\0';
+    j_script[j_script_length] = '\0';
 
     jerry_value_t value = jerry_parse(nullptr, 0, j_script, j_script_length, JERRY_PARSE_NO_OPTS);
 

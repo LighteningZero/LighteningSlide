@@ -16,31 +16,30 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 var render = [markdown => {
-    print(markdown);
     let count_mark_number = str => {
         let mark_number = 0;
         for (let i = 0; i < str.length; i += 1) {
-            if (str[i] === '~') {
+            if (str[i] == '~') {
                 mark_number += 1;
             } else {
-                mark_number = 0;
-                break;
+                return 0;
             }
         }
 
         return mark_number;
-    }
+    };
 
-    let scanner = new Scanner(markdown);
+    let s = new Scanner(markdown);
     let result = new String();
     let last_is_section = false;
     let first_mark = true;
 
-    scanner.setLineBreakToLFMode();
-    scanner.makeMarkHere();
+    s.setLineBreakToLFMode();
+    s.makeMarkHere();
 
     while (true) {
-        let str = scanner.scanLine();
+        let str = s.scanLine();
+        
         let mark_number = count_mark_number(str);
 
         if (mark_number >= 3) {
@@ -50,7 +49,7 @@ var render = [markdown => {
                 result += '</section>\n';
             }
 
-            if (!scanner.isEnd()) {
+            if (!s.isEnd()) {
                 result += '<section>\n';
             }
 
@@ -61,15 +60,15 @@ var render = [markdown => {
                 first_mark = false;
             }
 
-            result += scanner.getTextFormMark();
+            result += s.getTextFormMark();
             last_is_section = false;
         }
+        
+        s.skipOneReturn();
+        s.makeMarkHere();
 
-        scanner.skipOneReturn();
-        scanner.makeMarkHere();
-
-        if (scanner.isEnd()) {
-            result += scanner.getTextFormMark();
+        if (s.isEnd()) {
+            result += s.getTextFormMark();
             if (!last_is_section) {
                 result += '\n</section>\n';
             }

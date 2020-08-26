@@ -54,7 +54,7 @@ TEST(JSRunnerEngineTest, RunUnameFunctionTest) {
     jerry_value_t a = jerry_create_number(5);
     runner->runFunction(std::string("RunUnameFunctionTest_add"), &a, 1);
 
-    std::string res = runner->getResualtAsString();
+    std::string res = runner->getResultAsString();
     ASSERT_EQ(std::string("6"), res);
 
     jerry_release_value(a);
@@ -110,7 +110,7 @@ TEST(JSRunnerEngineTest, ES5ConstVarTest) {
 //     jerry_value_t js_markdown[1];
 //     js_markdown[0] = jerry_create_string((const jerry_char_t *)"# abc");
 //     runner->runFunction("render[0]", js_markdown, 1);
-//     std::string res = runner->getResualtAsString();
+//     std::string res = runner->getResultAsString();
 //     ASSERT_EQ(std::string("<h1>abc</h1>"), res);
 // }
 
@@ -143,13 +143,13 @@ TEST(JSRunnerEngineTest, TestTwice) {
     runner->runScript();
     runner->runFunction("render[0]", js_number, 1);
 
-    std::string res1 = runner->getResualtAsString();
+    std::string res1 = runner->getResultAsString();
 
     runner->setScript(script2);
     runner->runScript();
     runner->runFunction("render[0]", js_number, 1);
 
-    std::string res2 = runner->getResualtAsString();
+    std::string res2 = runner->getResultAsString();
 
     ASSERT_EQ(res1, "6");
     ASSERT_EQ(res2, "7");

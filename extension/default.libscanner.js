@@ -26,7 +26,7 @@ function isDigit(x) {
     }
 
     return false;
-}
+};
 
 function isBlankChar(x) {
     if (typeof(x) !== 'string') {
@@ -38,7 +38,7 @@ function isBlankChar(x) {
     }
 
     return false;
-}
+};
 
 function Scanner(text) {
     this.text = text;
@@ -48,12 +48,12 @@ function Scanner(text) {
     this.resetScanner = () => {
         this.pointer = 0;
         this.mark = undefined;
-    }
+    };
 
     this.setLineBreakToLFMode = () => {
         this.text = this.text.replaceAll('\r\n', '\n');
         this.text = this.text.replaceAll('\r', '\n');
-    }
+    };
 
     this.skipSpace = () => {
         let result = false;
@@ -111,7 +111,7 @@ function Scanner(text) {
         }
 
         return result;
-    }
+    };
 
     this.skipChar = (length=1) => {
         this.pointer += length;
@@ -132,7 +132,7 @@ function Scanner(text) {
         }
 
         return false;
-    }
+    };
 
     this.scanNumber = () => {
         let result = new Number(0);
@@ -147,7 +147,7 @@ function Scanner(text) {
         }
 
         return result;
-    }
+    };
 
     this.scanToken = () => {
         let result = new String();
@@ -161,7 +161,7 @@ function Scanner(text) {
         }
 
         return result;
-    }
+    };
 
     this.scanLine = () => {
         let result = new String();
@@ -175,20 +175,20 @@ function Scanner(text) {
         }
 
         return result;
-    }
+    };
 
 
     this.makeMark = point => {
         this.mark = point;
-    }
+    };
 
     this.makeMarkHere = () => {
         this.mark = this.pointer;
-    }
+    };
 
     this.clearMark = () => {
         this.mark = undefined;
-    }
+    };
 
     this.getTextFormMark = () => {
         if (this.mark === undefined) {
@@ -196,7 +196,7 @@ function Scanner(text) {
         }
         
         return this.text.substr(this.mark, this.pointer - this.mark + 1);
-    }
+    };
 
     return this;
-}
+};

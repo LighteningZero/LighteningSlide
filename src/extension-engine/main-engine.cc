@@ -52,7 +52,6 @@ void extension::ExtensionRunner::runExtensions() {
         libPath = this->findExtensionFile(lib);
         frontend::FileScanner file(libPath);
         std::string fileContent = file.scanAll();
-        fmt::print("{}\n\n", fileContent);
 
         auto js = extension::JSContainer::getInstance();
         js->setScript(fileContent);
@@ -81,20 +80,17 @@ void extension::ExtensionRunner::runExtensions() {
         extPath = this->findExtensionFile(extName);
         frontend::FileScanner file(extPath);
         std::string fileContent = file.scanAll();
-        fmt::print("{}\n\n", fileContent);
 
         auto js = extension::JSContainer::getInstance();
         js->setScript(fileContent);
         js->runScript();
-
-        jerry_value_t js_markdown[1];
-        js_markdown[0] = jerry_create_string((const jerry_char_t *)this->markdown.c_str());
+        jerry_value_t *js_markdown = new jerry_value_t;
+        *js_markdown = jerry_create_string((const jerry_char_t *)this->markdown.c_str());
         js->runFunction(fmt::format("render[{}]", funcId), js_markdown, 1);
-        jerry_release_value(js_markdown[0]);
+        jerry_release_value(*js_markdown);
 
-        fmt::print("+{}\n", this->markdown);
-        this->markdown = js->getResualtAsString();
-        fmt::print("+{}\n", this->markdown);
+        this->markdown = js->getResultAsString();
+        fmt::print("{}", this->markdown);
     }
 }
 

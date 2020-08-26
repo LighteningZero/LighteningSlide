@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-function italic(origin, mark) {
+function single(origin, mark, html) {
     let s = new Scanner(origin);
     let result = new String();
 
@@ -42,7 +42,7 @@ function italic(origin, mark) {
             }
 
             if (have_end && mid != '') {
-                result += '<i>' + mid + '</i>';
+                result += '<' + html + '>' + mid + '</' + html + '>';
             } else {
                 if (mid == '') {
                     result += mark;
@@ -66,7 +66,7 @@ function italic(origin, mark) {
     return result;
 }
 
-function bold(origin, mark) {
+function double(origin, mark, html) {
     let s = new Scanner(origin);
     let result = new String();
 
@@ -103,7 +103,7 @@ function bold(origin, mark) {
             }
 
             if (have_end && mid != '') {
-                result += '<strong>' + mid + '</strong>';
+                result += '<' + html + '>' + mid + '</' + html + '>';
             } else {
                 if (mid == '') {
                     result += mark + mark;
@@ -129,9 +129,12 @@ function bold(origin, mark) {
 
 var render = [origin => {
     let result = origin;
-    result = italic(result, '_');
-    result = italic(result, '*');
-    result = bold(result, '_');
-    result = bold(result, '*');
+    result = single(result, '_', 'i');
+    result = single(result, '*', 'i');
+
+    result = double(result, '_', 'strong');
+    result = double(result, '*', 'strong');
+
+    result = single(result, '~', 'del');
     return result;
 }]

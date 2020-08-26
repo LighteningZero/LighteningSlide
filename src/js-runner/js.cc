@@ -141,9 +141,10 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
     jerry_value_t this_val = jerry_create_undefined();
     jerry_value_t ret_val = jerry_call_function(target_function, this_val, function_args, length_args);
 
-    if (this->_run_resualt != nullptr)
-        jerry_release_value(*this->_run_resualt);
+    if (jerry_value_is_error(ret_val))
+        throw extension::JSRuntimeError(fmt::format("Runtime Error when running function '{}'", function_name));
 
+    this->freeRunResualt();
     this->_run_resualt = new jerry_value_t;
     *this->_run_resualt = ret_val;
 

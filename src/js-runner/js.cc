@@ -93,7 +93,7 @@ void extension::JSContainer::setScript(const std::string& script) {
             fmt::format("[{}] Error Value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
     this->_parsed_script = new jerry_value_t;
-    memcpy(this->_parsed_script, &value, sizeof(value));
+    *this->_parsed_script = value;
 
     delete[] j_script;
     this->commitGC(5);
@@ -108,7 +108,7 @@ void extension::JSContainer::runScript() {
             fmt::format("[{}] Error value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
     this->_run_resualt = new jerry_value_t;
-    memcpy(this->_run_resualt, &value, sizeof(value));
+    *this->_run_resualt = value;
 
     this->commitGC(60);
 }
@@ -130,7 +130,7 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
         jerry_release_value(*this->_run_resualt);
 
     this->_run_resualt = new jerry_value_t;
-    memcpy(this->_run_resualt,&ret_val, sizeof(ret_val));
+    *this->_run_resualt = ret_val;
 
     jerry_release_value(global_object);
     jerry_release_value(prop_name);

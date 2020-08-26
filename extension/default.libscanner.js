@@ -16,12 +16,12 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 function isDigit(x) {
-    if (typeof(x) !== "string") {
+    if (typeof(x) !== 'string') {
         return false;
     }
 
     // OPTIMIZE '0' and '9' to ASCII code
-    if ("0".charCodeAt() <= x.charCodeAt() && x.charCodeAt() <= "9".charCodeAt()) {
+    if ('0'.charCodeAt() <= x.charCodeAt() && x.charCodeAt() <= '9'.charCodeAt()) {
         return true;
     }
 
@@ -29,7 +29,7 @@ function isDigit(x) {
 }
 
 function isBlankChar(x) {
-    if (typeof(x) !== "string") {
+    if (typeof(x) !== 'string') {
         return false;
     }
 
@@ -51,8 +51,8 @@ function Scanner(text) {
     }
 
     this.setLineBreakToLFMode = () => {
-        this.text = this.text.replaceAll("\r\n", "\n");
-        this.text = this.text.replaceAll("\r", "\n");
+        this.text = this.text.replaceAll('\r\n', '\n');
+        this.text = this.text.replaceAll('\r', '\n');
     }
 
     this.skipSpace = () => {

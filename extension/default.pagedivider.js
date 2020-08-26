@@ -32,7 +32,8 @@ var render = [markdown => {
 
     let scanner = new Scanner(markdown);
     let result = new String();
-    let last_line_is_mark = false;
+    let last_is_section = false;
+    let first_mark = true;
     scanner.setLineBreakToLFMode();
     scanner.makeMarkHere();
 
@@ -41,22 +42,29 @@ var render = [markdown => {
         let mark_number = count_mark_number(str);
 
         if (mark_number >= 3) {
-            if (!last_line_is_mark) {
-                result += '<section>\n';
-                last_line_is_mark = true;
+            if (first_mark) {
+                first_mark = false;
             } else {
                 result += '</section>\n';
-                last_line_is_mark = false;
             }
+            if (!scanner.isEnd()) {
+                result += '<section>\n';
+            }
+            last_is_section = true;
         } else {
+            if (first_mark) {
+                result += '<section>\n';
+                first_mark = false;
+            }
             result += scanner.getTextFormMark();
+            last_is_section = false;
         }
 
         scanner.skipOneReturn();
         scanner.makeMarkHere();
         if (scanner.isEnd()) {
             result += scanner.getTextFormMark();
-            if(last_line_is_mark) {
+            if (!last_is_section) {
                 result += '\n</section>\n';
             }
             break;

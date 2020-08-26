@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-var render = [origin => {
+function italic(origin, mark) {
     let s = new Scanner(origin);
     let result = new String();
 
@@ -24,14 +24,14 @@ var render = [origin => {
     while (true) {
         let ch = s.scanChar();
 
-        if (ch == '_') {
+        if (ch == mark) {
             let new_ch;
             let mid = '';
             let have_end = true;
 
             while (true) {
                 new_ch = s.scanChar();
-                if (new_ch == '_') {
+                if (new_ch == mark) {
                     break;
                 }
                 mid += new_ch;
@@ -46,10 +46,10 @@ var render = [origin => {
                 result += '<i>' + mid + '</i>';
             } else {
                 if (mid == '') {
-                    result += '_';
+                    result += mark;
                 }
 
-                result += '_';
+                result += mark;
 
                 if (mid != 'undefined') {
                     result += mid;
@@ -64,5 +64,12 @@ var render = [origin => {
         }
     }
 
+    return result;
+}
+
+var render = [origin => {
+    let result = origin;
+    result = italic(result, '_');
+    result = italic(result, '*');
     return result;
 }]

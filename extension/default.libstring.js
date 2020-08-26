@@ -37,7 +37,7 @@ if (String.prototype.format === undefined) {
     }
 }
 
-// if (String.prototype.replaceAll === undefined) {
+if (String.prototype.replaceAll === undefined) {
     String.prototype.replaceAll = function(before, after) {
         let res = new String();
         let matched = 0;
@@ -60,7 +60,7 @@ if (String.prototype.format === undefined) {
 
         return res;
     };
-// }
+}
 
 if (String.prototype.trim === undefined) {
     String.prototype.trim = function() {

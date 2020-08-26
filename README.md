@@ -5,3 +5,4 @@ A slide maker based on C++ & Js extention
 [![GitHub license](https://img.shields.io/github/license/LighteningZero/LighteningSlide)](https://github.com/LighteningZero/LighteningSlide/blob/master/LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/LighteningZero/LighteningSlide)](https://github.com/LighteningZero/LighteningSlide/)
 [![Repo Size](https://img.shields.io/github/repo-size/LighteningZero/LighteningSlide)](https://github.com/LighteningZero/LighteningSlide/)
+[![CI state](https://action-badges.now.sh/LighteningZero/LighteningSlide)](https://github.com/LighteningZero/LighteningSlide/actions)

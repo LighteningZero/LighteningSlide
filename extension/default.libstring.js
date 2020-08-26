@@ -23,14 +23,14 @@ if (String.prototype.format === undefined) {
         }
 
         let data = arguments;
-        if (arguments.length === 1 && typeof (args) === "object") {
+        if (arguments.length === 1 && typeof (args) === 'object') {
             data = args;
         }
 
         for (let key in data) {
             let value = data[key];
             if (value !== undefined) {
-                result = result.replace("{" + key + "}", value);
+                result = result.replace('{' + key + '}', value);
             }
         }
         return result;

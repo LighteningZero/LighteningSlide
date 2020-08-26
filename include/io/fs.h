@@ -15,11 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LS_IO_IO_H
-#define LS_IO_IO_H
+#ifndef IO_FS_H
+#define IO_FS_H
 
-#include "fs.h"
-#include "input.h"
-#include "output.h"
+#include <string>
 
-#endif // IO_IO_H
+namespace frontend {
+
+bool isFileExist(const std::string& filepath);
+
+} // namespace frontend
+
+#endif // IO_FS_H

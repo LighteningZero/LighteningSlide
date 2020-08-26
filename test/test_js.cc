@@ -44,6 +44,21 @@ TEST(JSRunnerEngineTest, RunFunctionTest) {
     jerry_release_value(a);
 }
 
+TEST(JSRunnerEngineTest, RunUnameFunctionTest) {
+    auto runner = extension::JSContainer::getInstance();
+    std::string script = "var RunUnameFunctionTest_add = x => {\n\treturn x+1;\n};";
+    runner->setScript(script);
+    runner->runScript();
+
+    jerry_value_t a = jerry_create_number(5);
+    runner->runFunction(std::string("RunUnameFunctionTest_add"), &a, 1);
+
+    std::string res = runner->getResultAsString();
+    ASSERT_EQ(std::string("6"), res);
+
+    jerry_release_value(a);
+}
+
 TEST(JSRunnerEngineTest, ES5ArrowFunctionTest) {
     auto runner = extension::JSContainer::getInstance();
     std::string script = "var ES5LetVarTest_foo = x => x * 2;ES5LetVarTest_foo(123)";
@@ -88,6 +103,28 @@ TEST(JSRunnerEngineTest, FunctionInArrayTest) {
     ASSERT_EQ(std::string("11"), res);
 
     jerry_release_value(x);
+}
+
+TEST(JSRunnerEngineTest, TestTwice) {
+    auto runner = extension::JSContainer::getInstance();
+    std::string script1 = "var render = [x => {return x + 1;}];";
+    std::string script2 = "var render = [y => {return y + 2;}];";
+    jerry_value_t js_number[1];
+    js_number[0] = jerry_create_number(5);
+    runner->setScript(script1);
+    runner->runScript();
+    runner->runFunction("render[0]", js_number, 1);
+
+    std::string res1 = runner->getResultAsString();
+
+    runner->setScript(script2);
+    runner->runScript();
+    runner->runFunction("render[0]", js_number, 1);
+
+    std::string res2 = runner->getResultAsString();
+
+    ASSERT_EQ(res1, "6");
+    ASSERT_EQ(res2, "7");
 }
 
 int main(int argc, char* argv[]) {

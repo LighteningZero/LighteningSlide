@@ -32,6 +32,8 @@ SET(SRC_LIB_LIST
     ${PROJECT_SOURCE_DIR}/src/config-reader/exceptions.cc
     ${PROJECT_SOURCE_DIR}/src/io/input.cc
     ${PROJECT_SOURCE_DIR}/src/io/output.cc
+    ${PROJECT_SOURCE_DIR}/src/io/fs.cc
+    ${PROJECT_SOURCE_DIR}/src/extension-engine/main-engine.cc
 )
 
 SET(SRC_MAIN_LST
@@ -40,6 +42,8 @@ SET(SRC_MAIN_LST
 )
 
 ENABLE_TESTING()
+
+# ADD_COMPILE_OPTIONS(-g3)
 
 FIND_PACKAGE(PkgConfig)
 

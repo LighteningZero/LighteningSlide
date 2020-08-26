@@ -121,7 +121,7 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
     jerry_value_t target_function = jerry_get_property(global_object, prop_name);
 
     if (!jerry_value_is_function(target_function))
-        throw extension::JSTypeError(fmt::format("[{}] \"{}\" is not a function", __FUNCTION__, function_name));
+        throw extension::JSTypeError(fmt::format("[{}] '{}' is not a function", __FUNCTION__, function_name));
 
     jerry_value_t this_val = jerry_create_undefined();
     jerry_value_t ret_val = jerry_call_function(target_function, this_val, function_args, length_args);

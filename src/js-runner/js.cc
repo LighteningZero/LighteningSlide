@@ -41,13 +41,13 @@ extension::JSContainer::JSContainer() {
     srand((unsigned)time(nullptr)); // Randomize random seed for Math.random()
 
     this->_parsed_script = nullptr;
-    this->_run_resualt = nullptr;
+    this->_run_result = nullptr;
     this->GC_now_pending = 0;
 }
 
 extension::JSContainer::~JSContainer() {
     this->freeParsedScript();
-    this->freeRunResualt();
+    this->freeRunResult();
 
     jerry_cleanup();
 }
@@ -61,12 +61,26 @@ void extension::JSContainer::freeParsedScript() {
     this->commitGC();
 }
 
-void extension::JSContainer::freeRunResualt() {
-    if (this->_run_resualt == nullptr)
+void extension::JSContainer::freeRunResult() {
+    if (this->_run_result == nullptr)
         return;
 
-    jerry_release_value(*this->_run_resualt);
-    delete this->_run_resualt;
+    jerry_release_value(*this->_run_result);
+    delete this->_run_result;
+    this->commitGC();
+}
+
+void extension::JSContainer::setParsedScript(const jerry_value_t& value) {
+    this->freeParsedScript();
+    this->_parsed_script = new jerry_value_t;
+    *this->_parsed_script = value;
+    this->commitGC();
+}
+
+void extension::JSContainer::setRunResult(const jerry_value_t& value) {
+    this->freeRunResult();
+    this->_run_result = new jerry_value_t;
+    *this->_run_result = value;
     this->commitGC();
 }
 
@@ -81,8 +95,6 @@ void extension::JSContainer::commitGC(int x) {
 }
 
 void extension::JSContainer::setScript(const std::string& script) {
-    this->freeParsedScript();
-
     jerry_char_t* j_script = new jerry_char_t[(script.size() + 1) * sizeof(char)];
     size_t j_script_length = sizeof(char) * (script.size());
     memcpy((char*)j_script, script.c_str(), j_script_length);
@@ -94,24 +106,19 @@ void extension::JSContainer::setScript(const std::string& script) {
         throw extension::JSParsingError(
             fmt::format("Error Value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
-    this->_parsed_script = new jerry_value_t;
-    *this->_parsed_script = value;
+    this->setParsedScript(value);
 
     delete[] j_script;
     this->commitGC(5);
 }
 
 void extension::JSContainer::runScript() {
-    this->freeRunResualt();
-
     jerry_value_t value = jerry_run(*this->_parsed_script);
     if (jerry_value_is_error(value))
         throw extension::JSRuntimeError(
             fmt::format("Error value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
-    this->_run_resualt = new jerry_value_t;
-    *this->_run_resualt = value;
-
+    this->setRunResult(value);
     this->commitGC(60);
 }
 
@@ -141,11 +148,10 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
     jerry_value_t this_val = jerry_create_undefined();
     jerry_value_t ret_val = jerry_call_function(target_function, this_val, function_args, length_args);
 
-    if (this->_run_resualt != nullptr)
-        jerry_release_value(*this->_run_resualt);
+    if (jerry_value_is_error(ret_val))
+        throw extension::JSRuntimeError(fmt::format("Runtime Error when running function '{}'", function_name));
 
-    this->_run_resualt = new jerry_value_t;
-    *this->_run_resualt = ret_val;
+    this->setRunResult(ret_val);
 
     jerry_release_value(global_object);
     jerry_release_value(prop_name);
@@ -155,22 +161,22 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
     this->commitGC(60);
 }
 
-std::string extension::JSContainer::getResualtAsString() {
-    if (this->_run_resualt == nullptr)
-        throw std::logic_error(fmt::format("Trying to get resualt before run any script", __FUNCTION__));
+std::string extension::JSContainer::getResultAsString() {
+    if (this->_run_result == nullptr)
+        throw std::logic_error(fmt::format("Trying to get result before run any script", __FUNCTION__));
 
-    jerry_value_t str_value = jerry_value_to_string(*this->_run_resualt);
+    jerry_value_t str_value = jerry_value_to_string(*this->_run_result);
     jerry_size_t str_size = jerry_get_utf8_string_size(str_value);
     jerry_char_t* str_buffer = new jerry_char_t[str_size + 5];
 
     jerry_size_t bytes_copied = jerry_string_to_utf8_char_buffer(str_value, str_buffer, str_size);
     str_buffer[bytes_copied] = '\0';
 
-    std::string resualt((const char*)str_buffer);
+    std::string result((const char*)str_buffer);
 
     delete[] str_buffer;
     jerry_release_value(str_value);
     this->commitGC(1);
 
-    return resualt;
+    return result;
 }

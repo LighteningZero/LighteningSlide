@@ -35,6 +35,7 @@ var render = [markdown => {
     let result = new String();
     let last_is_section = false;
     let first_mark = true;
+
     scanner.setLineBreakToLFMode();
     scanner.makeMarkHere();
 
@@ -48,21 +49,25 @@ var render = [markdown => {
             } else {
                 result += '</section>\n';
             }
+
             if (!scanner.isEnd()) {
                 result += '<section>\n';
             }
+
             last_is_section = true;
         } else {
             if (first_mark) {
                 result += '<section>\n';
                 first_mark = false;
             }
+
             result += scanner.getTextFormMark();
             last_is_section = false;
         }
 
         scanner.skipOneReturn();
         scanner.makeMarkHere();
+
         if (scanner.isEnd()) {
             result += scanner.getTextFormMark();
             if (!last_is_section) {

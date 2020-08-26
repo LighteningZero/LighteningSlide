@@ -26,7 +26,7 @@ TEST(JSRunnerEngineTest, RunCodeTest) {
     std::string script = "(function(x){return x+1;})(5)";
     runner->setScript(script);
     runner->runScript();
-    std::string res = runner->getResualtAsString();
+    std::string res = runner->getResultAsString();
     ASSERT_EQ(std::string("6"), res);
 }
 
@@ -39,7 +39,7 @@ TEST(JSRunnerEngineTest, RunFunctionTest) {
     jerry_value_t a = jerry_create_number(5);
     runner->runFunction(std::string("RunFunctionTest_add"), &a, 1);
 
-    std::string res = runner->getResualtAsString();
+    std::string res = runner->getResultAsString();
     ASSERT_EQ(std::string("6"), res);
 
     jerry_release_value(a);
@@ -65,7 +65,7 @@ TEST(JSRunnerEngineTest, ES5ArrowFunctionTest) {
     std::string script = "var ES5LetVarTest_foo = x => x * 2;ES5LetVarTest_foo(123)";
     runner->setScript(script);
     runner->runScript();
-    std::string res = runner->getResualtAsString();
+    std::string res = runner->getResultAsString();
     ASSERT_EQ(std::string("246"), res);
 }
 
@@ -74,7 +74,7 @@ TEST(JSRunnerEngineTest, ES5LetVarTest) {
     std::string script = "let ES5LetVarTest_x = 4;ES5LetVarTest_x += 1;ES5LetVarTest_x * 2";
     runner->setScript(script);
     runner->runScript();
-    std::string res = runner->getResualtAsString();
+    std::string res = runner->getResultAsString();
     ASSERT_EQ(std::string("10"), res);
 }
 
@@ -83,7 +83,7 @@ TEST(JSRunnerEngineTest, ES5ConstVarTest) {
     std::string script = "const ES5ConstVarTest_x = 4;ES5ConstVarTest_x * 2";
     runner->setScript(script);
     runner->runScript();
-    std::string res = runner->getResualtAsString();
+    std::string res = runner->getResultAsString();
     ASSERT_EQ(std::string("8"), res);
 }
 // TEST(JSRunnerEngineTest, LongCodeTest) {
@@ -123,11 +123,11 @@ TEST(JSRunnerEngineTest, FunctionInArrayTest) {
     jerry_value_t x = jerry_create_number(10);
 
     runner->runFunction("FunctionInArrayTest_f[0]", &x, 1);
-    std::string res = runner->getResualtAsString();
+    std::string res = runner->getResultAsString();
     ASSERT_EQ(std::string("20"), res);
 
     runner->runFunction("FunctionInArrayTest_f[1]", &x, 1);
-    res = runner->getResualtAsString();
+    res = runner->getResultAsString();
     ASSERT_EQ(std::string("11"), res);
 
     jerry_release_value(x);

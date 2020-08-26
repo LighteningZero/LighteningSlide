@@ -20,7 +20,7 @@ var render = [origin => {
     let countSharpNumber = str => {
         let c = 0;
         for (let i = 0; i < str.length; i += 1) {
-            if (str[i] !== "#") {
+            if (str[i] !== '#') {
                 return 0;
             } else {
                 c += 1;
@@ -29,15 +29,18 @@ var render = [origin => {
                 }
             }
         }
+
         return c;
     };
 
     let s = new Scanner(origin);
     let result = new String();
     s.makeMarkHere();
+
     while (true) {
         let str = s.scanToken();
         let sharpNumber = countSharpNumber(str);
+
         if (sharpNumber === 0) {
             result += s.getTextFormMark();
         } else {
@@ -47,6 +50,7 @@ var render = [origin => {
         
         s.skipBlank();
         s.makeMarkHere();
+
         if (s.isEnd()) {
             break;
         }

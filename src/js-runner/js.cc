@@ -92,7 +92,7 @@ void extension::JSContainer::setScript(const std::string& script) {
 
     if (jerry_value_is_error(value))
         throw extension::JSParsingError(
-            fmt::format("[{}] Error Value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
+            fmt::format("Error Value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
     this->_parsed_script = new jerry_value_t;
     *this->_parsed_script = value;
@@ -107,7 +107,7 @@ void extension::JSContainer::runScript() {
     jerry_value_t value = jerry_run(*this->_parsed_script);
     if (jerry_value_is_error(value))
         throw extension::JSRuntimeError(
-            fmt::format("[{}] Error value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
+            fmt::format("Error value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
     this->_run_resualt = new jerry_value_t;
     *this->_run_resualt = value;
@@ -156,7 +156,7 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
 
 std::string extension::JSContainer::getResualtAsString() {
     if (this->_run_resualt == nullptr)
-        throw std::logic_error(fmt::format("[{}] Trying to get resualt before run any script", __FUNCTION__));
+        throw std::logic_error(fmt::format("Trying to get resualt before run any script", __FUNCTION__));
 
     jerry_value_t str_value = jerry_value_to_string(*this->_run_resualt);
     jerry_size_t str_size = jerry_get_utf8_string_size(str_value);

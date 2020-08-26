@@ -29,14 +29,14 @@ public:
     void runScript();
     void runFunction(const std::string& function_name, const jerry_value_t function_args[], size_t length_args);
 
-    std::string getResualtAsString();
+    std::string getResultAsString();
 
 private:
     JSContainer();
     ~JSContainer();
 
     void freeParsedScript();
-    void freeRunResualt();
+    void freeRunResult();
 
     static JSContainer* _instance;
 
@@ -44,7 +44,7 @@ private:
     void commitGC(int x = 1);
 
     jerry_value_t* _parsed_script;
-    jerry_value_t* _run_resualt;
+    jerry_value_t* _run_result;
 
 public:
     static const int GC_ratio;

@@ -71,6 +71,25 @@ TEST(JSRunnerEngineTest, ES5ConstVarTest) {
     ASSERT_EQ(std::string("8"), res);
 }
 
+TEST(JSRunnerEngineTest, FunctionInArrayTest) {
+    auto runner = extension::JSContainer::getInstance();
+    std::string script = "var FunctionInArrayTest_f = [x => x * 2, x => x + 1]";
+    runner->setScript(script);
+    runner->runScript();
+
+    jerry_value_t x = jerry_create_number(10);
+
+    runner->runFunction("FunctionInArrayTest_f[0]", &x, 1);
+    std::string res = runner->getResualtAsString();
+    ASSERT_EQ(std::string("20"), res);
+
+    runner->runFunction("FunctionInArrayTest_f[1]", &x, 1);
+    res = runner->getResualtAsString();
+    ASSERT_EQ(std::string("11"), res);
+
+    jerry_release_value(x);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

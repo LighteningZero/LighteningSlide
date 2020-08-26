@@ -92,10 +92,10 @@ void extension::JSContainer::setScript(const std::string& script) {
 
     if (jerry_value_is_error(value))
         throw extension::JSParsingError(
-            fmt::format("[{}] Error Value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
+            fmt::format("Error Value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
     this->_parsed_script = new jerry_value_t;
-    memcpy(this->_parsed_script, &value, sizeof(value));
+    *this->_parsed_script = value;
 
     delete[] j_script;
     this->commitGC(5);
@@ -107,10 +107,10 @@ void extension::JSContainer::runScript() {
     jerry_value_t value = jerry_run(*this->_parsed_script);
     if (jerry_value_is_error(value))
         throw extension::JSRuntimeError(
-            fmt::format("[{}] Error value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
+            fmt::format("Error value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
     this->_run_resualt = new jerry_value_t;
-    memcpy(this->_run_resualt, &value, sizeof(value));
+    *this->_run_resualt = value;
 
     this->commitGC(60);
 }
@@ -122,8 +122,21 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
 
     jerry_value_t target_function = jerry_get_property(global_object, prop_name);
 
-    if (!jerry_value_is_function(target_function))
-        throw extension::JSTypeError(fmt::format("[{}] \"{}\" is not a function", __FUNCTION__, function_name));
+    if (!jerry_value_is_function(target_function)) {
+        std::string temp_function_name = fmt::format("__now_func{}", rand());
+        std::string mark_script = fmt::format("var {}={};", temp_function_name, function_name).c_str();
+        bool mark_script_ret =
+            jerry_eval((const jerry_char_t*)(mark_script.c_str()), mark_script.length(), JERRY_PARSE_NO_OPTS);
+        if (!mark_script_ret)
+            throw extension::JSTypeError(fmt::format("Error running function '{}' (may not found?)", function_name));
+
+        jerry_release_value(target_function);
+        jerry_release_value(prop_name);
+        prop_name = jerry_create_string((const jerry_char_t*)temp_function_name.c_str());
+        target_function = jerry_get_property(global_object, prop_name);
+
+        this->commitGC(5);
+    }
 
     jerry_value_t this_val = jerry_create_undefined();
     jerry_value_t ret_val = jerry_call_function(target_function, this_val, function_args, length_args);
@@ -132,7 +145,7 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
         jerry_release_value(*this->_run_resualt);
 
     this->_run_resualt = new jerry_value_t;
-    memcpy(this->_run_resualt, &ret_val, sizeof(ret_val));
+    *this->_run_resualt = ret_val;
 
     jerry_release_value(global_object);
     jerry_release_value(prop_name);
@@ -144,7 +157,7 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
 
 std::string extension::JSContainer::getResualtAsString() {
     if (this->_run_resualt == nullptr)
-        throw std::logic_error(fmt::format("[{}] Trying to get resualt before run any script", __FUNCTION__));
+        throw std::logic_error(fmt::format("Trying to get resualt before run any script", __FUNCTION__));
 
     jerry_value_t str_value = jerry_value_to_string(*this->_run_resualt);
     jerry_size_t str_size = jerry_get_utf8_string_size(str_value);

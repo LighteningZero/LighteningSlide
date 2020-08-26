@@ -1,2 +1,2 @@
 # LighteningSlide
-A slide maker based on C++ &amp; Js extention
+A slide maker based on C++ & Js extention

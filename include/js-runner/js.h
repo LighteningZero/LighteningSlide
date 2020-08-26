@@ -28,7 +28,7 @@ public:
     void setScript(const std::string& script);
     void runScript();
     void runFunction(const std::string& function_name, const jerry_value_t function_args[], size_t length_args);
-    ;
+
     std::string getResualtAsString();
 
 private:

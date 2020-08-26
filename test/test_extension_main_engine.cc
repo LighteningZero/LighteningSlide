@@ -23,10 +23,10 @@
 
 TEST(ExtensionMainEngineTest, Test) {
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("~~~\nabc\n~~~");
+    ext.setOriginMarkdown("~~~\n# abc\n~~~");
     ext.runExtensions();
     std::string HTML = ext.getResult();
-    ASSERT_EQ(std::string("<section>abc</section>\n"), HTML);
+    ASSERT_EQ(std::string("<section>\n<h1>abc</h1>\n</section>\n"), HTML);
 }
 
 int main(int argc, char* argv[]) {

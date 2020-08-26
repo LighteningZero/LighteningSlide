@@ -125,18 +125,19 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
     if (!jerry_value_is_function(target_function)) {
         std::string temp_function_name = fmt::format("__now_func{}", rand());
         std::string mark_script = fmt::format("var {}={};", temp_function_name, function_name).c_str();
-        bool mark_script_ret = jerry_eval((const jerry_char_t *)(mark_script.c_str()), mark_script.length(), JERRY_PARSE_NO_OPTS);
+        bool mark_script_ret =
+            jerry_eval((const jerry_char_t*)(mark_script.c_str()), mark_script.length(), JERRY_PARSE_NO_OPTS);
         if (!mark_script_ret)
             throw extension::JSTypeError(fmt::format("Error running function '{}' (may not found?)", function_name));
-        
+
         jerry_release_value(target_function);
         jerry_release_value(prop_name);
-        prop_name = jerry_create_string((const jerry_char_t *)temp_function_name.c_str());
+        prop_name = jerry_create_string((const jerry_char_t*)temp_function_name.c_str());
         target_function = jerry_get_property(global_object, prop_name);
-        
+
         this->commitGC(5);
     }
-        
+
     jerry_value_t this_val = jerry_create_undefined();
     jerry_value_t ret_val = jerry_call_function(target_function, this_val, function_args, length_args);
 

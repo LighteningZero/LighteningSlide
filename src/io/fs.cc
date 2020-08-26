@@ -17,7 +17,7 @@
 
 #include "io/fs.h"
 
-bool frontend::isFileExist(const std::string &filepath) {
+bool frontend::isFileExist(const std::string& filepath) {
     FILE* fp = fopen(filepath.c_str(), "r");
     if (fp == nullptr)
         return false;

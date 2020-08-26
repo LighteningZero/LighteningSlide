@@ -22,7 +22,7 @@
 
 namespace frontend {
 
-bool isFileExist(const std::string &filepath);
+bool isFileExist(const std::string& filepath);
 
 } // namespace frontend
 

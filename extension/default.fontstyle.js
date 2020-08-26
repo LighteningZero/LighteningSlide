@@ -25,16 +25,15 @@ function italic(origin, mark) {
         let ch = s.scanChar();
 
         if (ch == mark) {
-            let new_ch;
             let mid = '';
             let have_end = true;
 
             while (true) {
-                new_ch = s.scanChar();
-                if (new_ch == mark) {
+                ch = s.scanChar();
+                if (ch == mark) {
                     break;
                 }
-                mid += new_ch;
+                mid += ch;
 
                 if (s.isEnd()) {
                     have_end = false;
@@ -67,9 +66,72 @@ function italic(origin, mark) {
     return result;
 }
 
+function bold(origin, mark) {
+    let s = new Scanner(origin);
+    let result = new String();
+
+    s.setLineBreakToLFMode();
+
+    while (true) {
+        let ch = s.scanChar();
+
+        if (ch == mark) {
+            let mid = '';
+            let have_end = true;
+
+            ch = s.scanChar();
+            if (ch != mark) {
+                result += mark + ch;
+                continue;
+            }
+
+            while (true) {
+                ch = s.scanChar();
+                if (ch == mark) {
+                    ch = s.scanChar();
+                    if (ch != mark) {
+                        have_end = false;
+                    }
+                    break;
+                }
+                mid += ch;
+
+                if (s.isEnd()) {
+                    have_end = false;
+                    break;
+                }
+            }
+
+            if (have_end && mid != '') {
+                result += '<strong>' + mid + '</strong>';
+            } else {
+                if (mid == '') {
+                    result += mark + mark;
+                }
+
+                result += mark + mark;
+
+                if (mid != 'undefined') {
+                    result += mid;
+                }
+            }
+        } else {
+            result += ch;
+        }
+
+        if (s.isEnd()) {
+            break;
+        }
+    }
+
+    return result;
+}
+
 var render = [origin => {
     let result = origin;
     result = italic(result, '_');
     result = italic(result, '*');
+    result = bold(result, '_');
+    result = bold(result, '*');
     return result;
 }]

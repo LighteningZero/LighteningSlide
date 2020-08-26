@@ -25,7 +25,7 @@ int main() {
     std::string script = "(function(x){return x+1;})(5)";
     runner->setScript(script);
     runner->runScript();
-    std::string res = runner->getResualtAsString();
+    std::string res = runner->getResultAsString();
     printf("%s\n", res.c_str());
     return 0;
 }

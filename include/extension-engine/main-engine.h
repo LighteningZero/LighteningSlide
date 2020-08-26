@@ -15,11 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LS_IO_IO_H
-#define LS_IO_IO_H
+# ifndef EXTENSION_ENGINE_MAIN_ENGINE_H
+# define EXTENSION_ENGINE_MAIN_ENGINE_H
 
-#include "input.h"
-#include "output.h"
-#include "fs.h"
+# include <string>
 
-#endif // IO_IO_H
+namespace extension {
+
+class ExtensionRunner {
+public:
+    ExtensionRunner();
+    ~ExtensionRunner();
+    void runExtensions();
+    std::string findExtensionFile(const std::string& filename);
+    void setOriginMarkdown(const std::string& markdown);
+    std::string getResult();
+private:
+    std::string markdown;
+};
+
+} // namespace extension
+
+# endif // EXTENSION_ENGINE_MAIN_ENGINE_H

@@ -15,11 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LS_IO_IO_H
-#define LS_IO_IO_H
+# include "io/fs.h"
 
-#include "input.h"
-#include "output.h"
-#include "fs.h"
+bool frontend::isFileExist(std::string filepath) {
+    FILE* fp = fopen(filepath.c_str(), "r");
+    if (fp == nullptr) 
+        return false;
 
-#endif // IO_IO_H
+    return true;
+}

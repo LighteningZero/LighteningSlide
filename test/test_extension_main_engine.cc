@@ -15,11 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LS_IO_IO_H
-#define LS_IO_IO_H
+#include <string>
+#include <gtest/gtest.h>
+#include <cstdlib>
 
-#include "input.h"
-#include "output.h"
-#include "fs.h"
+#include "extension-engine/main-engine.h"
 
-#endif // IO_IO_H
+TEST(ExtensionMainEngineTest, Test) {
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("# abc");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+    ASSERT_EQ(std::string("<h1>abc</h1>\n"), HTML);
+}
+
+int main(int argc, char* argv[]) {
+    testing::InitGoogleTest(&argc, argv);
+
+    system("cp -r ../../extension ./extension");
+    mkdir("data", S_IRWXU);
+    system("cp ../../template.json ./data/config.json");
+
+    return RUN_ALL_TESTS();
+}

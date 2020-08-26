@@ -1,0 +1,10 @@
+{
+    "extension.order": [
+        "default.header:0",
+        "default.pagedivider:0"
+    ],
+    "extension.lib": [
+        "default.libstring",
+        "default.libscanner"
+    ]
+}

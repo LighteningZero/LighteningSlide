@@ -16,6 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 var render = [markdown => {
+    print(markdown);
     let count_mark_number = str => {
         let mark_number = 0;
         for (let i = 0; i < str.length; i += 1) {

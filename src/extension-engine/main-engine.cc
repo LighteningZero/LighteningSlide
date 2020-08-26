@@ -56,6 +56,7 @@ void extension::ExtensionRunner::runExtensions() {
         js->setScript(fileContent);
         js->runScript();
     }
+    
     for (size_t i = 0; i < ConfigReader.getItemSize("extension.order"); i++) {
         std::string ext;
         ext = ConfigReader.getItemAsString(fmt::format("extension.order:{}", i));

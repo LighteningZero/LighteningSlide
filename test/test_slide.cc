@@ -25,13 +25,13 @@
 
 TEST(SlideTest, Test) {
     lightening::Slide slide;
-    slide.importFromMarkdownString("# 123");
+    slide.importFromMarkdownString("%THEME% white\n%TITLE% test\n+++\n# PAGE1\n+++\n# PAGE2\n+++");
     file::createDir("slide_test");
     slide.exportSlide("./slide_test/");
     frontend::FileScanner result_scanner("./slide_test/slide.html");
 
     std::string result = result_scanner.scanAll();
-    ASSERT_EQ(result, "<section>\n<h1>123</h1>\n\n</section>\n");
+    ASSERT_EQ(result, "<!DOCTYPE html>\n<html>\n<body>\n<div class=\"reveal\">\n<div class=\"slides\">\n<link rel=\"stylesheet\" href=\"./reveal/dist/theme/white.css\"></link><title>test</title>\n<section>\n<h1>PAGE1</h1>\n</section>\n<section>\n<h1>PAGE2</h1>\n</section>\n</div>\n</div>\n<link rel=\"stylesheet\" href=\"./reveal/dist/reveal.css\"></link>\n<script src=\"./reveal/dist/reveal.js\"></script>\n<script src=\"./reveal/plugin/highlight/highlight.js\"></script>\n<script> Reveal.initialize(); </script>\n\n</body>\n</html>");
 }
 
 int main(int argc, char* argv[]) {

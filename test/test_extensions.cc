@@ -90,7 +90,9 @@ TEST(ExtensionTest, PageDividerTest) {
                           "page3");
     ext.runExtensions();
     std::string HTML = ext.getResult();
-    ASSERT_EQ(std::string("<section>\n"
+    ASSERT_EQ(std::string("<div class=\"reveal\">\n"
+                          "<div class=\"slides\">\n"
+                          "<section>\n"
                           "page1\n"
                           "</section>\n"
                           "<section>\n"
@@ -98,7 +100,9 @@ TEST(ExtensionTest, PageDividerTest) {
                           "</section>\n"
                           "<section>\n"
                           "page3\n"
-                          "</section>\n"),
+                          "</section>\n"
+                          "</div>\n"
+                          "</div>"),
               HTML);
 }
 

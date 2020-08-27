@@ -33,6 +33,7 @@ TEST(ExtensionTest, HeaderTest) {
            "\"default.libscanner\""
            "]"
            "}";
+
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("# header1\n"
@@ -42,6 +43,8 @@ TEST(ExtensionTest, HeaderTest) {
                           "##### header5");
     ext.runExtensions();
     std::string HTML = ext.getResult();
+
+
     ASSERT_EQ(std::string("<h1>header1</h1>\n"
                           "<h2>header2</h2>\n"
                           "<h3>header3</h3>\n"
@@ -61,11 +64,13 @@ TEST(ExtensionTest, BlockquoteTest) {
            "\"default.libscanner\""
            "]"
            "}";
+
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("> blockquote\n\n\nnormal text");
     ext.runExtensions();
     std::string HTML = ext.getResult();
+
     ASSERT_EQ(std::string("<blockquote>blockquote</blockquote>\n\nnormal  text"), HTML);
 }
 
@@ -80,6 +85,7 @@ TEST(ExtensionTest, PageDividerTest) {
            "\"default.libscanner\""
            "]"
            "}";
+
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("+++\n"
@@ -90,6 +96,7 @@ TEST(ExtensionTest, PageDividerTest) {
                           "page3");
     ext.runExtensions();
     std::string HTML = ext.getResult();
+
     ASSERT_EQ(std::string("<div class=\"reveal\">\n"
                           "<div class=\"slides\">\n"
                           "<section>\n"
@@ -117,11 +124,13 @@ TEST(ExtensionTest, FontStlyeTest) {
            "\"default.libscanner\""
            "]"
            "}";
+
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("__**~test1~**__ _*test2*_");
     ext.runExtensions();
     std::string HTML = ext.getResult();
+
     ASSERT_EQ(std::string("<strong><strong><del>test1</del></strong></strong> <i><i>test2</i></i>"), HTML);
 }
 
@@ -136,11 +145,13 @@ TEST(ExtensionTest, TabTitleTest) {
            "\"default.libscanner\""
            "]"
            "}";
+
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("%TITLE% abcd\n %title% bcde");
     ext.runExtensions();
     std::string HTML = ext.getResult();
+
     ASSERT_EQ(std::string("<title>abcd</title>\n<title>bcde</title>\n"), HTML);
 }
 

@@ -27,6 +27,7 @@ TEST(ExtensionMainEngineTest, Test) {
     ext.setOriginMarkdown("%THEME% white\n%TITLE% test\n+++\n# PAGE1\n+++\n# PAGE2\n+++");
     ext.runExtensions();
     std::string HTML = ext.getResult();
+
     ASSERT_EQ(
         std::string(
             "<!DOCTYPE html>\n<html>\n<body>\n<div class=\"reveal\">\n<div class=\"slides\">\n<link rel=\"stylesheet\" "

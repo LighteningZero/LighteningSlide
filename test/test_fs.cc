@@ -16,27 +16,27 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <string>
-#include <cstdlib>
-#include <sys/stat.h>
 
-#include "file/file.h"
+#include <gtest/gtest.h>
+
 #include "io/io.h"
 
-void file::move(const std::string& originFilename, const std::string& newFilename) {
-    std::string command = "mv " + originFilename + " " + newFilename;
-    system(command.c_str());
+TEST(FileSystemTest, TestAll) {
+    frontend::createDir("in");
+    frontend::createDir("ans");
+    frontend::createFile("in/test.txt");
+    frontend::FileWriter in_writer("./in/test.txt");
+    in_writer.write("abc");
+    in_writer.flush();
+
+    frontend::copyFile("./in/test.txt", "./ans/test.txt");
+    frontend::moveFile("./ans/test.txt", "./ans/ans.txt");
+    frontend::FileScanner ans_scanner("./ans/ans.txt");
+    std::string res = ans_scanner.scanAll();
+    ASSERT_EQ(res, "abc");
 }
 
-void file::copy(const std::string& originFilename, const std::string& newFilename) {
-    std::string command = "cp -r " + originFilename + " " + newFilename;
-    system(command.c_str());
-}
-
-void file::createFile(const std::string& filename) {
-    std::string command = "touch " + filename;
-    system(command.c_str());
-}
-
-void file::createDir(const std::string& filename) {
-    mkdir(filename.c_str(), S_IRWXU);
+int main(int argc, char* argv[]) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

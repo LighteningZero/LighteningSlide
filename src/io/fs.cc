@@ -16,6 +16,13 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "io/fs.h"
+#include <exception>
+#include <stdexcept>
+#include <string>
+#include <cstdlib>
+#include <errno.h>
+#include <fmt/core.h>
+#include <sys/stat.h>
 
 bool frontend::isFileExist(const std::string& filepath) {
     FILE* fp = fopen(filepath.c_str(), "r");
@@ -23,4 +30,27 @@ bool frontend::isFileExist(const std::string& filepath) {
         return false;
 
     return true;
+}
+
+void frontend::moveFile(const std::string& originFilename, const std::string& newFilename) {
+    std::string command(fmt::format("mv {} {}", originFilename, newFilename));
+    system(command.c_str());
+}
+
+void frontend::copyFile(const std::string& originFilename, const std::string& newFilename) {
+    std::string command(fmt::format("cp -r {} {}", originFilename, newFilename));
+    system(command.c_str());
+}
+
+void frontend::createFile(const std::string& filename) {
+    FILE* file = fopen(filename.c_str(), "w");
+    if (file == nullptr)
+        throw std::runtime_error(
+            fmt::format("[{}] Cannot create file '{}': [{}] {}", __FUNCTION__, filename, errno, strerror(errno)));
+
+    fclose(file);
+}
+
+void frontend::createDir(const std::string& filename) {
+    mkdir(filename.c_str(), S_IRWXU | S_IXGRP | S_IRGRP | S_IXOTH | S_IROTH);
 }

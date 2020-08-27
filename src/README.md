@@ -1,3 +1,3 @@
-# Src Folder
+# Source Folder
 
-Here keeps script files.
+Here kept all source files.

@@ -23,9 +23,9 @@
 #include "slide/slide.h"
 
 TEST(SlideTest, Test) {
-    lightening::Slide slide;
+    frontend::Slide slide;
     slide.importFromMarkdownString("%THEME% white\n%TITLE% test\n+++\n# PAGE1\n+++\n# PAGE2\n+++");
-    file::createDir("slide_test");
+    frontend::createDir("slide_test");
     slide.exportSlide("./slide_test/");
 
     frontend::FileScanner result_scanner("./slide_test/slide.html");

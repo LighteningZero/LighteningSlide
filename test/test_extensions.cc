@@ -24,8 +24,15 @@
 
 TEST(ExtensionTest, HeaderTest) {
     std::ofstream out("./data/config.json");
-    out << "{\"extension.order\":[\"default.header:0\"],\"extension.lib\":[\"default.libstring\",\"default."
-           "libscanner\"]}";
+    out << "{"
+           "\"extension.order\":["
+           "\"default.header:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("# header1\n"
@@ -45,14 +52,54 @@ TEST(ExtensionTest, HeaderTest) {
 
 TEST(ExtensionTest, BlockquoteTest) {
     std::ofstream out("./data/config.json");
-    out << "{\"extension.order\":[\"default.blockquote:0\"],\"extension.lib\":[\"default.libstring\",\"default."
-           "libscanner\"]}";
+    out << "{"
+           "\"extension.order\":["
+           "\"default.blockquote:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("> block\nquote");
     ext.runExtensions();
     std::string HTML = ext.getResult();
     ASSERT_EQ(std::string("<blockquote>block\nquote</blockquote>"), HTML);
+}
+
+TEST(ExtensionTest, PageDividerTest) {
+    std::ofstream out("./data/config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.pagedivider:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("~~~\n"
+                          "page1\n"
+                          "~~~\n"
+                          "page2\n"
+                          "~~~\n"
+                          "page3");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+    ASSERT_EQ(std::string("<section>\n"
+                          "page1\n"
+                          "</section>\n"
+                          "<section>\n"
+                          "page2\n"
+                          "</section>\n"
+                          "<section>\n"
+                          "page3\n"
+                          "</section>\n"),
+              HTML);
 }
 
 int main(int argc, char* argv[]) {

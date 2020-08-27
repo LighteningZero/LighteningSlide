@@ -121,6 +121,25 @@ TEST(ExtensionTest, FontStlyeTest) {
     ASSERT_EQ(std::string("<strong><strong><del>test1</del></strong></strong> <i><i>test2</i></i>"), HTML);
 }
 
+TEST(ExtensionTest, TabTitleTest) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.tabtitle:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("%TITLE% abcd\n %title% bcde");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+    ASSERT_EQ(std::string("<title>abcd</title>\n<title>bcde</title>\n"), HTML);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 

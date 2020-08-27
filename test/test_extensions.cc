@@ -15,22 +15,44 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#include <fstream>
 #include <string>
 #include <cstdlib>
-#include <fstream>
 #include <gtest/gtest.h>
 
 #include "extension-engine/main-engine.h"
 
 TEST(ExtensionTest, HeaderTest) {
     std::ofstream out("./data/config.json");
-    out << "{\"extension.order\":[\"default.header:0\"],\"extension.lib\":[\"default.libstring\",\"default.libscanner\"]}";
+    out << "{\"extension.order\":[\"default.header:0\"],\"extension.lib\":[\"default.libstring\",\"default."
+           "libscanner\"]}";
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("# abc");
+    ext.setOriginMarkdown("# header1\n"
+                          "## header2\n"
+                          "### header3\n"
+                          "#### header4\n"
+                          "##### header5");
     ext.runExtensions();
     std::string HTML = ext.getResult();
-    ASSERT_EQ(std::string("<h1>abc</h1>\n"), HTML);
+    ASSERT_EQ(std::string("<h1>header1</h1>\n"
+                          "<h2>header2</h2>\n"
+                          "<h3>header3</h3>\n"
+                          "<h4>header4</h4>\n"
+                          "<h5>header5</h5>\n"),
+              HTML);
+}
+
+TEST(ExtensionTest, BlockquoteTest) {
+    std::ofstream out("./data/config.json");
+    out << "{\"extension.order\":[\"default.blockquote:0\"],\"extension.lib\":[\"default.libstring\",\"default."
+           "libscanner\"]}";
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("> block\nquote");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+    ASSERT_EQ(std::string("<blockquote>block\nquote</blockquote>"), HTML);
 }
 
 int main(int argc, char* argv[]) {
@@ -38,7 +60,6 @@ int main(int argc, char* argv[]) {
 
     system("cp -r ../../extension ./extension");
     mkdir("data", S_IRWXU);
-    // system("cp ../../template.json ./data/config.json");
 
     return RUN_ALL_TESTS();
 }

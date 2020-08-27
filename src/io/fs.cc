@@ -16,13 +16,13 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "io/fs.h"
+#include <exception>
+#include <stdexcept>
 #include <string>
 #include <cstdlib>
-#include <sys/stat.h>
 #include <errno.h>
-#include <exception>
 #include <fmt/core.h>
-#include <stdexcept>
+#include <sys/stat.h>
 
 bool frontend::isFileExist(const std::string& filepath) {
     FILE* fp = fopen(filepath.c_str(), "r");
@@ -31,7 +31,6 @@ bool frontend::isFileExist(const std::string& filepath) {
 
     return true;
 }
-
 
 void frontend::moveFile(const std::string& originFilename, const std::string& newFilename) {
     std::string command(fmt::format("mv {} {}", originFilename, newFilename));
@@ -46,8 +45,9 @@ void frontend::copyFile(const std::string& originFilename, const std::string& ne
 void frontend::createFile(const std::string& filename) {
     FILE* file = fopen(filename.c_str(), "w");
     if (file == nullptr)
-        throw std::runtime_error(fmt::format("[{}] Cannot create file '{}': [{}] {}", __FUNCTION__, filename, errno, strerror(errno)));
-    
+        throw std::runtime_error(
+            fmt::format("[{}] Cannot create file '{}': [{}] {}", __FUNCTION__, filename, errno, strerror(errno)));
+
     fclose(file);
 }
 

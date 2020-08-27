@@ -27,7 +27,7 @@ TEST(SlideTest, Test) {
     slide.importFromMarkdownString("# Hello World");
     frontend::createDir("slide_test");
     slide.exportSlide("./slide_test/");
-    
+
     frontend::FileScanner result_scanner("./slide_test/slide.html");
     std::string result = result_scanner.scanAll();
     ASSERT_EQ(result, "<section>\n<h1>Hello World</h1>\n\n</section>\n");

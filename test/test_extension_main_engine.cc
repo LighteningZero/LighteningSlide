@@ -19,8 +19,8 @@
 #include <cstdlib>
 #include <gtest/gtest.h>
 
-#include "extension-engine/main-engine.h"
 #include "file/file.h"
+#include "extension-engine/main-engine.h"
 
 TEST(ExtensionMainEngineTest, Test) {
     extension::ExtensionRunner ext;

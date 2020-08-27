@@ -90,7 +90,6 @@ void extension::ExtensionRunner::runExtensions() {
         jerry_release_value(*js_markdown);
 
         this->markdown = js->getResultAsString();
-        fmt::print("{}", this->markdown);
     }
 }
 

@@ -63,10 +63,10 @@ TEST(ExtensionTest, BlockquoteTest) {
            "}";
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("> block\nquote");
+    ext.setOriginMarkdown("> blockquote\n\n\nnormal text");
     ext.runExtensions();
     std::string HTML = ext.getResult();
-    ASSERT_EQ(std::string("<blockquote>block\nquote</blockquote>"), HTML);
+    ASSERT_EQ(std::string("<blockquote>blockquote</blockquote>\n\nnormal  text"), HTML);
 }
 
 TEST(ExtensionTest, PageDividerTest) {

@@ -20,26 +20,25 @@
 
 #include <string>
 
-namespace lightening {
+namespace frontend {
 
 class Slide {
 public:
-    // Export slide
-    void exportSlide(const std::string& filepath);
-
     // Import slide
     void importFromHtmlFile(const std::string& filename);
     void importFromHtmlString(const std::string& html);
     void importFromMarkdownFile(const std::string& filename);
     void importFromMarkdownString(const std::string& markdown);
 
-private:
-    std::string HTML;
+    // Export Slide
+    void exportSlide(const std::string& filepath);
 
-    // Export
-    std::string exportToString();
+    std::string getHTML();
+
+private:
+    std::string _HTML;
 };
 
-} // namespace lightening
+} // namespace frontend
 
 #endif // EXPORT_SLIDE_H

@@ -19,7 +19,7 @@
 #include <cstdlib>
 #include <gtest/gtest.h>
 
-#include "file/file.h"
+#include "io/io.h"
 #include "extension-engine/main-engine.h"
 
 TEST(ExtensionMainEngineTest, Test) {
@@ -33,9 +33,9 @@ TEST(ExtensionMainEngineTest, Test) {
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
-    file::copy("./../../extension", "./extension");
-    file::createDir("data");
-    file::copy("./../../template.json", "./data/extension_config.json");
+    frontend::copyFile("./../../extension", "./extension");
+    frontend::createDir("data");
+    frontend::copyFile("./../../template.json", "./data/extension_config.json");
 
     return RUN_ALL_TESTS();
 }

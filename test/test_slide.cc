@@ -19,28 +19,27 @@
 
 #include <gtest/gtest.h>
 
-#include "file/file.h"
 #include "io/io.h"
 #include "slide/slide.h"
 
 TEST(SlideTest, Test) {
-    lightening::Slide slide;
-    slide.importFromMarkdownString("# 123");
-    file::createDir("slide_test");
+    frontend::Slide slide;
+    slide.importFromMarkdownString("# Hello World");
+    frontend::createDir("slide_test");
     slide.exportSlide("./slide_test/");
+    
     frontend::FileScanner result_scanner("./slide_test/slide.html");
-
     std::string result = result_scanner.scanAll();
-    ASSERT_EQ(result, "<section>\n<h1>123</h1>\n\n</section>\n");
+    ASSERT_EQ(result, "<section>\n<h1>Hello World</h1>\n\n</section>\n");
 }
 
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
-    file::copy("./../../extension", "./extension");
-    file::createDir("data");
-    file::copy("./../../template.json", "./data/extension_config.json");
-    file::copy("./../../reveal", "./reveal");
+    frontend::copyFile("./../../extension", "./extension");
+    frontend::createDir("data");
+    frontend::copyFile("./../../template.json", "./data/extension_config.json");
+    frontend::copyFile("./../../reveal", "./reveal");
 
     return RUN_ALL_TESTS();
 }

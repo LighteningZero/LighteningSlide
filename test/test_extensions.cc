@@ -19,7 +19,7 @@
 #include <string>
 #include <gtest/gtest.h>
 
-#include "file/file.h"
+#include "io/io.h"
 #include "extension-engine/main-engine.h"
 
 TEST(ExtensionTest, HeaderTest) {
@@ -124,8 +124,8 @@ TEST(ExtensionTest, FontStlyeTest) {
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
-    file::copy("./../../extension", "./extension");
-    file::createDir("data");
+    frontend::copyFile("./../../extension", "./extension");
+    frontend::createDir("data");
 
     return RUN_ALL_TESTS();
 }

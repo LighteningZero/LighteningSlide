@@ -17,41 +17,40 @@
 
 #include <string>
 
-#include "file/file.h"
 #include "io/io.h"
 #include "slide/slide.h"
 #include "extension-engine/main-engine.h"
 
-void lightening::Slide::importFromHtmlString(const std::string& html) {
-    this->HTML = html;
+void frontend::Slide::importFromHtmlString(const std::string& html) {
+    this->_HTML = html;
 }
 
-void lightening::Slide::importFromHtmlFile(const std::string& filename) {
+void frontend::Slide::importFromHtmlFile(const std::string& filename) {
     frontend::FileScanner html_file_scanner(filename);
-    this->HTML = html_file_scanner.scanAll();
+    this->_HTML = html_file_scanner.scanAll();
 }
 
-void lightening::Slide::importFromMarkdownString(const std::string& markdown) {
+void frontend::Slide::importFromMarkdownString(const std::string& markdown) {
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown(markdown);
     ext.runExtensions();
-    this->HTML = ext.getResult();
+    this->_HTML = ext.getResult();
 }
 
-void lightening::Slide::importFromMarkdownFile(const std::string& filename) {
+void frontend::Slide::importFromMarkdownFile(const std::string& filename) {
     frontend::FileScanner markdown_file_scanner(filename);
     std::string markdown = markdown_file_scanner.scanAll();
 
     this->importFromMarkdownString(markdown);
 }
 
-std::string lightening::Slide::exportToString() {
-    return this->HTML;
+std::string frontend::Slide::getHTML() {
+    return this->_HTML;
 }
 
-void lightening::Slide::exportSlide(const std::string& filepath) {
+void frontend::Slide::exportSlide(const std::string& filepath) {
     frontend::FileWriter slide_file_writer(filepath + "slide.html");
-    slide_file_writer.write(this->HTML);
+    slide_file_writer.write(this->_HTML);
 
-    file::copy("./reveal", filepath + "/reveal");
+    frontend::copyFile("./reveal", filepath + "/reveal");
 }

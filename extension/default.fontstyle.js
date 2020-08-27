@@ -50,8 +50,6 @@ var render = [origin => {
                 let mid = '';
                 let have_end = true;
 
-                let second_mark_size = 0;
-
                 while (true) {
                     ch = s.scanChar();
                     if (ch == undefined) ch = '';
@@ -59,13 +57,11 @@ var render = [origin => {
                         if (is_double_mark) {
                             if (s.isEnd()) {
                                 have_end = false;
-                                second_mark_size = 1;
                                 break;
                             }
                             ch = s.scanChar();
                             if (ch == undefined) ch = '';
                             if (ch == mark) {
-                                second_mark_size = 2;
                                 break;
                             }
                             mid += mark;
@@ -89,7 +85,7 @@ var render = [origin => {
                         }
                     }
                     result += mark;
-                    if (second_mark_size == 2) {
+                    if (is_double_mark) {
                         result += mark;
                     }
                     if (mid != undefined) {

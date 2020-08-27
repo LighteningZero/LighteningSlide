@@ -102,6 +102,25 @@ TEST(ExtensionTest, PageDividerTest) {
               HTML);
 }
 
+TEST(ExtensionTest, FontStlyeTest) {
+    std::ofstream out("./data/config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.fontstyle:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("__**~test1~**__ _*test2*_");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+    ASSERT_EQ(std::string("<strong><strong><del>test1</del></strong></strong> <i><i>test2</i></i>"), HTML);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 

@@ -33,6 +33,7 @@ TEST(ExtensionTest, HeaderTest) {
            "\"default.libscanner\""
            "]"
            "}";
+
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("# header1\n"
@@ -42,6 +43,7 @@ TEST(ExtensionTest, HeaderTest) {
                           "##### header5");
     ext.runExtensions();
     std::string HTML = ext.getResult();
+
     ASSERT_EQ(std::string("<h1>header1</h1>\n"
                           "<h2>header2</h2>\n"
                           "<h3>header3</h3>\n"
@@ -61,11 +63,13 @@ TEST(ExtensionTest, BlockquoteTest) {
            "\"default.libscanner\""
            "]"
            "}";
+
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("> blockquote\n\n\nnormal text");
     ext.runExtensions();
     std::string HTML = ext.getResult();
+
     ASSERT_EQ(std::string("<blockquote>blockquote</blockquote>\n\nnormal  text"), HTML);
 }
 
@@ -80,17 +84,21 @@ TEST(ExtensionTest, PageDividerTest) {
            "\"default.libscanner\""
            "]"
            "}";
+
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("~~~\n"
+    ext.setOriginMarkdown("+++\n"
                           "page1\n"
-                          "~~~\n"
+                          "+++\n"
                           "page2\n"
-                          "~~~\n"
+                          "+++\n"
                           "page3");
     ext.runExtensions();
     std::string HTML = ext.getResult();
-    ASSERT_EQ(std::string("<section>\n"
+
+    ASSERT_EQ(std::string("<div class=\"reveal\">\n"
+                          "<div class=\"slides\">\n"
+                          "<section>\n"
                           "page1\n"
                           "</section>\n"
                           "<section>\n"
@@ -98,7 +106,9 @@ TEST(ExtensionTest, PageDividerTest) {
                           "</section>\n"
                           "<section>\n"
                           "page3\n"
-                          "</section>\n"),
+                          "</section>\n"
+                          "</div>\n"
+                          "</div>"),
               HTML);
 }
 
@@ -113,12 +123,35 @@ TEST(ExtensionTest, FontStlyeTest) {
            "\"default.libscanner\""
            "]"
            "}";
+
     out.close();
     extension::ExtensionRunner ext;
     ext.setOriginMarkdown("__**~test1~**__ _*test2*_");
     ext.runExtensions();
     std::string HTML = ext.getResult();
+
     ASSERT_EQ(std::string("<strong><strong><del>test1</del></strong></strong> <i><i>test2</i></i>"), HTML);
+}
+
+TEST(ExtensionTest, TabTitleTest) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.tabtitle:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("%TITLE% abcd\n %title% bcde");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(std::string("<title>abcd</title>\n<title>bcde</title>\n"), HTML);
 }
 
 int main(int argc, char* argv[]) {

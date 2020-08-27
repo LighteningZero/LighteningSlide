@@ -19,7 +19,7 @@ var render = [markdown => {
     let count_mark_number = str => {
         let mark_number = 0;
         for (let i = 0; i < str.length; i += 1) {
-            if (str[i] == '~') {
+            if (str[i] == '+') {
                 mark_number += 1;
             } else {
                 return 0;
@@ -55,11 +55,6 @@ var render = [markdown => {
 
             last_is_section = true;
         } else {
-            if (first_mark) {
-                result += '<section>\n';
-                first_mark = false;
-            }
-
             result += s.getTextFormMark();
             last_is_section = false;
         }
@@ -75,6 +70,8 @@ var render = [markdown => {
             break;
         }
     }
+
+    result = '<div class="reveal">\n<div class="slides">\n' + result + '</div>\n</div>';
 
     return result;
 }];

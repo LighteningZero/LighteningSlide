@@ -15,10 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# ifndef EXTENSION_ENGINE_MAIN_ENGINE_H
-# define EXTENSION_ENGINE_MAIN_ENGINE_H
+#ifndef EXTENSION_ENGINE_MAIN_ENGINE_H
+#define EXTENSION_ENGINE_MAIN_ENGINE_H
 
-# include <string>
+#include <string>
 
 namespace extension {
 
@@ -30,10 +30,11 @@ public:
     std::string findExtensionFile(const std::string& filename);
     void setOriginMarkdown(const std::string& markdown);
     std::string getResult();
+
 private:
     std::string markdown;
 };
 
 } // namespace extension
 
-# endif // EXTENSION_ENGINE_MAIN_ENGINE_H
+#endif // EXTENSION_ENGINE_MAIN_ENGINE_H

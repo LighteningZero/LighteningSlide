@@ -18,8 +18,8 @@
 #ifndef LS_IO_IO_H
 #define LS_IO_IO_H
 
+#include "fs.h"
 #include "input.h"
 #include "output.h"
-#include "fs.h"
 
 #endif // IO_IO_H

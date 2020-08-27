@@ -15,11 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# include "io/fs.h"
+#include "io/fs.h"
 
-bool frontend::isFileExist(std::string filepath) {
+bool frontend::isFileExist(const std::string& filepath) {
     FILE* fp = fopen(filepath.c_str(), "r");
-    if (fp == nullptr) 
+    if (fp == nullptr)
         return false;
 
     return true;

@@ -25,7 +25,13 @@ var render = [markdown => {
 
     while (true) {
         let str = s.scanToken();
-        if (str === '>' || (str !== '' && lastLineIsBlockquote)) {
+        if (str === '>' || lastLineIsBlockquote) {
+            if (str == '') {
+                lastLineIsBlockquote = false;
+                result += '</blockquote>';
+                continue;
+            }
+
             let content = new String();
             if(str === '>') {
                 content = s.scanLine();
@@ -40,11 +46,6 @@ var render = [markdown => {
                 result += '\n' + content;
             }
         } else {
-            if(lastLineIsBlockquote) {
-                lastLineIsBlockquote = false;
-                result += '</blockquote>';
-            }
-
             result += s.getTextFormMark();
         }
 

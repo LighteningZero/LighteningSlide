@@ -19,8 +19,8 @@
 
 #include <gtest/gtest.h>
 
-#include "io/io.h"
 #include "file/file.h"
+#include "io/io.h"
 #include "slide/slide.h"
 
 TEST(SlideTest, Test) {
@@ -29,7 +29,7 @@ TEST(SlideTest, Test) {
     file::createDir("slide_test");
     slide.exportSlide("./slide_test/");
     frontend::FileScanner result_scanner("./slide_test/slide.html");
-    
+
     std::string result = result_scanner.scanAll();
     ASSERT_EQ(result, "<section>\n<h1>123</h1>\n\n</section>\n");
 }

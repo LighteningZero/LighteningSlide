@@ -16,17 +16,103 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 var render = [origin => {
-    let s = new Scanner(origin);
-    let result = new String();
+    let mark = function (origin, mark, html, is_double_mark) {
+        let s = new Scanner(origin);
+        let result = new String();
 
-    s.setLineBreakToLFMode();
-    while (true) {
-        s.skipEmpty();
-        
-        if (s.isEnd()) {
-            break;
+        s.setLineBreakToLFMode();
+
+        while (true) {
+            let ch = s.scanChar();
+
+            if (ch == mark) {
+                if (is_double_mark) {
+                    if (s.isEnd()) {
+                        result += ch;
+                        return result;
+                    }
+                    ch = s.scanChar();
+                    if (ch != mark) {
+                        result += mark + ch;
+                        continue;
+                    }
+                }
+
+                if (s.isEnd()) {
+                    result += mark;
+                    if (is_double_mark) {
+                        result += mark;
+                    }
+                    return result;
+                }
+
+                let mid = '';
+                let have_end = true;
+
+                let second_mark_size = 0;
+
+                while (true) {
+                    ch = s.scanChar();
+                    if (ch == mark) {
+                        if (is_double_mark) {
+                            if (s.isEnd()) {
+                                have_end = false;
+                                second_mark_size = 1;
+                                break;
+                            }
+                            ch = s.scanChar();
+                            if (ch == mark) {
+                                second_mark_size = 2;
+                                break;
+                            }
+                            mid += mark;
+                        }
+                        break;
+                    }
+                    mid += ch;
+                    if (s.isEnd() || ch == '\n') {
+                        have_end = false;
+                        break;
+                    }
+                }
+
+                if (have_end && mid != '') {
+                    result += '<' + html + '>' + mid + '</' + html + '>';
+                } else {
+                    if (mid == '') {
+                        result += mark;
+                        if (is_double_mark) {
+                            result += mark;
+                        }
+                    }
+                    result += mark;
+                    if (second_mark_size == 2) {
+                        result += mark;
+                    }
+                    if (mid != 'undefined') {
+                        result += mid;
+                    }
+                }
+            } else {
+                result += ch;
+            }
+
+            if (s.isEnd()) {
+                break;
+            }
         }
+
+        return result;
     }
 
+    let result = origin;
+    result = mark(result, '_', 'i', false);
+    result = mark(result, '*', 'i', false);
+
+    result = mark(result, '_', 'strong', true);
+    result = mark(result, '*', 'strong', true);
+
+    result = mark(result, '~', 'del', false);
+    result = mark(result, '~', 'del', true);
     return result;
 }]

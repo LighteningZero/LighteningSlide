@@ -19,8 +19,8 @@
 
 #include <gtest/gtest.h>
 
-#include "io/io.h"
 #include "file/file.h"
+#include "io/io.h"
 
 TEST(FileTest, Test) {
     file::createDir("in");

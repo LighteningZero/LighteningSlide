@@ -23,7 +23,7 @@
 #include "extension-engine/main-engine.h"
 
 TEST(ExtensionTest, HeaderTest) {
-    std::ofstream out("./data/config.json");
+    std::ofstream out("./data/extension_config.json");
     out << "{"
            "\"extension.order\":["
            "\"default.header:0\""
@@ -51,7 +51,7 @@ TEST(ExtensionTest, HeaderTest) {
 }
 
 TEST(ExtensionTest, BlockquoteTest) {
-    std::ofstream out("./data/config.json");
+    std::ofstream out("./data/extension_config.json");
     out << "{"
            "\"extension.order\":["
            "\"default.blockquote:0\""
@@ -70,7 +70,7 @@ TEST(ExtensionTest, BlockquoteTest) {
 }
 
 TEST(ExtensionTest, PageDividerTest) {
-    std::ofstream out("./data/config.json");
+    std::ofstream out("./data/extension_config.json");
     out << "{"
            "\"extension.order\":["
            "\"default.pagedivider:0\""
@@ -103,7 +103,7 @@ TEST(ExtensionTest, PageDividerTest) {
 }
 
 TEST(ExtensionTest, FontStlyeTest) {
-    std::ofstream out("./data/config.json");
+    std::ofstream out("./data/extension_config.json");
     out << "{"
            "\"extension.order\":["
            "\"default.fontstyle:0\""

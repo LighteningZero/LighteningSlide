@@ -17,6 +17,7 @@
 
 #include <string>
 
+#include "file/file.h"
 #include "io/io.h"
 #include "slide/slide.h"
 #include "extension-engine/main-engine.h"
@@ -42,4 +43,15 @@ void lightening::Slide::importFromMarkdownFile(const std::string& filename) {
     std::string markdown = markdown_file_scanner.scanAll();
 
     this->importFromMarkdownString(markdown);
+}
+
+std::string lightening::Slide::exportToString() {
+    return this->HTML;
+}
+
+void lightening::Slide::exportSlide(const std::string& filepath) {
+    frontend::FileWriter slide_file_writer(filepath + "slide.html");
+    slide_file_writer.write(this->HTML);
+
+    file::copy("./reveal", filepath + "/reveal");
 }

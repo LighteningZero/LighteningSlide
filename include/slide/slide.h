@@ -25,8 +25,7 @@ namespace lightening {
 class Slide {
 public: 
     // Export slide
-    void exportToFile(const std::string& filename);
-    std::string exportToString();
+    void exportSlide(const std::string& filepath);
 
     // Import slide
     void importFromHtmlFile(const std::string& filename);
@@ -36,6 +35,9 @@ public:
 
 private:
     std::string HTML;
+
+    // Export
+    std::string exportToString();
 };
 
 } // namespace frontend

@@ -33,7 +33,7 @@ void file::copy(const std::string& originFilename, const std::string& newFilenam
 }
 
 void file::createFile(const std::string& filename) {
-    std::string command = "thouch " + filename;
+    std::string command = "touch " + filename;
     system(command.c_str());
 }
 

@@ -15,7 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-int main() {
+#include "file/file.h"
 
+int main() {
+    file::createDir("data");
+    file::createDir("data/extension");
+    file::createFile("data/extension_config.json");
     return 0;
 }

@@ -17,25 +17,26 @@
 
 #include <string>
 #include <cstdlib>
-#include <gtest/gtest.h>
+#include <sys/stat.h>
 
-#include "extension-engine/main-engine.h"
 #include "file/file.h"
+#include "io/io.h"
 
-TEST(ExtensionMainEngineTest, Test) {
-    extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("~~~\n# abc\n~~~");
-    ext.runExtensions();
-    std::string HTML = ext.getResult();
-    ASSERT_EQ(std::string("<section>\n<h1>abc</h1>\n</section>\n"), HTML);
+void file::move(const std::string& originFilename, const std::string& newFilename) {
+    std::string command = "mv " + originFilename + " " + newFilename;
+    system(command.c_str());
 }
 
-int main(int argc, char* argv[]) {
-    testing::InitGoogleTest(&argc, argv);
+void file::copy(const std::string& originFilename, const std::string& newFilename) {
+    std::string command = "cp -r " + originFilename + " " + newFilename;
+    system(command.c_str());
+}
 
-    file::copy("./../../extension", "./extension");
-    file::createDir("data");
-    file::copy("./../../template.json", "./data/config.json");
+void file::createFile(const std::string& filename) {
+    std::string command = "thouch " + filename;
+    system(command.c_str());
+}
 
-    return RUN_ALL_TESTS();
+void file::createDir(const std::string& filename) {
+    mkdir(filename.c_str(), S_IRWXU);
 }

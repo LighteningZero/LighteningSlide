@@ -15,27 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#ifndef FILE_FILE_H
+#define FILE_FILE_H
+
 #include <string>
-#include <cstdlib>
-#include <gtest/gtest.h>
 
-#include "extension-engine/main-engine.h"
-#include "file/file.h"
+namespace file {
 
-TEST(ExtensionMainEngineTest, Test) {
-    extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("~~~\n# abc\n~~~");
-    ext.runExtensions();
-    std::string HTML = ext.getResult();
-    ASSERT_EQ(std::string("<section>\n<h1>abc</h1>\n</section>\n"), HTML);
-}
+// Move files
+void move(const std::string& originFilename, const std::string& newFilename);
 
-int main(int argc, char* argv[]) {
-    testing::InitGoogleTest(&argc, argv);
+// Copy files
+void copy(const std::string& originFilename, const std::string& newFilename);
 
-    file::copy("./../../extension", "./extension");
-    file::createDir("data");
-    file::copy("./../../template.json", "./data/config.json");
+// Create files
+void createFile(const std::string& filename);
+void createDir(const std::string& filename);
 
-    return RUN_ALL_TESTS();
-}
+} // namespace file
+
+#endif // FILE_FILE_H

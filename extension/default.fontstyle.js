@@ -15,126 +15,62 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-function single(origin, mark, html) {
-    let s = new Scanner(origin);
-    let result = new String();
-
-    s.setLineBreakToLFMode();
-
-    while (true) {
-        let ch = s.scanChar();
-
-        if (ch == mark) {
-            let mid = '';
-            let have_end = true;
-
-            while (true) {
-                ch = s.scanChar();
-                if (ch == mark) {
-                    break;
-                }
-                mid += ch;
-
-                if (s.isEnd()) {
-                    have_end = false;
-                    break;
-                }
-            }
-
-            if (have_end && mid != '') {
-                result += '<' + html + '>' + mid + '</' + html + '>';
-            } else {
-                if (mid == '') {
-                    result += mark;
-                }
-
-                result += mark;
-
-                if (mid != 'undefined') {
-                    result += mid;
-                }
-            }
-        } else {
-            result += ch;
-        }
-
-        if (s.isEnd()) {
-            break;
-        }
-    }
-
-    return result;
-}
-
-function double(origin, mark, html) {
-    let s = new Scanner(origin);
-    let result = new String();
-
-    s.setLineBreakToLFMode();
-
-    while (true) {
-        let ch = s.scanChar();
-
-        if (ch == mark) {
-            let mid = '';
-            let have_end = true;
-
-            ch = s.scanChar();
-            if (ch != mark) {
-                result += mark + ch;
-                continue;
-            }
-
-            while (true) {
-                ch = s.scanChar();
-                if (ch == mark) {
-                    ch = s.scanChar();
-                    if (ch != mark) {
-                        have_end = false;
-                    }
-                    break;
-                }
-                mid += ch;
-
-                if (s.isEnd()) {
-                    have_end = false;
-                    break;
-                }
-            }
-
-            if (have_end && mid != '') {
-                result += '<' + html + '>' + mid + '</' + html + '>';
-            } else {
-                if (mid == '') {
-                    result += mark + mark;
-                }
-
-                result += mark + mark;
-
-                if (mid != 'undefined') {
-                    result += mid;
-                }
-            }
-        } else {
-            result += ch;
-        }
-
-        if (s.isEnd()) {
-            break;
-        }
-    }
-
-    return result;
-}
-
 var render = [origin => {
+    let mark = function (origin, mark, html) {
+        let s = new Scanner(origin);
+        let result = new String();
+    
+        s.setLineBreakToLFMode();
+    
+        while (true) {
+            let ch = s.scanChar();
+    
+            if (ch == mark) {
+                let mid = '';
+                let have_end = true;
+    
+                while (true) {
+                    ch = s.scanChar();
+                    if (ch == mark) {
+                        break;
+                    }
+                    mid += ch;
+                    if (s.isEnd() || ch == '\n') {
+                        have_end = false;
+                        break;
+                    }
+                }
+    
+                if (have_end && mid != '') {
+                    result += '<' + html + '>' + mid + '</' + html + '>';
+                } else {
+                    if (mid == '') {
+                        result += mark;
+                    }
+                    result += mark;
+                    if (mid != 'undefined') {
+                        result += mid;
+                    }
+                }
+            } else {
+                result += ch;
+            }
+    
+            if (s.isEnd()) {
+                break;
+            }
+        }
+    
+        return result;
+    }
+
     let result = origin;
-    result = single(result, '_', 'i');
-    result = single(result, '*', 'i');
+    result = mark(result, '_', 'i');
+    result = mark(result, '*', 'i');
 
-    result = double(result, '_', 'strong');
-    result = double(result, '*', 'strong');
+    // result = double(result, '_', 'strong');
+    // result = double(result, '*', 'strong');
 
-    result = single(result, '~', 'del');
+    result = mark(result, '~', 'del');
     return result;
 }]

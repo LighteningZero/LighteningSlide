@@ -40,6 +40,7 @@ int main(int argc, char* argv[]) {
     file::copy("./../../extension", "./extension");
     file::createDir("data");
     file::copy("./../../template.json", "./data/extension_config.json");
+    file::copy("./../../reveal", "./reveal");
 
     return RUN_ALL_TESTS();
 }

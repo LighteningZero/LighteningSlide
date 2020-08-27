@@ -15,7 +15,29 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-int main() {
+#include <string>
 
-    return 0;
+#include <gtest/gtest.h>
+
+#include "io/io.h"
+#include "file/file.h"
+
+TEST(FileTest, Test) {
+    file::createDir("in");
+    file::createDir("ans");
+    file::createFile("in/test.txt");
+    frontend::FileWriter in_writer("./in/test.txt");
+    in_writer.write("test!");
+    in_writer.flush();
+
+    file::copy("./in/test.txt", "./ans/test.txt");
+    file::move("./ans/test.txt", "./ans/ans.txt");
+    frontend::FileScanner ans_scanner("./ans/ans.txt");
+    std::string res = ans_scanner.scanAll();
+    ASSERT_EQ(res, "test!");
+}
+
+int main(int argc, char* argv[]) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

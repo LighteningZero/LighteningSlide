@@ -19,7 +19,7 @@ var render = [markdown => {
     let count_mark_number = str => {
         let mark_number = 0;
         for (let i = 0; i < str.length; i += 1) {
-            if (str[i] == '~') {
+            if (str[i] == '+') {
                 mark_number += 1;
             } else {
                 return 0;

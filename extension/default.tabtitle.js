@@ -1,4 +1,4 @@
-// -*- C++ -*- LighteningZero
+// -*- javascript -*- LighteningZero
 
 // Copyright (C) 2020  Lightening Zero
 //
@@ -15,27 +15,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <string>
-#include <cstdlib>
-#include <gtest/gtest.h>
+var render = [origin => {
+    let s = new Scanner(origin);
+    let result = new String();
+    s.makeMarkHere();
 
-#include "file/file.h"
-#include "extension-engine/main-engine.h"
+    while (true) {
+        let str = s.scanToken();
 
-TEST(ExtensionMainEngineTest, Test) {
-    extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("+++\n# abc\n+++");
-    ext.runExtensions();
-    std::string HTML = ext.getResult();
-    ASSERT_EQ(std::string("<section>\n<h1>abc</h1>\n</section>\n"), HTML);
-}
+        if (str != '%TITLE%' && str != '%title%') {
+            result += s.getTextFormMark();
+        } else {
+            let content = s.scanLine();
+            result += '<title>' + content + '</title>\n';
+        }
+        
+        s.skipBlank();
+        s.makeMarkHere();
 
-int main(int argc, char* argv[]) {
-    testing::InitGoogleTest(&argc, argv);
+        if (s.isEnd()) {
+            break;
+        }
+    }
 
-    file::copy("./../../extension", "./extension");
-    file::createDir("data");
-    file::copy("./../../template.json", "./data/extension_config.json");
-
-    return RUN_ALL_TESTS();
-}
+    return result;
+}];

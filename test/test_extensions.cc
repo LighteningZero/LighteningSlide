@@ -82,11 +82,11 @@ TEST(ExtensionTest, PageDividerTest) {
            "}";
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("~~~\n"
+    ext.setOriginMarkdown("+++\n"
                           "page1\n"
-                          "~~~\n"
+                          "+++\n"
                           "page2\n"
-                          "~~~\n"
+                          "+++\n"
                           "page3");
     ext.runExtensions();
     std::string HTML = ext.getResult();

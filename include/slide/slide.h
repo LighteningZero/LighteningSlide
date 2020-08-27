@@ -23,7 +23,7 @@
 namespace lightening {
 
 class Slide {
-public: 
+public:
     // Export slide
     void exportSlide(const std::string& filepath);
 
@@ -40,6 +40,6 @@ private:
     std::string exportToString();
 };
 
-} // namespace frontend
+} // namespace lightening
 
 #endif // EXPORT_SLIDE_H

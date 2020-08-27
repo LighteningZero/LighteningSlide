@@ -44,7 +44,6 @@ TEST(ExtensionTest, HeaderTest) {
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-
     ASSERT_EQ(std::string("<h1>header1</h1>\n"
                           "<h2>header2</h2>\n"
                           "<h3>header3</h3>\n"

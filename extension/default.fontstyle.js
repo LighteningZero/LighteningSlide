@@ -24,7 +24,7 @@ var render = [origin => {
 
         while (true) {
             let ch = s.scanChar();
-
+            if (ch == undefined) ch = '';
             if (ch == mark) {
                 if (is_double_mark) {
                     if (s.isEnd()) {
@@ -32,6 +32,7 @@ var render = [origin => {
                         return result;
                     }
                     ch = s.scanChar();
+                    if (ch == undefined) ch = '';
                     if (ch != mark) {
                         result += mark + ch;
                         continue;
@@ -53,6 +54,7 @@ var render = [origin => {
 
                 while (true) {
                     ch = s.scanChar();
+                    if (ch == undefined) ch = '';
                     if (ch == mark) {
                         if (is_double_mark) {
                             if (s.isEnd()) {
@@ -61,6 +63,7 @@ var render = [origin => {
                                 break;
                             }
                             ch = s.scanChar();
+                            if (ch == undefined) ch = '';
                             if (ch == mark) {
                                 second_mark_size = 2;
                                 break;
@@ -89,7 +92,7 @@ var render = [origin => {
                     if (second_mark_size == 2) {
                         result += mark;
                     }
-                    if (mid != 'undefined') {
+                    if (mid != undefined) {
                         result += mid;
                     }
                 }

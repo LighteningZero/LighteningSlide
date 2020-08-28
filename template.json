@@ -6,12 +6,14 @@
         "default.image:0",
         "default.blockquote:0",
         "default.pagedivider:0",
+        "default.splitline:0",
         "default.tabtitle:0",
         "default.reveal:0",
         "default.framework:0"
     ],
     "extension.lib": [
         "default.libstring",
-        "default.libscanner"
+        "default.libscanner",
+        "default.liblock"
     ]
 }

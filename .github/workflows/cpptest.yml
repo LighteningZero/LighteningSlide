@@ -107,5 +107,5 @@ jobs:
         mkdir build
         cd build
         cmake ..
-        make -j128
+        make -j16
         make test

@@ -95,8 +95,8 @@ jobs:
         cd fmt-7.0.3
         mkdir build
         cd build
-        cmake -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE ..
-        make -j16
+        cmake -DFMT_TEST=false -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE ..
+        make -j4
         sudo make install
         
     - name: reset env

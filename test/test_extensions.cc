@@ -154,6 +154,27 @@ TEST(ExtensionTest, TabTitleTest) {
     ASSERT_EQ(std::string("<title>abcd</title>\n<title>bcde</title>\n"), HTML);
 }
 
+TEST(ExtensionTest, LinkTest) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.link:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("[Lightening Slide](https://github.com/LighteningZero/LighteningSlide)");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(std::string("<a href=\"https://github.com/LighteningZero/LighteningSlide\">Lightening Slide</a>"), HTML);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 

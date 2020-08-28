@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-let render = [origin => {
+var render = [origin => {
     let s = new Scanner(origin);
     let result = new String();
     

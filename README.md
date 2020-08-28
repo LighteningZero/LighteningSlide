@@ -1,3 +1,5 @@
+![](https://github.com/LighteningZero/LighteningIcon/blob/master/horizontal/Brand/LighteningZeroBrand.svg)
+
 # LighteningSlide
 A slide maker based on Receal.js, using C++ & Js extention.
 

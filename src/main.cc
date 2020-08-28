@@ -15,7 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-int main() {
+#include <gflags/gflags.h>
+#include "slide/slide.h"
+#include <cstdio>
 
+DEFINE_string(input, "/dev/stdin", "Input markdown file.");
+DEFINE_string(output, "/dev/stdout", "Output directory. Where to place render slide");
+
+int main(int argc, char** argv) {
+    GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, false);
+    frontend::Slide slide_maker;
+    slide_maker.importFromMarkdownFile(FLAGS_input);
+    slide_maker.exportSlide(FLAGS_output);
     return 0;
 }

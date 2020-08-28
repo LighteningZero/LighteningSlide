@@ -217,6 +217,27 @@ TEST(ExtensionTest, ImgTest) {
               HTML);
 }
 
+TEST(ExtensionTest, SplitLineTest) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.splitline:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("---\ntest1\n----\ntest2");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(std::string("<hr/>\ntest1\n<hr/>\ntest2"), HTML);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 

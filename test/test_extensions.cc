@@ -120,7 +120,8 @@ TEST(ExtensionTest, FontStlyeTest) {
            "],"
            "\"extension.lib\":["
            "\"default.libstring\","
-           "\"default.libscanner\""
+           "\"default.libscanner\","
+           "\"default.libinlinemark\""
            "]"
            "}";
 

@@ -45,7 +45,7 @@ void frontend::CurrentPath::calcCurrentPath() {
     char* current_absolute_path = new char[PATH_SIZE_MAX];
     int len = readlink("/proc/self/exe", current_absolute_path, PATH_SIZE_MAX);
 
-    if (len < 0 || len >= SIZE_MAX)
+    if (len < 0 || len >= PATH_SIZE_MAX)
         throw std::runtime_error(fmt::format("Cannot read symbol link of current: [{}] {}", errno, strerror(errno)));
 
     for (int i = len; i >= 0; --i) {

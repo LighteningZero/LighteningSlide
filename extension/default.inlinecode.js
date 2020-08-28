@@ -17,16 +17,7 @@
 
 var render = [origin => {
     let result = origin;
-    // Italic
-    result = inlineMark(result, '_', 'i', false);
-    result = inlineMark(result, '*', 'i', false);
 
-    // Bold
-    result = inlineMark(result, '_', 'strong', true);
-    result = inlineMark(result, '*', 'strong', true);
-
-    // Delete
-    result = inlineMark(result, '~', 'del', false);
-    result = inlineMark(result, '~', 'del', true);
+    result = inlineMark(result, '`', 'code', false);
     return result;
 }]

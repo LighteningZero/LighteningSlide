@@ -14,6 +14,7 @@
     "extension.lib": [
         "default.libstring",
         "default.libscanner",
+        "default.libinlinemark",
         "default.liblock",
         "default.libsign"
     ]

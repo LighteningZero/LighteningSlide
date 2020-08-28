@@ -120,7 +120,8 @@ TEST(ExtensionTest, FontStlyeTest) {
            "],"
            "\"extension.lib\":["
            "\"default.libstring\","
-           "\"default.libscanner\""
+           "\"default.libscanner\","
+           "\"default.libinlinemark\""
            "]"
            "}";
 
@@ -236,6 +237,28 @@ TEST(ExtensionTest, SplitLineTest) {
     std::string HTML = ext.getResult();
 
     ASSERT_EQ(std::string("<hr/>\ntest1\n<hr/>\ntest2"), HTML);
+}
+
+TEST(ExtensionTest, InlineCodeTest) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.inlinecode:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\","
+           "\"default.libinlinemark\""
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("`code`");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(std::string("<code>code</code>"), HTML);
 }
 
 int main(int argc, char* argv[]) {

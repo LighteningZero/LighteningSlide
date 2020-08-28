@@ -193,7 +193,8 @@ TEST(ExtensionTest, ImgTest) {
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("<img src=\"https://cdn.luogu.com.cn/upload/image_hosting/9dnyge7l.png\" alt=\"abc\"/>"), HTML);
+    ASSERT_EQ(std::string("<img src=\"https://cdn.luogu.com.cn/upload/image_hosting/9dnyge7l.png\" alt=\"abc\"/>"),
+              HTML);
 }
 
 int main(int argc, char* argv[]) {

@@ -153,6 +153,26 @@ TEST(ExtensionTest, TabTitleTest) {
 
     ASSERT_EQ(std::string("<title>abcd</title>\n<title>bcde</title>\n"), HTML);
 }
+TEST(ExtensionTest, CodeTest) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.code:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("abc\n```cpp\nabc\n``\n```");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(std::string("abc\n<pre>\n<code>\nabc\n``\n</code>\n</pre>\n"), HTML);
+}
 
 TEST(ExtensionTest, LinkTest) {
     std::ofstream out("./data/extension_config.json");

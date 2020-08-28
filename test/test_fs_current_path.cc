@@ -24,7 +24,7 @@ TEST(FileSystemCurrentPathTest, TestAll) {
     system("sh output_pwd.sh > current_path.out");
     frontend::FileScanner f("current_path.out");
     fmt::print("+{}\n", frontend::CurrentPath::get());
-    
+
     std::string res(f.scanAll());
     res.pop_back();
     res.push_back('/');

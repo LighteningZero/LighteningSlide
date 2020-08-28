@@ -18,9 +18,9 @@
 #ifndef LS_IO_IO_H
 #define LS_IO_IO_H
 
-#include "fs/fs.h"
-#include "fs/main-path.h"
 #include "input.h"
 #include "output.h"
+#include "fs/fs.h"
+#include "fs/main-path.h"
 
 #endif // IO_IO_H

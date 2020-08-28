@@ -28,7 +28,7 @@ function Signer(owner) {
         }
 
         _default_lib_sign_ss[this.owner].push(lock.lockId);
-        return 'PROTECT {name} {id}'.format({
+        return ' PROTECT {name} {id} '.format({
             name: this.owner, 
             id: _default_lib_sign_ss[this.owner].length - 1
         });

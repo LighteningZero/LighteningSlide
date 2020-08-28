@@ -1,4 +1,4 @@
-![](https://github.com/LighteningZero/LighteningIcon/blob/master/horizontal/BrandTextSlide/LighteningZeroBrandTextSlide.svg)
+![](https://github.com/LighteningZero/LighteningIcon/blob/master/horizontalSlide/BrandText/LighteningZeroBrandSlide.png)
 
 # LighteningSlide
 A slide maker based on Reveal.js, using C++ & Js extention.

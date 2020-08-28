@@ -84,6 +84,7 @@ void extension::ExtensionRunner::runExtensions() {
         auto js = extension::JSContainer::getInstance();
         js->setScript(fileContent);
         js->runScript();
+
         jerry_value_t* js_markdown = new jerry_value_t;
         *js_markdown = jerry_create_string((const jerry_char_t*)this->markdown.c_str());
         js->runFunction(fmt::format("render[{}]", funcId), js_markdown, 1);

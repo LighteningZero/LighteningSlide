@@ -1,5 +1,5 @@
 # LighteningSlide
-A slide maker based on C++ & Js extention.
+A slide maker based on Receal.js, using C++ & Js extention.
 
 [![CI state](https://action-badges.now.sh/LighteningZero/LighteningSlide)](https://github.com/LighteningZero/LighteningSlide/actions)
 [![Last Commit](https://img.shields.io/github/last-commit/LighteningZero/LighteningSlide)](https://github.com/LighteningZero/LighteningSlide/)

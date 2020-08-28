@@ -12,6 +12,8 @@
     ],
     "extension.lib": [
         "default.libstring",
-        "default.libscanner"
+        "default.libscanner",
+        "default.liblock",
+        "default.libsign"
     ]
 }

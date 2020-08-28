@@ -15,12 +15,29 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LS_IO_IO_H
-#define LS_IO_IO_H
+#ifndef IO_FS_MAIN_PATH_H
+#define IO_FS_MAIN_PATH_H
 
-#include "fs/fs.h"
-#include "fs/main-path.h"
-#include "input.h"
-#include "output.h"
+#include <string>
 
-#endif // IO_IO_H
+namespace frontend {
+
+class CurrentPath {
+public:
+    static std::string getCurrentPath();
+
+private:
+    void calcCurrentPath();
+
+    CurrentPath();
+    ~CurrentPath();
+
+    std::string _path;
+
+    static CurrentPath* _instance;
+    static CurrentPath* getInstance();
+};
+
+} // namespace frontend
+
+#endif

@@ -25,7 +25,7 @@ var render = [origin => {
     while (true) {
         let str = s.scanToken();
         let isCodeStart = true;
-        for (let i = 0; i < Math.min(3, str.length); i += 1) {
+        for (let i = 0; i < 3; i += 1) {
             if (str[i] != '`') {
                 isCodeStart = false;
                 break;
@@ -53,10 +53,9 @@ var render = [origin => {
                 }
             }
         } else {
-            result += s.getTextFormMark();
+            result += str + s.scanLine() + '\n';
+            s.skipOneReturn();
         }
-
-        s.makeMarkHere();
 
         if (s.isEnd()) {
             break;

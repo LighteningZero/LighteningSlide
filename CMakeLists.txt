@@ -32,7 +32,8 @@ SET(SRC_LIB_LIST
     ${PROJECT_SOURCE_DIR}/src/config-reader/exceptions.cc
     ${PROJECT_SOURCE_DIR}/src/io/input.cc
     ${PROJECT_SOURCE_DIR}/src/io/output.cc
-    ${PROJECT_SOURCE_DIR}/src/io/fs.cc
+    ${PROJECT_SOURCE_DIR}/src/io/fs/fs.cc
+    ${PROJECT_SOURCE_DIR}/src/io/fs/main-path.cc
     ${PROJECT_SOURCE_DIR}/src/slide/slide.cc
     ${PROJECT_SOURCE_DIR}/src/extension-engine/main-engine.cc
 )

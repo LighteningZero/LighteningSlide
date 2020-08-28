@@ -15,10 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <string>
-
-#include "io/io.h"
 #include "slide/slide.h"
+#include <string>
+#include <fmt/core.h>
+#include "io/io.h"
 #include "extension-engine/main-engine.h"
 
 void frontend::Slide::importFromHtmlString(const std::string& html) {
@@ -52,5 +52,5 @@ void frontend::Slide::exportSlide(const std::string& filepath) {
     frontend::FileWriter slide_file_writer(filepath + "slide.html");
     slide_file_writer.write(this->_HTML);
 
-    frontend::copyFile("./reveal", filepath + "/reveal");
+    frontend::copyFile(fmt::format("{}/reveal", frontend::CurrentPath::get()), filepath + "/reveal");
 }

@@ -31,11 +31,11 @@ extension::ExtensionRunner::ExtensionRunner() {}
 extension::ExtensionRunner::~ExtensionRunner() {}
 
 std::string extension::ExtensionRunner::findExtensionFile(const std::string& filename) {
-    if (frontend::isFileExist(fmt::format("./data/extension/{}.js", filename)))
-        return fmt::format("./data/extension/{}.js", filename);
+    if (frontend::isFileExist(fmt::format("{}/data/extension/{}.js", frontend::CurrentPath::get(), filename)))
+        return fmt::format("{}/data/extension/{}.js", frontend::CurrentPath::get(), filename);
 
-    if (frontend::isFileExist(fmt::format("./extension/{}.js", filename)))
-        return fmt::format("./extension/{}.js", filename);
+    if (frontend::isFileExist(fmt::format("{}/extension/{}.js", frontend::CurrentPath::get(), filename)))
+        return fmt::format("{}/extension/{}.js", frontend::CurrentPath::get(), filename);
 
     throw std::runtime_error(fmt::format("Can not find extension '{}'", filename));
 }

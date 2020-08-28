@@ -15,12 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LS_IO_IO_H
-#define LS_IO_IO_H
+#include <string>
+#include <fmt/core.h>
+#include <gtest/gtest.h>
+#include "io/io.h"
 
-#include "input.h"
-#include "output.h"
-#include "fs/fs.h"
-#include "fs/main-path.h"
+TEST(FileSystemCurrentPathTest, TestAll) {
+    system("sh output_pwd.sh > current_path.out");
+    frontend::FileScanner f("current_path.out");
+    fmt::print("+{}\n", frontend::CurrentPath::get());
 
-#endif // IO_IO_H
+    std::string res(f.scanAll());
+    res.pop_back();
+    res.push_back('/');
+    ASSERT_EQ(res, frontend::CurrentPath::get());
+}
+
+int main(int argc, char* argv[]) {
+    testing::InitGoogleTest(&argc, argv);
+    frontend::FileWriter f("output_pwd.sh");
+    f.write("#! /bin/sh\ncur_dir=$(cd \"$(dirname \"$0\")\"; pwd)\necho $cur_dir\n");
+    f.flush();
+    return RUN_ALL_TESTS();
+}

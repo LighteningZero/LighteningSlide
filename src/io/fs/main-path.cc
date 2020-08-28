@@ -58,7 +58,7 @@ void frontend::CurrentPath::calcCurrentPath() {
     delete[] current_absolute_path;
 }
 
-std::string frontend::CurrentPath::getCurrentPath() {
+std::string frontend::CurrentPath::get() {
     auto that = frontend::CurrentPath::getInstance();
     return that->_path;
 }

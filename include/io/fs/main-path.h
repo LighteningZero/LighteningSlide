@@ -24,7 +24,7 @@ namespace frontend {
 
 class CurrentPath {
 public:
-    static std::string getCurrentPath();
+    static std::string get();
 
 private:
     void calcCurrentPath();

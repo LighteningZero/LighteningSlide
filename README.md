@@ -1,6 +1,5 @@
 ![](https://github.com/LighteningZero/LighteningIcon/blob/master/horizontalSlide/BrandText/LighteningZeroBrandSlide.png)
 
-# LighteningSlide
 A slide maker based on Reveal.js, using C++ & Js extention.
 
 [![CI state](https://action-badges.now.sh/LighteningZero/LighteningSlide)](https://github.com/LighteningZero/LighteningSlide/actions)

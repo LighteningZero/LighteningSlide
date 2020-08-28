@@ -41,6 +41,18 @@ jobs:
       run: |
         sudo apt install wget pkg-config build-essential cmake unzip python3
     
+    - name: install gflags
+      run: |
+        cd ../..
+        wget https://github.com/gflags/gflags/archive/v2.2.2.zip
+        unzip v2.2.2.zip
+        cd gflags-2.2.2
+        mkdir build
+        cd build
+        cmake ..
+        make -j16
+        sudo make install
+
     - name: install jsoncpp
       run: |
         cd ../..
@@ -77,7 +89,7 @@ jobs:
     
     - name: install libfmt
       run: |
-        cd ..
+        cd ../..
         wget https://github.com/fmtlib/fmt/releases/download/7.0.3/fmt-7.0.3.zip
         unzip fmt-7.0.3.zip
         cd fmt-7.0.3

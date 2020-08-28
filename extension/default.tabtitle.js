@@ -1,4 +1,4 @@
-// -*- C++ -*- LighteningZero
+// -*- javascript -*- LighteningZero
 
 // Copyright (C) 2020  Lightening Zero
 //
@@ -15,19 +15,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef IO_FS_H
-#define IO_FS_H
+var render = [origin => {
+    let s = new Scanner(origin);
+    let result = new String();
+    s.makeMarkHere();
 
-#include <string>
+    while (true) {
+        let str = s.scanToken();
 
-namespace frontend {
+        if (str != '%TITLE%' && str != '%title%') {
+            result += s.getTextFormMark();
+        } else {
+            let content = s.scanLine();
+            result += '<title>' + content + '</title>\n';
+        }
+        
+        s.skipBlank();
+        s.makeMarkHere();
 
-bool isFileExist(const std::string& filepath);
-void moveFile(const std::string& originFilename, const std::string& newFilename);
-void copyFile(const std::string& originFilename, const std::string& newFilename);
-void createFile(const std::string& filename);
-void createDir(const std::string& filename);
+        if (s.isEnd()) {
+            break;
+        }
+    }
 
-} // namespace frontend
-
-#endif // IO_FS_H
+    return result;
+}];

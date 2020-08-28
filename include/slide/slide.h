@@ -15,19 +15,30 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef IO_FS_H
-#define IO_FS_H
+#ifndef EXPORT_SLIDE_H
+#define EXPORT_SLIDE_H
 
 #include <string>
 
 namespace frontend {
 
-bool isFileExist(const std::string& filepath);
-void moveFile(const std::string& originFilename, const std::string& newFilename);
-void copyFile(const std::string& originFilename, const std::string& newFilename);
-void createFile(const std::string& filename);
-void createDir(const std::string& filename);
+class Slide {
+public:
+    // Import slide
+    void importFromHtmlFile(const std::string& filename);
+    void importFromHtmlString(const std::string& html);
+    void importFromMarkdownFile(const std::string& filename);
+    void importFromMarkdownString(const std::string& markdown);
+
+    // Export Slide
+    void exportSlide(const std::string& filepath);
+
+    std::string getHTML();
+
+private:
+    std::string _HTML;
+};
 
 } // namespace frontend
 
-#endif // IO_FS_H
+#endif // EXPORT_SLIDE_H

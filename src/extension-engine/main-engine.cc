@@ -42,7 +42,7 @@ std::string extension::ExtensionRunner::findExtensionFile(const std::string& fil
 
 void extension::ExtensionRunner::runExtensions() {
     extension::ConfigContainer ConfigReader;
-    ConfigReader.loadFromFile("./data/config.json");
+    ConfigReader.loadFromFile("./data/extension_config.json");
     for (size_t i = 0; i < ConfigReader.getItemSize("extension.lib"); i++) {
         std::string lib;
         lib = ConfigReader.getItemAsString(fmt::format("extension.lib:{}", i));

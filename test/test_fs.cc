@@ -15,19 +15,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef IO_FS_H
-#define IO_FS_H
-
 #include <string>
 
-namespace frontend {
+#include <gtest/gtest.h>
 
-bool isFileExist(const std::string& filepath);
-void moveFile(const std::string& originFilename, const std::string& newFilename);
-void copyFile(const std::string& originFilename, const std::string& newFilename);
-void createFile(const std::string& filename);
-void createDir(const std::string& filename);
+#include "io/io.h"
 
-} // namespace frontend
+TEST(FileSystemTest, TestAll) {
+    frontend::createDir("in");
+    frontend::createDir("ans");
+    frontend::createFile("in/test.txt");
+    frontend::FileWriter in_writer("./in/test.txt");
+    in_writer.write("abc");
+    in_writer.flush();
 
-#endif // IO_FS_H
+    frontend::copyFile("./in/test.txt", "./ans/test.txt");
+    frontend::moveFile("./ans/test.txt", "./ans/ans.txt");
+    frontend::FileScanner ans_scanner("./ans/ans.txt");
+    std::string res = ans_scanner.scanAll();
+    ASSERT_EQ(res, "abc");
+}
+
+int main(int argc, char* argv[]) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}

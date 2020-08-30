@@ -15,13 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#include <exception>
+#include <stdexcept>
 #include <cstdio>
 #include <cstdlib>
 #include <fmt/color.h>
 #include <fmt/core.h>
 #include <gflags/gflags.h>
-#include <exception>
-#include <stdexcept>
 #include <unistd.h>
 
 #include "io/io.h"
@@ -61,11 +61,11 @@ int main(int argc, char** argv) {
 
         try {
             slide_maker.importFromMarkdownFile(FLAGS_input);
-        } catch(std::invalid_argument& err) {
+        } catch (std::invalid_argument& err) {
             fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
             fmt::print("{}\n", err.what());
             return 0;
-        } catch(std::runtime_error& err) {
+        } catch (std::runtime_error& err) {
             fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
             fmt::print("{}\n", err.what());
             return 0;
@@ -73,11 +73,11 @@ int main(int argc, char** argv) {
 
         try {
             slide_maker.exportSlide(FLAGS_output);
-        } catch(std::invalid_argument& err) {
+        } catch (std::invalid_argument& err) {
             fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
             fmt::print("{}\n", err.what());
             return 0;
-        } catch(std::runtime_error& err) {
+        } catch (std::runtime_error& err) {
             fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
             fmt::print("{}\n", err.what());
             return 0;

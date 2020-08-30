@@ -37,14 +37,14 @@ void printIcon(bool large) {
     if (large) {
         std::string icon = "\n"
                            "    +-------------------+  │\n"
-                           "+-------------------+###|  │  Lightening Slide V0.1a\n"
+                           "+-------------------+###|  │  Lightening Slide\n"
                            "|########@@@@#######|###|  │  Copyright (C) 2020 Lightening Zero\n"
                            "|#######@@@@########|###|  │\n"
                            "|######@@@@@@@######|###|  │  For Help:      --help\n"
                            "|#####@@@@@@@#######|###|  │  Make Slide:    --input /path --output /path\n"
                            "|########@@@########|###|  │  Modigy Config: --config\n"
                            "|########@@#########|###|  │  Get Path:      --path\n"
-                           "|########@##########|---+  │\n"
+                           "|########@##########|---+  │  Get Version:   --version\n"
                            "+-------------------+      │\n\n";
 
         for (size_t i = 0; i < icon.size(); i++) {
@@ -87,6 +87,7 @@ void printIcon(bool large) {
 }
 
 int main(int argc, char** argv) {
+    GFLAGS_NAMESPACE::SetVersionString("V0.1a");
     GFLAGS_NAMESPACE::SetUsageMessage(
         "This program make slides.\n\nLighteningSlide Copyright (C) 2020 LighteningZero\nThis program comes with "
         "ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it\nunder certain "

@@ -264,7 +264,7 @@ TEST(ExtensionTest, InlineCodeTest) {
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
-    frontend::copyFile("./../../extension", "./extension");
+    frontend::copyFile("./../../extension", "./extension", true);
     frontend::createDir("data");
 
     return RUN_ALL_TESTS();

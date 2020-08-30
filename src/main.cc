@@ -29,6 +29,7 @@
 
 DEFINE_string(input, "", "Input markdown file.");
 DEFINE_string(output, "", "Output directory. Where to place rendered slide");
+DEFINE_string(install, "", "Install extension");
 DEFINE_bool(license, false, "Output program license");
 DEFINE_bool(config, false, "Show config");
 DEFINE_bool(path, false, "Show current path");
@@ -107,6 +108,11 @@ int main(int argc, char** argv) {
 
     if (FLAGS_path) {
         fmt::print(fmt::emphasis::underline, "{}\n", frontend::CurrentPath::get());
+        return 0;
+    }
+
+    if (FLAGS_install.size() > 0) {
+        frontend::copyFile(FLAGS_install, fmt::format("{}extension", frontend::CurrentPath::get()), false);
         return 0;
     }
 

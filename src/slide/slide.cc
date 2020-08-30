@@ -52,5 +52,5 @@ void frontend::Slide::exportSlide(const std::string& filepath) {
     frontend::FileWriter slide_file_writer(filepath + "slide.html");
     slide_file_writer.write(this->_HTML);
 
-    frontend::copyFile(fmt::format("{}/reveal", frontend::CurrentPath::get()), filepath + "/reveal");
+    frontend::copyFile(fmt::format("{}/reveal", frontend::CurrentPath::get()), filepath + "/reveal", true);
 }

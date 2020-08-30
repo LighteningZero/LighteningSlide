@@ -24,12 +24,13 @@ namespace frontend {
 
 class CurrentPath {
 public:
-    CurrentPath();
-    ~CurrentPath();
     static std::string get();
 
 private:
     void calcCurrentPath();
+
+    CurrentPath();
+    ~CurrentPath();
 
     std::string _path;
 

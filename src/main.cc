@@ -33,6 +33,59 @@ DEFINE_bool(license, false, "Output program license");
 DEFINE_bool(config, false, "Show config");
 DEFINE_bool(path, false, "Show current path");
 
+void printIcon(bool large) {
+    if (large) {
+        std::string icon = "\n"
+                           "    +-------------------+  │\n"
+                           "+-------------------+###|  │  Lightening Slide V0.1a\n"
+                           "|########@@@@#######|###|  │  Copyright (C) 2020 Lightening Zero\n"
+                           "|#######@@@@########|###|  │\n"
+                           "|######@@@@@@@######|###|  │  For Help:      --help\n"
+                           "|#####@@@@@@@#######|###|  │  Make Slide:    --input /path --output /path\n"
+                           "|########@@@########|###|  │  Modigy Config: --config\n"
+                           "|########@@#########|###|  │  Get Path:      --path\n"
+                           "|########@##########|---+  │\n"
+                           "+-------------------+      │\n\n";
+
+        for (size_t i = 0; i < icon.size(); i++) {
+            if (icon[i] == '@') {
+                fmt::print(bg(fmt::color::light_blue) | fg(fmt::color::yellow) | fmt::emphasis::bold, "@");
+            } else if (icon[i] == '#') {
+                fmt::print(bg(fmt::color::light_blue) | fg(fmt::color::light_blue), "#");
+            } else if (icon[i] == '-' && icon[i + 1] == '+' || icon[i] == '-' && icon[i + 2] == '+'
+                       || icon[i] == '-' && icon[i + 2] == '-' || icon[i] == '+' || icon[i] == '|') {
+                fmt::print(bg(fmt::color::light_blue) | fg(fmt::color::sky_blue) | fmt::emphasis::bold, "{}", icon[i]);
+            } else {
+                fmt::print("{}", icon[i]);
+            }
+        }
+    } else {
+        std::string icon = "\n"
+                           "    +-------------------+\n"
+                           "+-------------------+###|\n"
+                           "|########@@@@#######|###|\n"
+                           "|#######@@@@########|###|\n"
+                           "|######@@@@@@@######|###|\n"
+                           "|#####@@@@@@@#######|###|\n"
+                           "|########@@@########|###|\n"
+                           "|########@@#########|###|\n"
+                           "|########@##########|---+\n"
+                           "+-------------------+    \n";
+
+        for (size_t i = 0; i < icon.size(); i++) {
+            if (icon[i] == '@') {
+                fmt::print(bg(fmt::color::light_blue) | fg(fmt::color::yellow) | fmt::emphasis::bold, "@");
+            } else if (icon[i] == '#') {
+                fmt::print(bg(fmt::color::light_blue) | fg(fmt::color::light_blue), "#");
+            } else if (icon[i] == '-' || icon[i] == '+' || icon[i] == '|') {
+                fmt::print(bg(fmt::color::light_blue) | fg(fmt::color::sky_blue) | fmt::emphasis::bold, "{}", icon[i]);
+            } else {
+                fmt::print("{}", icon[i]);
+            }
+        }
+    }
+}
+
 int main(int argc, char** argv) {
     GFLAGS_NAMESPACE::SetUsageMessage(
         "This program make slides.\n\nLighteningSlide Copyright (C) 2020 LighteningZero\nThis program comes with "
@@ -93,6 +146,8 @@ int main(int argc, char** argv) {
         fmt::print("Missing --output\n");
         return 0;
     }
+
+    printIcon(true);
 
     return 0;
 }

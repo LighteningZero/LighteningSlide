@@ -27,7 +27,7 @@
 #include "io/io.h"
 #include "slide/slide.h"
 
-DEFINE_string(input, "", "Inpput markdown file.");
+DEFINE_string(input, "", "Input markdown file.");
 DEFINE_string(output, "", "Output directory. Where to place rendered slide");
 DEFINE_bool(license, false, "Output program license");
 DEFINE_bool(config, false, "Show config");

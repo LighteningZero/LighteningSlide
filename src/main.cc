@@ -17,15 +17,21 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <fmt/color.h>
 #include <fmt/core.h>
 #include <gflags/gflags.h>
+#include <exception>
+#include <stdexcept>
 #include <unistd.h>
+
 #include "io/io.h"
 #include "slide/slide.h"
 
-DEFINE_string(input, "/dev/stdin", "Input markdown file.");
-DEFINE_string(output, "/dev/stdout", "Output directory. Where to place render slide");
+DEFINE_string(input, "", "Inpput markdown file.");
+DEFINE_string(output, "", "Output directory. Where to place rendered slide");
 DEFINE_bool(license, false, "Output program license");
+DEFINE_bool(config, false, "Show config");
+DEFINE_bool(path, false, "Show current path");
 
 int main(int argc, char** argv) {
     GFLAGS_NAMESPACE::SetUsageMessage(
@@ -40,8 +46,53 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    frontend::Slide slide_maker;
-    slide_maker.importFromMarkdownFile(FLAGS_input);
-    slide_maker.exportSlide(FLAGS_output);
+    if (FLAGS_config) {
+        system(fmt::format("/usr/bin/editor {}data/extension_config.json", frontend::CurrentPath::get()).c_str());
+        return 0;
+    }
+
+    if (FLAGS_path) {
+        fmt::print(fmt::emphasis::underline, "{}\n", frontend::CurrentPath::get());
+        return 0;
+    }
+
+    if (FLAGS_input.size() > 0 && FLAGS_output.size() > 0) {
+        frontend::Slide slide_maker;
+
+        try {
+            slide_maker.importFromMarkdownFile(FLAGS_input);
+        } catch(std::invalid_argument& err) {
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+            fmt::print("{}\n", err.what());
+            return 0;
+        } catch(std::runtime_error& err) {
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+            fmt::print("{}\n", err.what());
+            return 0;
+        }
+
+        try {
+            slide_maker.exportSlide(FLAGS_output);
+        } catch(std::invalid_argument& err) {
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+            fmt::print("{}\n", err.what());
+            return 0;
+        } catch(std::runtime_error& err) {
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+            fmt::print("{}\n", err.what());
+            return 0;
+        }
+
+        return 0;
+    } else if (FLAGS_input.size() == 0 && FLAGS_output.size() > 0) {
+        fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+        fmt::print("Missing --input\n");
+        return 0;
+    } else if (FLAGS_output.size() == 0 && FLAGS_input.size() > 0) {
+        fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+        fmt::print("Missing --output\n");
+        return 0;
+    }
+
     return 0;
 }

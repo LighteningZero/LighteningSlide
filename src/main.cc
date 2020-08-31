@@ -96,8 +96,14 @@ int main(int argc, char** argv) {
     GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, false);
 
     if (FLAGS_license) {
-        frontend::FileScanner license_file("LICENSE");
-        fmt::print(license_file.scanAll());
+        try {
+            frontend::FileScanner license_file("LICENSE");
+            fmt::print(license_file.scanAll());
+        } catch (std::invalid_argument& err) {
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+            fmt::print("{}\n", err.what());
+            return 0;
+        }
         return 0;
     }
 
@@ -107,6 +113,7 @@ int main(int argc, char** argv) {
     }
 
     if (FLAGS_path) {
+        fmt::print(fg(fmt::color::light_sky_blue) | fmt::emphasis::bold, "LighteningSlide is at:\n");
         fmt::print(fmt::emphasis::underline, "{}\n", frontend::CurrentPath::get());
         return 0;
     }
@@ -142,6 +149,8 @@ int main(int argc, char** argv) {
             fmt::print("{}\n", err.what());
             return 0;
         }
+
+        fmt::print(fg(fmt::color::sea_green) | fmt::emphasis::bold, "Successed\n");
 
         return 0;
     } else if (FLAGS_input.size() == 0 && FLAGS_output.size() > 0) {

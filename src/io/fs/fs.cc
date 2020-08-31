@@ -37,7 +37,7 @@ void frontend::moveFile(const std::string& originFilename, const std::string& ne
     system(command.c_str());
 }
 
-void frontend::copyFile(const std::string& originFilename, const std::string& newFilename, const bool withDir) {
+void frontend::copyFile(const std::string& originFilename, const std::string& newFilename, bool withDir) {
     std::string command;
     if (withDir) {
         command = fmt::format("cp -r {} {}", originFilename, newFilename);

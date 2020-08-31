@@ -24,7 +24,7 @@ namespace frontend {
 
 bool isFileExist(const std::string& filepath);
 void moveFile(const std::string& originFilename, const std::string& newFilename);
-void copyFile(const std::string& originFilename, const std::string& newFilename, const bool withDir);
+void copyFile(const std::string& originFilename, const std::string& newFilename, bool withDir);
 void createFile(const std::string& filename);
 void createDir(const std::string& filename);
 

@@ -119,7 +119,7 @@ int main(int argc, char** argv) {
     }
 
     if (FLAGS_install.size() > 0) {
-        frontend::copyFile(FLAGS_install, fmt::format("{}extension", frontend::CurrentPath::get()), false);
+        frontend::copyFile(FLAGS_install, fmt::format("{}data/extension", frontend::CurrentPath::get()), false);
         return 0;
     }
 

@@ -42,9 +42,9 @@ TEST(ExtensionMainEngineTest, Test) {
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
-    frontend::copyFile("./../../extension", "./extension");
+    frontend::copyFile("./../../extension", "./extension", true);
     frontend::createDir("data");
-    frontend::copyFile("./../../template.json", "./data/extension_config.json");
+    frontend::copyFile("./../../template.json", "./data/extension_config.json", false);
 
     return RUN_ALL_TESTS();
 }

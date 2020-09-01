@@ -29,7 +29,7 @@ TEST(FileSystemTest, TestAll) {
     in_writer.write("abc");
     in_writer.flush();
 
-    frontend::copyFile("./in/test.txt", "./ans/test.txt");
+    frontend::copyFile("./in/test.txt", "./ans/test.txt", false);
     frontend::moveFile("./ans/test.txt", "./ans/ans.txt");
     frontend::FileScanner ans_scanner("./ans/ans.txt");
     std::string res = ans_scanner.scanAll();

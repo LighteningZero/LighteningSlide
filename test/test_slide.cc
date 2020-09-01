@@ -43,10 +43,10 @@ TEST(SlideTest, Test) {
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 
-    frontend::copyFile("./../../extension", "./extension");
+    frontend::copyFile("./../../extension", "./extension", false);
     frontend::createDir("data");
-    frontend::copyFile("./../../template.json", "./data/extension_config.json");
-    frontend::copyFile("./../../reveal", "./reveal");
+    frontend::copyFile("./../../template.json", "./data/extension_config.json", false);
+    frontend::copyFile("./../../reveal", "./reveal", true);
 
     return RUN_ALL_TESTS();
 }

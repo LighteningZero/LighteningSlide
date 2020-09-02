@@ -36,6 +36,8 @@
 
 # CMake Build
 build/
+release/
+dist/
 
 debug/
 reveal/

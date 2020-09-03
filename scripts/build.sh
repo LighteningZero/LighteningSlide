@@ -22,7 +22,7 @@ then
     cd ..
 fi
 
-git clone https://github.com/hakimel/reveal.js
+git clone https://github.com/hakimel/reveal.js --depth=1 -b master
 
 mkdir build
 cd build

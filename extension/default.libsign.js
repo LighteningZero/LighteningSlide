@@ -34,18 +34,14 @@ function Signer(owner) {
         });
     }
 
-    this.unsign = function(value, process=x=>x) {
+    this.unsign = function(value) {
         let s = new Scanner(value);
         let result = new String();
         s.setLineBreakToLFMode();
         
-        s.skipEmpty();
         s.makeMarkHere();
         while (true) {
-            s.skipChar(-1);
             let before = s.getTextFormMark();
-            s.skipChar(1);
-            
             let now = s.scanToken();
             if (now == 'PROTECT') {
                 let name = s.scanToken();
@@ -54,7 +50,7 @@ function Signer(owner) {
                 if (name == this.owner) {
                     result += before;
                     let lock = new Lock(false, _default_lib_sign_ss[this.owner][id]);
-                    result += process(lock.getLockCode());
+                    result += lock.getLockCode();
                     lock.freeLock();
                     s.makeMarkHere();
                 }

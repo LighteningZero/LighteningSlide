@@ -18,15 +18,15 @@
 var render = [origin => {
     let result = origin;
     // Italic
-    result = inlineMark(result, '_', wrapWithHTMLTags('i'), false);
-    result = inlineMark(result, '*', wrapWithHTMLTags('i'), false);
+    result = inlineMark(result, '_', 'i', false);
+    result = inlineMark(result, '*', 'i', false);
 
     // Bold
-    result = inlineMark(result, '_', wrapWithHTMLTags('strong'), true);
-    result = inlineMark(result, '*', wrapWithHTMLTags('strong'), true);
+    result = inlineMark(result, '_', 'strong', true);
+    result = inlineMark(result, '*', 'strong', true);
 
     // Delete
-    result = inlineMark(result, '~', wrapWithHTMLTags('del'), false);
-    result = inlineMark(result, '~', wrapWithHTMLTags('del'), true);
+    result = inlineMark(result, '~', 'del', false);
+    result = inlineMark(result, '~', 'del', true);
     return result;
 }]

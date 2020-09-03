@@ -15,6 +15,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+if (String.prototype.format === undefined) {
+    String.prototype.format = function(args) {
+        let result = this;
+        if (arguments.length < 1) {
+            return result;
+        }
+
+        let data = arguments;
+        if (arguments.length === 1 && typeof (args) === 'object') {
+            data = args;
+        }
+
+        for (let key in data) {
+            let value = data[key];
+            if (value !== undefined) {
+                result = result.replace('{' + key + '}', value);
+            }
+        }
+        return result;
+    }
+}
+
 if (String.prototype.replaceAll === undefined) {
     String.prototype.replaceAll = function(before, after) {
         let res = new String();
@@ -27,44 +49,17 @@ if (String.prototype.replaceAll === undefined) {
                     matched = 0;
                 }
             } else {
-                for (let j = i - matched; j <= i; j += 1) {
-                    res += this[j];
-                }
                 matched = 0;
-                
+                res += this[i];
             }
         }
 
-        for (let i = this.length - matched; i < this.length; ++i) {
+        for (let i = this.length - matched; i < this.length; i += 1) {
             res += this[i];
         }
 
         return res;
     };
-}
-
-if (String.prototype.format === undefined) {
-    String.prototype.format = function(args) {
-        let result = this;
-        if (arguments.length < 1) {
-            return result;
-        }
-
-        let data;
-        if (arguments.length === 1 && typeof(args) === 'object') {
-            data = args;
-        } else {
-            data = arguments;
-        }
-
-        for (let key in data) {
-            let value = data[key];
-            if (value !== undefined) {
-                result = result.replaceAll('{' + key + '}', value);
-            }
-        }
-        return result;
-    }
 }
 
 if (String.prototype.trim === undefined) {

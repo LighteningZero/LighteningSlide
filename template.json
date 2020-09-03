@@ -1,6 +1,5 @@
 {
     "extension.order": [
-        "default.inlinecode:0",
         "default.header:0",
         "default.fontstyle:0",
         "default.link:0",
@@ -8,8 +7,6 @@
         "default.blockquote:0",
         "default.pagedivider:0",
         "default.splitline:0",
-        
-        "default.inlinecode:1",
         "default.tabtitle:0",
         "default.reveal:0",
         "default.framework:0"
@@ -19,7 +16,6 @@
         "default.libscanner",
         "default.libinlinemark",
         "default.liblock",
-        "default.libsign",
-        "default.libwrapper"
+        "default.libsign"
     ]
 }

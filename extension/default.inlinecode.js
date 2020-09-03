@@ -18,6 +18,9 @@
 var render = [origin => {
     let result = origin;
 
-    result = inlineMark(result, '`', 'code', false);
+    result = inlineMark(result, '`', wrapWithProtect('DefaultInlineCodeJS'), false);
     return result;
-}]
+}, origin => {
+    let pen = new Signer('DefaultInlineCodeJS');
+    return pen.unsign(origin, wrapWithHTMLTags('code'));
+}];

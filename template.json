@@ -1,5 +1,6 @@
 {
     "extension.order": [
+        "default.code:0",
         "default.inlinecode:0",
         "default.header:0",
         "default.fontstyle:0",

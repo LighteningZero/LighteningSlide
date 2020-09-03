@@ -15,12 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-var render = [origin => {
-    let result = origin;
+function wrapWithHTMLTags(tag) {
+    return content => {
+        return '<{tag}>{content}</{tag}>'.format({
+            tag: tag,
+            content: content
+        });
+    }
+}
 
-    result = inlineMark(result, '`', wrapWithProtect('DefaultInlineCodeJS'), false);
-    return result;
-}, origin => {
-    let pen = new Signer('DefaultInlineCodeJS');
-    return pen.unsign(origin, wrapWithHTMLTags('code'));
-}];
+function wrapWithProtect(ext_uuid) {
+    let pen = new Signer(ext_uuid);
+    return content => {
+        return pen.sign(content);
+    }
+}

@@ -121,7 +121,10 @@ TEST(ExtensionTest, FontStlyeTest) {
            "\"extension.lib\":["
            "\"default.libstring\","
            "\"default.libscanner\","
-           "\"default.libinlinemark\""
+           "\"default.liblock\","
+           "\"default.libinlinemark\","
+           "\"default.libsign\","
+           "\"default.libwrapper\""
            "]"
            "}";
 
@@ -154,6 +157,7 @@ TEST(ExtensionTest, TabTitleTest) {
 
     ASSERT_EQ(std::string("<title>abcd</title>\n<title>bcde</title>\n"), HTML);
 }
+
 TEST(ExtensionTest, CodeTest) {
     std::ofstream out("./data/extension_config.json");
     out << "{"
@@ -243,22 +247,27 @@ TEST(ExtensionTest, InlineCodeTest) {
     std::ofstream out("./data/extension_config.json");
     out << "{"
            "\"extension.order\":["
-           "\"default.inlinecode:0\""
+           "\"default.inlinecode:0\","
+           "\"default.fontstyle:0\","
+           "\"default.inlinecode:1\","
            "],"
            "\"extension.lib\":["
            "\"default.libstring\","
            "\"default.libscanner\","
-           "\"default.libinlinemark\""
+           "\"default.libinlinemark\","
+           "\"default.liblock\","
+           "\"default.libsign\","
+           "\"default.libwrapper\""
            "]"
            "}";
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("`code`");
+    ext.setOriginMarkdown("`code _III_`");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("<code>code</code>"), HTML);
+    ASSERT_EQ(std::string("<code>code _III_</code>"), HTML);
 }
 
 int main(int argc, char* argv[]) {

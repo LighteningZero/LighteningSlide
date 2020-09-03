@@ -28,7 +28,7 @@ var render = [origin => {
                 result += s.getTextFormMark();
             } else {
                 let content = s.scanLine();
-                result += '<link rel="stylesheet" href="./reveal/dist/theme/' + content + '.css"></link>'
+                result += '<link rel="stylesheet" href="./reveal/dist/theme/' + content + '.css" />'
             }
             
             s.skipBlank();
@@ -47,7 +47,7 @@ var render = [origin => {
     result = theme(result);
 
     // Basic reveal
-    result += '\n<link rel="stylesheet" href="./reveal/dist/reveal.css"></link>\n';
+    result = result + '<link rel="stylesheet" href="./reveal/dist/reveal.css" />';
     result += '<script src="./reveal/dist/reveal.js"></script>\n';
 
     // Code highlight

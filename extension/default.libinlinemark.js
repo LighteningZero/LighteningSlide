@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-function inlineMark(origin, mark, html, is_double_mark) {
+function inlineMark(origin, mark, handle, is_double_mark) {
     let s = new Scanner(origin);
     let result = new String();
 
@@ -75,7 +75,7 @@ function inlineMark(origin, mark, html, is_double_mark) {
             }
 
             if (have_end && mid != '') {
-                result += '<' + html + '>' + mid + '</' + html + '>';
+                result += handle(mid);
             } else {
                 if (mid == '') {
                     result += mark;

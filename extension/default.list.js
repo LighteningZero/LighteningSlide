@@ -31,6 +31,7 @@ var render = [markdown => {
                 s.skipOneReturn();
                 let str2 = s.scanToken();
                 if (str2 == '') {
+                    s.skipOneReturn();
                     break;
                 } else {
                     content += '\n<br>\n<li>' + str2 + s.scanLine() + '</li>';

@@ -26,29 +26,34 @@ var render = [markdown => {
         let str = s.scanToken();
         if (str === '-') {
             let content = new String();
-            content += '<li>' + s.scanLine() + '</li>';
+            content += '\n<li>\n' + s.scanLine();
+
             while (true) {
                 s.skipOneReturn();
                 let str2 = s.scanToken();
+
                 if (str2 == '') {
                     s.skipOneReturn();
+                    content += '\n</li>';
                     break;
                 } else if (str2 == '-') {
-                    content += '\n<br>\n<li>' + s.scanLine() + '</li>';
+                    content += '\n</li>\n<li>\n' + s.scanLine();
                 } else {
-                    content += '\n<br>\n<li>' + str2 + s.scanLine() + '</li>';
+                    content += '<br>' + str2 + s.scanLine();
                 }
+
                 if (s.isEnd()) {
+                    content += '\n</li>';
                     break;
                 }
             }
-            result += '<ul>\n' + content + '\n</ul>\n';
+            result += '<ul>' + content + '\n</ul>\n';
         } else {
             result += s.getTextFormMark();
         }
 
-        s.makeMarkHere();
         s.skipOneReturn();
+        s.makeMarkHere();
 
         if (s.isEnd()) {
             break;

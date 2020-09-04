@@ -53,7 +53,7 @@ var render = [origin => {
                 }
             }
         } else {
-            result += str + s.scanLine() + '\n';
+            result += str + ' ' + s.scanLine() + '\n';
             s.skipOneReturn();
         }
 

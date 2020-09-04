@@ -165,6 +165,7 @@ function Scanner(text) {
 
     this.scanLine = () => {
         let result = new String();
+        this.skipEmpty();
 
         while (this.getChar() !== '\n' && this.getChar() !== '\r' && this.getChar() != undefined) {
             result += this.scanChar();

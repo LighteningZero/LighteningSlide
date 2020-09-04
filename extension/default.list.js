@@ -33,6 +33,8 @@ var render = [markdown => {
                 if (str2 == '') {
                     s.skipOneReturn();
                     break;
+                } else if (str2 == '-') {
+                    content += '\n<br>\n<li>' + s.scanLine() + '</li>';
                 } else {
                     content += '\n<br>\n<li>' + str2 + s.scanLine() + '</li>';
                 }

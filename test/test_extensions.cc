@@ -292,6 +292,39 @@ TEST(ExtensionTest, ListTest) {
               HTML);
 }
 
+TEST(ExtensionTest, RevealTeat) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.reveal:0\""
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\""
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("%THEME% black\ntest");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(
+        std::string(
+            "<link rel=\"stylesheet\" href=\"./reveal/dist/reveal.css\" />\n<link rel=\"stylesheet\" "
+            "href=\"./reveal/dist/theme/black.css\" />\ntest\n<script "
+            "src=\"./reveal/dist/reveal.js\"></script>\n<script "
+            "src=\"./reveal/plugin/zoom/zoom.js\"></script>\n<script "
+            "src=\"./reveal/plugin/notes/notes.js\"></script>\n<script "
+            "src=\"./reveal/plugin/search/search.js\"></script>\n<script "
+            "src=\"./reveal/plugin/markdown/markdown.js\"></script>\n<script "
+            "src=\"./reveal/plugin/highlight/highlight.js\"></script>\n<script> Reveal.initialize({ controls: true, "
+            "progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, "
+            "RevealMarkdown, RevealHighlight] }); </script>\n"),
+        HTML);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 

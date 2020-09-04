@@ -287,7 +287,9 @@ TEST(ExtensionTest, ListTest) {
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("<ul>\n<li>abc</li>\n<br>\n<li>abcde-abcde</li>\n<br>\n<li>-abc</li>\n</ul>\nabc\n<ul>\n<li>abc</li>\n</ul>\n"), HTML);
+    ASSERT_EQ(std::string("<ul>\n<li>abc</li>\n<br>\n<li>abcde-abcde</li>\n<br>\n<li>-abc</li>\n</"
+                          "ul>\nabc\n<ul>\n<li>abc</li>\n</ul>\n"),
+              HTML);
 }
 
 int main(int argc, char* argv[]) {

@@ -269,6 +269,28 @@ TEST(ExtensionTest, InlineCodeTest) {
 
     ASSERT_EQ(std::string("<code>code _III_</code>"), HTML);
 }
+TEST(ExtensionTest, ListTest) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.list:0\","
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\","
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("- abc\nabcde-abcde\n-abc\n\nabc\n- abc\n-   abc");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(std::string("<ul>\n<li>\nabc<br>abcde-abcde<br>-abc\n</li>\n</ul>\nabc\n<ul>\n<li>\nabc\n</"
+                          "li>\n<li>\nabc\n</li>\n</ul>\n"),
+              HTML);
+}
 
 TEST(ExtensionTest, RevealTeat) {
     std::ofstream out("./data/extension_config.json");

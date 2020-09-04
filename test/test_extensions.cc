@@ -269,6 +269,26 @@ TEST(ExtensionTest, InlineCodeTest) {
 
     ASSERT_EQ(std::string("<code>code _III_</code>"), HTML);
 }
+TEST(ExtensionTest, ListTest) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\":["
+           "\"default.list:0\","
+           "],"
+           "\"extension.lib\":["
+           "\"default.libstring\","
+           "\"default.libscanner\","
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("- abc\nabcde-abcde\n-abc\n\nabc\n- abc");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(std::string("<ul>\n<li>abc</li>\n<br>\n<li>abcde-abcde</li>\n<br>\n<li>-abc</li>\n</ul>\nabc\n<ul>\n<li>abc</li>\n</ul>\n"), HTML);
+}
 
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);

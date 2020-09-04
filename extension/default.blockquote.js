@@ -49,8 +49,8 @@ var render = [markdown => {
             result += s.getTextFormMark();
         }
 
-        s.skipOneReturn();
         s.makeMarkHere();
+        s.skipOneReturn();
 
         if (s.isEnd()) {
             if(lastLineIsBlockquote) {

@@ -29,15 +29,18 @@ var render = [markdown => {
             content += '<li>' + s.scanLine() + '</li>';
             while (true) {
                 s.skipOneReturn();
+                if (s.isEnd()) {
+                    break;
+                }
                 let str2 = s.scanToken();
+                console.log(str2);
                 if (str2 == '') {
                     s.skipOneReturn();
                     break;
+                } else if (str2 == '-') {
+                    content += '\n<br>\n<li>' + s.scanLine() + '</li>';
                 } else {
                     content += '\n<br>\n<li>' + str2 + s.scanLine() + '</li>';
-                }
-                if (s.isEnd()) {
-                    break;
                 }
             }
             result += '<ul>\n' + content + '\n</ul>\n';

@@ -47,14 +47,18 @@ var render = [origin => {
     result = theme(result);
 
     // Basic reveal
-    result = result + '<link rel="stylesheet" href="./reveal/dist/reveal.css" />';
-    result += '<script src="./reveal/dist/reveal.js"></script>\n';
+    result = '<link rel="stylesheet" href="./reveal/dist/reveal.css" />' + result;
+    result += '<script src="./reveal/dist/reveal.js" />\n';
 
-    // Code highlight
-    result += '<script src="./reveal/plugin/highlight/highlight.js"></script>\n';
+    // Plugins
+    result += '<script src="./reveal/plugin/zoom/zoom.js" />\n';
+    result += '<script src="./reveal/plugin/notes/notes.js" />\n';
+    result += '<script src="./reveal/plugin/search/search.js" />\n';
+    result += '<script src="./reveal/plugin/markdown/markdown.js" />\n';
+    result += '<script src="./reveal/plugin/highlight/highlight.js" />\n';
 
     // Initialize reveal
-    result += '<script> Reveal.initialize(); </script>\n';
+    result += '<script> Reveal.initialize({ controls: true, progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight] }); </script>\n';
 
     return result;
 }];

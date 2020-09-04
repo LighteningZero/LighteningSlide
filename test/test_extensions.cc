@@ -325,6 +325,49 @@ TEST(ExtensionTest, RevealTeat) {
         HTML);
 }
 
+TEST(ExtensionTest, TestAll) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\": ["
+           "\"default.code:0\","
+           "\"default.inlinecode:0\","
+           "\"default.header:0\","
+           "\"default.fontstyle:0\","
+           "\"default.image:0\","
+           "\"default.link:0\","
+           "\"default.blockquote:0\","
+           "\"default.page:0\","
+           "\"default.splitline:0\","
+           "\"default.tabtitle:0\","
+           "\"default.reveal:0\","
+           "\"default.framework:0\","
+           "\"default.inlinecode:1\""
+           "],"
+           "\"extension.lib\": ["
+           "\"default.libstring\","
+           "\"default.libscanner\","
+           "\"default.libinlinemark\","
+           "\"default.liblock\","
+           "\"default.libsign\","
+           "\"default.libwrapper\""
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("%TITLE% LighteningSlide\n%THEME% white\n\n+++\n\n# H1\n## H2\n### H3\n#### "
+                          "H4\n\n+++\n\n[LighteningSlide](https://github.com/LighteningZero/"
+                          "LighteningSlide)\n\n---\n\n![LighteningSlide](https://github.com/LighteningZero/LighteningIcon/"
+                          "blob/master/horizontalSlide/BrandText/"
+                          "LighteningZeroBrandSlide.png)\n\n+++\n\n_abc_\n*abc*\n__abc__\n**abc**\n~~abc~~\n~abc~\n\n++"
+                          "+\n\n- abc\nabc\n- bcd\n\n+++\n\n`#include <vector>`\n\n```cpp\n#include <iostream>\nint "
+                          "main() {\n	int a, b;\n	std::cin >> a >> b;\n	std::cout << a + b;\n}\n```\n");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(std::string(""), HTML);
+}
+
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
 

@@ -77,7 +77,7 @@ TEST(ExtensionTest, PageDividerTest) {
     std::ofstream out("./data/extension_config.json");
     out << "{"
            "\"extension.order\":["
-           "\"default.pagedivider:0\""
+           "\"default.page:0\""
            "],"
            "\"extension.lib\":["
            "\"default.libstring\","

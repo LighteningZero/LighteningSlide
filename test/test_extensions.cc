@@ -355,13 +355,14 @@ TEST(ExtensionTest, TestAll) {
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("%TITLE% LighteningSlide\n%THEME% white\n\n+++\n\n# H1\n## H2\n### H3\n#### "
-                          "H4\n\n+++\n\n[LighteningSlide](https://github.com/LighteningZero/"
-                          "LighteningSlide)\n\n---\n\n![LighteningSlide](https://github.com/LighteningZero/LighteningIcon/"
-                          "blob/master/horizontalSlide/BrandText/"
-                          "LighteningZeroBrandSlide.png)\n\n+++\n\n_abc_\n*abc*\n__abc__\n**abc**\n~~abc~~\n~abc~\n\n++"
-                          "+\n\n- abc\nabc\n- bcd\n\n+++\n\n`#include <vector>`\n\n```cpp\n#include <iostream>\nint "
-                          "main() {\n	int a, b;\n	std::cin >> a >> b;\n	std::cout << a + b;\n}\n```\n");
+    ext.setOriginMarkdown(
+        "%TITLE% LighteningSlide\n%THEME% white\n\n+++\n\n# H1\n## H2\n### H3\n#### "
+        "H4\n\n+++\n\n[LighteningSlide](https://github.com/LighteningZero/"
+        "LighteningSlide)\n\n---\n\n![LighteningSlide](https://github.com/LighteningZero/LighteningIcon/"
+        "blob/master/horizontalSlide/BrandText/"
+        "LighteningZeroBrandSlide.png)\n\n+++\n\n_abc_\n*abc*\n__abc__\n**abc**\n~~abc~~\n~abc~\n\n++"
+        "+\n\n- abc\nabc\n- bcd\n\n+++\n\n`#include <vector>`\n\n```cpp\n#include <iostream>\nint "
+        "main() {\n	int a, b;\n	std::cin >> a >> b;\n	std::cout << a + b;\n}\n```\n");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 

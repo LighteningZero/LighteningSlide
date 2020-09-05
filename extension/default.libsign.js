@@ -56,11 +56,15 @@ function Signer(owner) {
                     let lock = new Lock(false, _default_lib_sign_ss[this.owner][id]);
                     result += process(lock.getLockCode());
                     lock.freeLock();
+                    s.skipChar();
                     s.makeMarkHere();
                 }
             }
 
+            s.skipOneReturn();
+
             if (s.isEnd()) {
+                result += s.getTextFormMark();
                 break;
             }
         }

@@ -134,7 +134,8 @@ TEST(ExtensionTest, FontStlyeTest) {
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("\n<strong>\n<strong>\n<del>test1</del>\n</strong>\n</strong>\n \n<i>\n<i>test2</i>\n</i>\n"), HTML);
+    ASSERT_EQ(std::string("\n<strong>\n<strong>\n<del>test1</del>\n</strong>\n</strong>\n \n<i>\n<i>test2</i>\n</i>\n"),
+              HTML);
 }
 
 TEST(ExtensionTest, TabTitleTest) {

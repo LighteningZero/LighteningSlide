@@ -172,11 +172,11 @@ TEST(ExtensionTest, CodeTest) {
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("abc\n```cpp\nabc\n``\n```");
+    ext.setOriginMarkdown("abc\n```cpp\n  a bc\n``\n```");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("abc\n<pre>\n<code>\nabc\n``\n</code>\n</pre>\n"), HTML);
+    ASSERT_EQ(std::string("abc\n<pre>\n<code>\n  a bc\n``\n</code>\n</pre>\n"), HTML);
 }
 
 TEST(ExtensionTest, LinkTest) {

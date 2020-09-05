@@ -129,11 +129,11 @@ int main(int argc, char** argv) {
         try {
             slide_maker.importFromMarkdownFile(FLAGS_input);
         } catch (std::invalid_argument& err) {
-            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--input]: ");
             fmt::print("{}\n", err.what());
             return 0;
         } catch (std::runtime_error& err) {
-            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--input]: ");
             fmt::print("{}\n", err.what());
             return 0;
         }
@@ -141,11 +141,11 @@ int main(int argc, char** argv) {
         try {
             slide_maker.exportSlide(FLAGS_output);
         } catch (std::invalid_argument& err) {
-            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--output]: ");
             fmt::print("{}\n", err.what());
             return 0;
         } catch (std::runtime_error& err) {
-            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--output]: ");
             fmt::print("{}\n", err.what());
             return 0;
         }

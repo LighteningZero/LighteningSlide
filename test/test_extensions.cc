@@ -130,11 +130,11 @@ TEST(ExtensionTest, FontStlyeTest) {
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("__**~test1~**__ _*test2*_");
+    ext.setOriginMarkdown("__**~test1~**__  _*test2*_");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("\n<strong>\n<strong>\n<del>test1</del>\n</strong>\n</strong>\n \n<i>\n<i>test2</i>\n</i>\n"),
+    ASSERT_EQ(std::string("\n<strong>\n<strong>\n<del>test1</del>\n</strong>\n</strong>\n  \n<i>\n<i>test2</i>\n</i>\n"),
               HTML);
 }
 

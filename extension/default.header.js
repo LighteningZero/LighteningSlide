@@ -47,7 +47,7 @@ var render = [origin => {
             result += '<h' + sharpNumber + '>' + content + '</h' + sharpNumber + '>\n';
         }
         
-        s.skipBlank();
+        s.skipOneReturn();
         s.makeMarkHere();
 
         if (s.isEnd()) {

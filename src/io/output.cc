@@ -33,7 +33,7 @@ frontend::FileWriter::~FileWriter() {
 }
 
 void frontend::FileWriter::write(std::string content) {
-    fmt::print(this->_file, content);
+    fmt::print(this->_file, "{}", content);
 }
 
 void frontend::FileWriter::flush() {

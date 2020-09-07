@@ -36,26 +36,33 @@ var render = [origin => {
             result += '<pre>\n<code>\n';
             s.scanLine();
             s.skipOneReturn();
+            s.makeMarkHere();
             while (true) {
-                let line = s.scanLine();
+                let str2 = s.scanToken();
+                let isCodeEnd = true;
+                for (let i = 0; i < Math.max(3, str2.length); i += 1) {
+                    if (str2[i] != '`') {
+                        isCodeEnd = false;
+                        break;
+                    }
+                }
+                s.scanLine();
+                if (isCodeEnd) {
+                    result += '</code>\n</pre>\n';
+                    s.makeMarkHere();
+                    break;
+                }
+                result += s.getTextFormMark();
                 s.skipOneReturn();
-                let tmp = new Scanner(line);
-                if (tmp.scanToken() === '```' && tmp.scanToken() == '') {
-                    result += '</code>\n</pre>\n';
-                    break;
-                }
-
-                result += line + '\n';
-                if (s.isEnd()) {
-                    result += '</code>\n</pre>\n';
-                    isCodeStart = false;
-                    break;
-                }
+                s.makeMarkHere();
             }
         } else {
-            result += str + s.scanLine() + '\n';
-            s.skipOneReturn();
+            s.scanLine();
+            result += s.getTextFormMark();
         }
+
+        s.skipOneReturn();
+        s.makeMarkHere();
 
         if (s.isEnd()) {
             break;

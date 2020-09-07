@@ -46,6 +46,7 @@ var render = [markdown => {
                 result += '\n' + content;
             }
         } else {
+            s.scanLine();
             result += s.getTextFormMark();
         }
 

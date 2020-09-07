@@ -66,18 +66,18 @@ TEST(ExtensionTest, BlockquoteTest) {
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("> blockquote\n\n\nnormal text");
+    ext.setOriginMarkdown("abc > blockquote\n\n\nnormal text\n\n\n> blockquote");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("<blockquote>blockquote</blockquote>\n\nnormal  text"), HTML);
+    ASSERT_EQ(std::string("abc > blockquote\n\n\nnormal text\n\n\n<blockquote>blockquote</blockquote>"), HTML);
 }
 
 TEST(ExtensionTest, PageDividerTest) {
     std::ofstream out("./data/extension_config.json");
     out << "{"
            "\"extension.order\":["
-           "\"default.pagedivider:0\""
+           "\"default.page:0\""
            "],"
            "\"extension.lib\":["
            "\"default.libstring\","
@@ -130,11 +130,13 @@ TEST(ExtensionTest, FontStlyeTest) {
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("__**~test1~**__ _*test2*_");
+    ext.setOriginMarkdown("__**~test1~**__  _*test2*_");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("<strong><strong><del>test1</del></strong></strong> <i><i>test2</i></i>"), HTML);
+    ASSERT_EQ(
+        std::string("\n<strong>\n<strong>\n<del>test1</del>\n</strong>\n</strong>\n  \n<i>\n<i>test2</i>\n</i>\n"),
+        HTML);
 }
 
 TEST(ExtensionTest, TabTitleTest) {
@@ -172,11 +174,11 @@ TEST(ExtensionTest, CodeTest) {
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("abc\n```cpp\nabc\n``\n```");
+    ext.setOriginMarkdown("abc\n```cpp\n  a bc\n``\n```");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("abc\n<pre>\n<code>\nabc\n``\n</code>\n</pre>\n"), HTML);
+    ASSERT_EQ(std::string("abc\n<pre>\n<code>\n  a bc\n``\n</code>\n</pre>\n"), HTML);
 }
 
 TEST(ExtensionTest, LinkTest) {
@@ -263,11 +265,11 @@ TEST(ExtensionTest, InlineCodeTest) {
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("`code _III_`");
+    ext.setOriginMarkdown("`code  _III_`");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("<code>code _III_</code>"), HTML);
+    ASSERT_EQ(std::string("\n<code>code  _III_</code>\n"), HTML);
 }
 TEST(ExtensionTest, ListTest) {
     std::ofstream out("./data/extension_config.json");
@@ -322,6 +324,70 @@ TEST(ExtensionTest, RevealTeat) {
             "src=\"./reveal/plugin/highlight/highlight.js\"></script>\n<script> Reveal.initialize({ controls: true, "
             "progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, "
             "RevealMarkdown, RevealHighlight] }); </script>\n"),
+        HTML);
+}
+
+TEST(ExtensionTest, TestAll) {
+    std::ofstream out("./data/extension_config.json");
+    out << "{"
+           "\"extension.order\": ["
+           "\"default.code:0\","
+           "\"default.inlinecode:0\","
+           "\"default.header:0\","
+           "\"default.fontstyle:0\","
+           "\"default.image:0\","
+           "\"default.link:0\","
+           "\"default.list:0\","
+           "\"default.blockquote:0\","
+           "\"default.inlinecode:1\","
+           "\"default.page:0\","
+           "\"default.splitline:0\","
+           "\"default.tabtitle:0\","
+           "\"default.reveal:0\","
+           "\"default.framework:0\""
+           "],"
+           "\"extension.lib\": ["
+           "\"default.libstring\","
+           "\"default.libscanner\","
+           "\"default.libinlinemark\","
+           "\"default.liblock\","
+           "\"default.libsign\","
+           "\"default.libwrapper\""
+           "]"
+           "}";
+
+    out.close();
+    extension::ExtensionRunner ext;
+    ext.setOriginMarkdown("%TITLE% LighteningSlide\n%THEME% white\n\n+++\n\n# H1\n## H2\n### H3\n#### "
+                          "H4\n\n+++\n\n[LighteningSlide](https://github.com/LighteningZero/"
+                          "LighteningSlide)\n\n---\n\n![LighteningSlide](https://s1.ax1x.com/2020/09/05/"
+                          "wEkEsx.png)\n\n+++\n\n_abc_\n*abc*\n__abc__\n**abc**\n~~abc~~\n~abc~\n\n++"
+                          "+\n\n- abc\nabc\n- bcd\n\n+++\n\n`#include <vector>`\n\n```cpp\n#include <iostream>\nint "
+                          "main() {\n	int a, b;\n	std::cin >> a >> b;\n	std::cout << a + b;\n}\n```\n");
+    ext.runExtensions();
+    std::string HTML = ext.getResult();
+
+    ASSERT_EQ(
+        std::string("<!DOCTYPE html>\n<html>\n<body>\n<link rel=\"stylesheet\" href=\"./reveal/dist/reveal.css\" "
+                    "/>\n<div class=\"reveal\">\n<div class=\"slides\">\n<title>LighteningSlide</title>\n<link "
+                    "rel=\"stylesheet\" href=\"./reveal/dist/theme/white.css\" "
+                    "/>\n<section>\n<h1>H1</h1>\n<h2>H2</h2>\n<h3>H3</h3>\n<h4>H4</h4>\n</section>\n<section>\n<a "
+                    "href=\"https://github.com/LighteningZero/LighteningSlide\">LighteningSlide</a>\n<hr/>\n<img "
+                    "src=\"https://s1.ax1x.com/2020/09/05/wEkEsx.png\" "
+                    "alt=\"LighteningSlide\"/>\n</section>\n<section>\n<i>abc</i>\n<i>abc</i>\n<strong>abc</"
+                    "strong>\n<strong>abc</strong>\n<del>abc</del>\n<del>abc</del>\n</"
+                    "section>\n<section>\n<ul>\n<li>\nabc<br>abc\n</li>\n<li>\nbcd\n</li>\n</ul>\n</"
+                    "section>\n<section>\n<code>#include <vector></code>\n<pre>\n<code>\n#include <iostream>\nint "
+                    "main() {\nint a, b;\nstd::cin >> a >> b;\nstd::cout << a + "
+                    "b;\n}\n</code>\n</pre>\n</section>\n</div>\n</div>\n<script "
+                    "src=\"./reveal/dist/reveal.js\"></script>\n<script "
+                    "src=\"./reveal/plugin/zoom/zoom.js\"></script>\n<script "
+                    "src=\"./reveal/plugin/notes/notes.js\"></script>\n<script "
+                    "src=\"./reveal/plugin/search/search.js\"></script>\n<script "
+                    "src=\"./reveal/plugin/markdown/markdown.js\"></script>\n<script "
+                    "src=\"./reveal/plugin/highlight/highlight.js\"></script>\n<script> Reveal.initialize({ controls: "
+                    "true, progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, "
+                    "RevealMarkdown, RevealHighlight] }); </script>\n\n</body>\n</html>"),
         HTML);
 }
 

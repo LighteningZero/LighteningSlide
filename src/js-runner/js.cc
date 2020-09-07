@@ -104,7 +104,7 @@ void extension::JSContainer::setScript(const std::string& script) {
 
     if (jerry_value_is_error(value))
         throw extension::JSParsingError(
-            fmt::format("Error Value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
+            fmt::format("Error Value: {} {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
     this->setParsedScript(value);
 
@@ -116,7 +116,7 @@ void extension::JSContainer::runScript() {
     jerry_value_t value = jerry_run(*this->_parsed_script);
     if (jerry_value_is_error(value))
         throw extension::JSRuntimeError(
-            fmt::format("Error value: {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
+            fmt::format("Error value: {} {}", __FUNCTION__, jerry_get_value_from_error(value, false)));
 
     this->setRunResult(value);
     this->commitGC(60);
@@ -135,7 +135,7 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
         bool mark_script_ret =
             jerry_eval((const jerry_char_t*)(mark_script.c_str()), mark_script.length(), JERRY_PARSE_NO_OPTS);
         if (!mark_script_ret)
-            throw extension::JSTypeError(fmt::format("Error running function '{}' (may not found?)", function_name));
+            throw extension::JSTypeError(fmt::format("Error running function '{}' (may not found)", function_name));
 
         jerry_release_value(target_function);
         jerry_release_value(prop_name);
@@ -163,7 +163,7 @@ void extension::JSContainer::runFunction(const std::string& function_name, const
 
 std::string extension::JSContainer::getResultAsString() {
     if (this->_run_result == nullptr)
-        throw std::logic_error(fmt::format("Trying to get result before run any script", __FUNCTION__));
+        throw std::logic_error(fmt::format("Trying to get result before run any script [{}]", __FUNCTION__));
 
     jerry_value_t str_value = jerry_value_to_string(*this->_run_result);
     jerry_size_t str_size = jerry_get_utf8_string_size(str_value);

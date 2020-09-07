@@ -42,7 +42,7 @@ function Lock(newLock, id) {
     }
 
     this.freeLock = () => {
-        _default_liblock_store.splice(this.lockId, 1, undefined);
+        _default_liblock_store[this.lockId] = undefined;
         _default_liblock_unuse.push(this.lockId);
     }
 }

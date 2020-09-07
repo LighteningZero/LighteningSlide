@@ -4,10 +4,10 @@
         "default.inlinecode:0",
         "default.header:0",
         "default.fontstyle:0",
-        "default.link:0",
         "default.image:0",
+        "default.link:0",
         "default.blockquote:0",
-        "default.pagedivider:0",
+        "default.page:0",
         "default.splitline:0",
         
         "default.inlinecode:1",

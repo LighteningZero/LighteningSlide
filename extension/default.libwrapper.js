@@ -17,7 +17,7 @@
 
 function wrapWithHTMLTags(tag) {
     return content => {
-        return '<{tag}>{content}</{tag}>'.format({
+        return '\n<{tag}>{content}</{tag}>\n'.format({
             tag: tag,
             content: content
         });

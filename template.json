@@ -6,11 +6,11 @@
         "default.fontstyle:0",
         "default.image:0",
         "default.link:0",
+        "default.list:0",
         "default.blockquote:0",
+        "default.inlinecode:1",
         "default.page:0",
         "default.splitline:0",
-        
-        "default.inlinecode:1",
         "default.tabtitle:0",
         "default.reveal:0",
         "default.framework:0"

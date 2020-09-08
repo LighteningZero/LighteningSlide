@@ -21,6 +21,8 @@ var render = [markdown => {
         for (let i = 0; i < str.length; i += 1) {
             if (str[i] == '+') {
                 mark_number += 1;
+            } else if (str[i] == ' ') {
+                break;
             } else {
                 return 0;
             }
@@ -39,7 +41,7 @@ var render = [markdown => {
 
     while (true) {
         let str = s.scanLine();
-        
+
         let mark_number = count_mark_number(str);
 
         if (mark_number >= 3) {
@@ -50,7 +52,46 @@ var render = [markdown => {
             }
 
             if (!s.isEnd()) {
-                result += '<section>\n';
+                let color = new String();
+                let image = new String();
+                let video = new String();
+                let iframe = new String();
+
+                let ss = new Scanner(str);
+
+                while (true) {
+                    let str2 = ss.scanToken();
+                    if (str2 == 'color') {
+                        color = ss.scanToken();
+                    } else if (str2 == 'image') {
+                        image = ss.scanToken();
+                    } else if (str2 == 'video') {
+                        video = ss.scanToken();
+                    } else if (str2 == 'iframe') {
+                        iframe = ss.scanToken();
+                    }
+
+                    if (ss.isEnd()) {
+                        break;
+                    }
+                }
+
+                result += '<section ';
+
+                if (color.length > 0) {
+                    result += ' data-background-color="' + color + '" ';
+                }
+                if (image.length > 0) {
+                    result += ' data-background-image="' + image + '" ';
+                }
+                if (video.length > 0) {
+                    result += ' data-background-video="' + video + '" ';
+                }
+                if (iframe.length > 0) {
+                    result += ' data-background-iframe="' + iframe + '" ';
+                }
+
+                result += ' >\n';
             }
 
             last_is_section = true;
@@ -58,7 +99,7 @@ var render = [markdown => {
             result += s.getTextFormMark();
             last_is_section = false;
         }
-        
+
         s.skipOneReturn();
         s.makeMarkHere();
 
@@ -71,7 +112,7 @@ var render = [markdown => {
         }
     }
 
-    result = '<div class="reveal">\n<div class="slides">\n' + result + '</div>\n</div>';
+    result = '<div class="reveal">\n<div class="slides">\n' + result + '\n</div>\n</div>';
 
     return result;
 }];

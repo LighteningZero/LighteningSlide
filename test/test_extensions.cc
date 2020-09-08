@@ -73,7 +73,7 @@ TEST(ExtensionTest, BlockquoteTest) {
     ASSERT_EQ(std::string("abc > blockquote\n\n\nnormal text\n\n\n<blockquote>blockquote</blockquote>"), HTML);
 }
 
-TEST(ExtensionTest, PageDividerTest) {
+TEST(ExtensionTest, PageTest) {
     std::ofstream out("./data/extension_config.json");
     out << "{"
            "\"extension.order\":["
@@ -87,28 +87,21 @@ TEST(ExtensionTest, PageDividerTest) {
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("+++\n"
+    ext.setOriginMarkdown("+++ color #409EFF\n"
                           "page1\n"
-                          "+++\n"
+                          "+++ image https://cdn.luogu.com.cn/upload/image_hosting/xdsuq4zj.png\n"
                           "page2\n"
-                          "+++\n"
+                          "+++ iframe https://github.com/LighteningZero/LighteningSlide\n"
                           "page3");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("<div class=\"reveal\">\n"
-                          "<div class=\"slides\">\n"
-                          "<section>\n"
-                          "page1\n"
-                          "</section>\n"
-                          "<section>\n"
-                          "page2\n"
-                          "</section>\n"
-                          "<section>\n"
-                          "page3\n"
-                          "</section>\n"
-                          "</div>\n"
-                          "</div>"),
+    ASSERT_EQ(std::string("<div class=\"reveal\">\n<div class=\"slides\">\n<section  data-background-color=\"#409EFF\" "
+                          " >\npage1\n</section>\n<section  "
+                          "data-background-image=\"https://cdn.luogu.com.cn/upload/image_hosting/xdsuq4zj.png\"  "
+                          ">\npage2\n</section>\n<section  "
+                          "data-background-iframe=\"https://github.com/LighteningZero/LighteningSlide\"  "
+                          ">\npage3\n</section>\n\n</div>\n</div>"),
               HTML);
 }
 
@@ -368,26 +361,25 @@ TEST(ExtensionTest, TestAll) {
     std::string HTML = ext.getResult();
 
     ASSERT_EQ(
-        std::string("<!DOCTYPE html>\n<html>\n<body>\n<link rel=\"stylesheet\" href=\"./reveal/dist/reveal.css\" "
-                    "/>\n<div class=\"reveal\">\n<div class=\"slides\">\n<title>LighteningSlide</title>\n<link "
-                    "rel=\"stylesheet\" href=\"./reveal/dist/theme/white.css\" "
-                    "/>\n<section>\n<h1>H1</h1>\n<h2>H2</h2>\n<h3>H3</h3>\n<h4>H4</h4>\n</section>\n<section>\n<a "
-                    "href=\"https://github.com/LighteningZero/LighteningSlide\">LighteningSlide</a>\n<hr/>\n<img "
-                    "src=\"https://s1.ax1x.com/2020/09/05/wEkEsx.png\" "
-                    "alt=\"LighteningSlide\"/>\n</section>\n<section>\n<i>abc</i>\n<i>abc</i>\n<strong>abc</"
-                    "strong>\n<strong>abc</strong>\n<del>abc</del>\n<del>abc</del>\n</"
-                    "section>\n<section>\n<ul>\n<li>\nabc<br>abc\n</li>\n<li>\nbcd\n</li>\n</ul>\n</"
-                    "section>\n<section>\n<code>#include <vector></code>\n<pre>\n<code>\n#include <iostream>\nint "
-                    "main() {\nint a, b;\nstd::cin >> a >> b;\nstd::cout << a + "
-                    "b;\n}\n</code>\n</pre>\n</section>\n</div>\n</div>\n<script "
-                    "src=\"./reveal/dist/reveal.js\"></script>\n<script "
-                    "src=\"./reveal/plugin/zoom/zoom.js\"></script>\n<script "
-                    "src=\"./reveal/plugin/notes/notes.js\"></script>\n<script "
-                    "src=\"./reveal/plugin/search/search.js\"></script>\n<script "
-                    "src=\"./reveal/plugin/markdown/markdown.js\"></script>\n<script "
-                    "src=\"./reveal/plugin/highlight/highlight.js\"></script>\n<script> Reveal.initialize({ controls: "
-                    "true, progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, "
-                    "RevealMarkdown, RevealHighlight] }); </script>\n\n</body>\n</html>"),
+        std::string(
+            "<!DOCTYPE html>\n<html>\n<body>\n<link rel=\"stylesheet\" href=\"./reveal/dist/reveal.css\" />\n<div "
+            "class=\"reveal\">\n<div class=\"slides\">\n<title>LighteningSlide</title>\n<link rel=\"stylesheet\" "
+            "href=\"./reveal/dist/theme/white.css\" />\n<section "
+            ">\n<h1>H1</h1>\n<h2>H2</h2>\n<h3>H3</h3>\n<h4>H4</h4>\n</section>\n<section >\n<a "
+            "href=\"https://github.com/LighteningZero/LighteningSlide\">LighteningSlide</a>\n<hr/>\n<img "
+            "src=\"https://s1.ax1x.com/2020/09/05/wEkEsx.png\" alt=\"LighteningSlide\"/>\n</section>\n<section "
+            ">\n<i>abc</i>\n<i>abc</i>\n<strong>abc</strong>\n<strong>abc</strong>\n<del>abc</del>\n<del>abc</del>\n</"
+            "section>\n<section >\n<ul>\n<li>\nabc<br>abc\n</li>\n<li>\nbcd\n</li>\n</ul>\n</section>\n<section "
+            ">\n<code>#include <vector></code>\n<pre>\n<code>\n#include <iostream>\nint main() {\nint a, b;\nstd::cin "
+            ">> a >> b;\nstd::cout << a + b;\n}\n</code>\n</pre>\n</section>\n</div>\n</div>\n<script "
+            "src=\"./reveal/dist/reveal.js\"></script>\n<script "
+            "src=\"./reveal/plugin/zoom/zoom.js\"></script>\n<script "
+            "src=\"./reveal/plugin/notes/notes.js\"></script>\n<script "
+            "src=\"./reveal/plugin/search/search.js\"></script>\n<script "
+            "src=\"./reveal/plugin/markdown/markdown.js\"></script>\n<script "
+            "src=\"./reveal/plugin/highlight/highlight.js\"></script>\n<script> Reveal.initialize({ controls: true, "
+            "progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, "
+            "RevealMarkdown, RevealHighlight] }); </script>\n\n</body>\n</html>"),
         HTML);
 }
 

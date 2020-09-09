@@ -264,6 +264,7 @@ TEST(ExtensionTest, InlineCodeTest) {
 
     ASSERT_EQ(std::string("\n<code>code  _III_</code>\n"), HTML);
 }
+
 TEST(ExtensionTest, ListTest) {
     std::ofstream out("./data/extension_config.json");
     out << "{"
@@ -278,13 +279,15 @@ TEST(ExtensionTest, ListTest) {
 
     out.close();
     extension::ExtensionRunner ext;
-    ext.setOriginMarkdown("- abc\nabcde-abcde\n-abc\n\nabc\n- abc\n-   abc");
+    ext.setOriginMarkdown("- abc\nabcde-abcde\n-abc\n\nabc\n- abc\n-   abc\n\n1. abc\n2. abc\nabc\n\n3. abc");
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("<ul>\n<li>\nabc<br>abcde-abcde<br>-abc\n</li>\n</ul>\nabc\n<ul>\n<li>\nabc\n</"
-                          "li>\n<li>\nabc\n</li>\n</ul>\n"),
-              HTML);
+    ASSERT_EQ(
+        std::string(
+            "<ul>\n<li>\nabc<br>abcde-abcde<br>-abc\n</li>\n</ul>\nabc\n<ul>\n<li>\nabc\n</li>\n<li>\nabc\n</li>\n</"
+            "ul>\n<ol>\n<li>\nabc\n</li>\n<li>\nabc<br>abc\n</li>\n</ol>\n<ol>\n<li>\nabc\n</li>\n</ol>\n"),
+        HTML);
 }
 
 TEST(ExtensionTest, RevealTeat) {

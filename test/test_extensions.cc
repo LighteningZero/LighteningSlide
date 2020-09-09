@@ -283,9 +283,11 @@ TEST(ExtensionTest, ListTest) {
     ext.runExtensions();
     std::string HTML = ext.getResult();
 
-    ASSERT_EQ(std::string("<ul>\n<li>\nabc<br>abcde-abcde<br>-abc\n</li>\n</ul>\nabc\n<ul>\n<li>\nabc\n</"
-                          "li>\n<li>\nabc\n</li>\n</ul>\n"),
-              HTML);
+    ASSERT_EQ(
+        std::string(
+            "<ul>\n<li>\nabc<br>abcde-abcde<br>-abc\n</li>\n</ul>\nabc\n<ul>\n<li>\nabc\n</li>\n<li>\nabc\n</li>\n</"
+            "ul>\n<ol>\n<li>\nabc\n</li>\n<li>\nabc<br>abc\n</li>\n</ol>\n<ol>\n<li>\nabc\n</li>\n</ol>\n"),
+        HTML);
 }
 
 TEST(ExtensionTest, RevealTeat) {

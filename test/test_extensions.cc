@@ -316,7 +316,8 @@ TEST(ExtensionTest, RevealTeat) {
             "src=\"./reveal/plugin/zoom/zoom.js\"></script>\n<script "
             "src=\"./reveal/plugin/notes/notes.js\"></script>\n<script "
             "src=\"./reveal/plugin/search/search.js\"></script>\n<script "
-            "src=\"./reveal/plugin/markdown/markdown.js\"></script>\n<script "
+            "src=\"./reveal/plugin/markdown/markdown.js\"></script>\n<link rel=\"stylesheet\" "
+            "href=\"./reveal/plugin/highlight/monokai.css\" />\n<script "
             "src=\"./reveal/plugin/highlight/highlight.js\"></script>\n<script> Reveal.initialize({ controls: true, "
             "progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, "
             "RevealMarkdown, RevealHighlight] }); </script>\n"),
@@ -379,7 +380,8 @@ TEST(ExtensionTest, TestAll) {
             "src=\"./reveal/plugin/zoom/zoom.js\"></script>\n<script "
             "src=\"./reveal/plugin/notes/notes.js\"></script>\n<script "
             "src=\"./reveal/plugin/search/search.js\"></script>\n<script "
-            "src=\"./reveal/plugin/markdown/markdown.js\"></script>\n<script "
+            "src=\"./reveal/plugin/markdown/markdown.js\"></script>\n<link rel=\"stylesheet\" "
+            "href=\"./reveal/plugin/highlight/monokai.css\" />\n<script "
             "src=\"./reveal/plugin/highlight/highlight.js\"></script>\n<script> Reveal.initialize({ controls: true, "
             "progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, "
             "RevealMarkdown, RevealHighlight] }); </script>\n\n</body>\n</html>"),

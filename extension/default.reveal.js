@@ -57,9 +57,10 @@ var render = [origin => {
     result += '<script src="./reveal/plugin/markdown/markdown.js"></script>\n';
     result += '<link rel="stylesheet" href="./reveal/plugin/highlight/monokai.css" />\n';
     result += '<script src="./reveal/plugin/highlight/highlight.js"></script>\n';
+    result += '<script src="./reveal/plugin/math/math.js"></script>\n';
 
     // Initialize reveal
-    result += '<script> Reveal.initialize({ controls: true, progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight] }); </script>\n';
+    result += '<script> Reveal.initialize({ controls: true, progress: true, center: true, hash: true, math: {mathjax: "https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js", config: "TeX-AMS_HTML-full", TeX: { Macros: { RR: "{\\bf R}" } } } ,plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath] }); </script>\n';
 
     return result;
 }];

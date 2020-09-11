@@ -42,3 +42,5 @@ dist/
 debug/
 reveal/
 reveal.js/
+mathjax/
+MathJax/

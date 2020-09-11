@@ -38,18 +38,17 @@ DEFINE_bool(path, false, "Show current path");
 
 void printIcon(bool large) {
     if (large) {
-        std::string icon =
-            "\n"
-            "    +-------------------+  │\n"
-            "+-------------------+###|  │  Lightening Slide\n"
-            "|########@@@@#######|###|  │  Copyright (C) 2020 Lightening Zero\n"
-            "|#######@@@@########|###|  │\n"
-            "|######@@@@@@@######|###|  │  For Help:      --help\n"
-            "|#####@@@@@@@#######|###|  │  Make Slide:    --input /path --output /path (or -i -o)\n"
-            "|########@@@########|###|  │  Modigy Config: --config\n"
-            "|########@@#########|###|  │  Get Path:      --path\n"
-            "|########@##########|---+  │  Get Version:   --version\n"
-            "+-------------------+      │\n\n";
+        std::string icon = "\n"
+                           "    +-------------------+  │\n"
+                           "+-------------------+###|  │  Lightening Slide\n"
+                           "|########@@@@#######|###|  │  Copyright (C) 2020 Lightening Zero\n"
+                           "|#######@@@@########|###|  │\n"
+                           "|######@@@@@@@######|###|  │  For Help:      --help\n"
+                           "|#####@@@@@@@#######|###|  │  Make Slide:    --input /path --output /path (or -i -o)\n"
+                           "|########@@@########|###|  │  Modigy Config: --config\n"
+                           "|########@@#########|###|  │  Get Path:      --path\n"
+                           "|########@##########|---+  │  Get Version:   --version\n"
+                           "+-------------------+      │\n\n";
 
         for (size_t i = 0; i < icon.size(); i++) {
             if (icon[i] == '@') {

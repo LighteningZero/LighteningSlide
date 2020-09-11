@@ -44,7 +44,7 @@ void printIcon(bool large) {
                            "|########@@@@#######|###|  │  Copyright (C) 2020 Lightening Zero\n"
                            "|#######@@@@########|###|  │\n"
                            "|######@@@@@@@######|###|  │  For Help:      --help\n"
-                           "|#####@@@@@@@#######|###|  │  Make Slide:    --input /path --output /path ( or -i -o)\n"
+                           "|#####@@@@@@@#######|###|  │  Make Slide:    --input /path --output /path (or -i -o)\n"
                            "|########@@@########|###|  │  Modigy Config: --config\n"
                            "|########@@#########|###|  │  Get Path:      --path\n"
                            "|########@##########|---+  │  Get Version:   --version\n"

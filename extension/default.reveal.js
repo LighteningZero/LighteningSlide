@@ -55,7 +55,7 @@ var render = [origin => {
     result += '<script src="./data/reveal/plugin/notes/notes.js"></script>\n';
     result += '<script src="./data/reveal/plugin/search/search.js"></script>\n';
     result += '<script src="./data/reveal/plugin/markdown/markdown.js"></script>\n';
-    result += '<link rel="stylesheet" href="./reveal/plugin/highlight/monokai.css" />\n';
+    result += '<link rel="stylesheet" href="./data/reveal/plugin/highlight/monokai.css" />\n';
     result += '<script src="./data/reveal/plugin/highlight/highlight.js"></script>\n';
     result += '<script src="./data/reveal/plugin/math/math.js"></script>\n';
 

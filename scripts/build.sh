@@ -23,6 +23,11 @@ then
 fi
 
 git clone https://github.com/hakimel/reveal.js --depth=1 -b master
+git clone https://github.com/mathjax/MathJax --depth=1 -b master
+
+mkdir mathjax
+mv MathJax/es5/* mathjax
+rm -rf MathJax
 
 mkdir build
 cd build
@@ -36,5 +41,9 @@ mkdir reveal
 cp -r ../reveal.js/dist ./reveal/dist
 cp -r ../reveal.js/plugin ./reveal/plugin
 
+mkdir mathjax
+cp ../mathjax/tex-chtml.js ./mathjax/mathjax.js
+cp -r ../mathjax/output ./mathjax/output
+
 cmake ..
-make -j4
+make -j8

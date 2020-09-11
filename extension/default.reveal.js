@@ -28,7 +28,7 @@ var render = [origin => {
                 result += s.getTextFormMark();
             } else {
                 let content = s.scanLine();
-                result += '<link rel="stylesheet" href="./reveal/dist/theme/' + content + '.css" />\n'
+                result += '<link rel="stylesheet" href="./data/reveal/dist/theme/' + content + '.css" />\n'
             }
             
             s.skipBlank();
@@ -47,19 +47,20 @@ var render = [origin => {
     result = theme(result);
 
     // Basic reveal
-    result = '<link rel="stylesheet" href="./reveal/dist/reveal.css" />\n' + result;
-    result += '\n<script src="./reveal/dist/reveal.js"></script>\n';
+    result = '<link rel="stylesheet" href="./data/reveal/dist/reveal.css" />\n' + result;
+    result += '\n<script src="./data/reveal/dist/reveal.js"></script>\n';
     
     // Plugins
-    result += '<script src="./reveal/plugin/zoom/zoom.js"></script>\n';
-    result += '<script src="./reveal/plugin/notes/notes.js"></script>\n';
-    result += '<script src="./reveal/plugin/search/search.js"></script>\n';
-    result += '<script src="./reveal/plugin/markdown/markdown.js"></script>\n';
+    result += '<script src="./data/reveal/plugin/zoom/zoom.js"></script>\n';
+    result += '<script src="./data/reveal/plugin/notes/notes.js"></script>\n';
+    result += '<script src="./data/reveal/plugin/search/search.js"></script>\n';
+    result += '<script src="./data/reveal/plugin/markdown/markdown.js"></script>\n';
     result += '<link rel="stylesheet" href="./reveal/plugin/highlight/monokai.css" />\n';
-    result += '<script src="./reveal/plugin/highlight/highlight.js"></script>\n';
+    result += '<script src="./data/reveal/plugin/highlight/highlight.js"></script>\n';
+    result += '<script src="./data/reveal/plugin/math/math.js"></script>\n';
 
     // Initialize reveal
-    result += '<script> Reveal.initialize({ controls: true, progress: true, center: true, hash: true, plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight] }); </script>\n';
+    result += '<script> Reveal.initialize({ controls: true, progress: true, center: true, hash: true, math: {mathjax: "./data/mathjax/mathjax.js", config: "TeX-AMS_HTML-full", TeX: { Macros: { RR: "{\\bf R}" } } } ,plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath] }); </script>\n';
 
     return result;
 }];

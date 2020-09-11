@@ -22,12 +22,19 @@ then
     cd ..
 fi
 
-git clone https://github.com/hakimel/reveal.js --depth=1 -b master
-git clone https://github.com/mathjax/MathJax --depth=1 -b master
+if [ ! -d "./reveal.js" ]
+then
+    git clone https://github.com/hakimel/reveal.js --depth=1 -b master
+fi
 
-mkdir mathjax
-mv MathJax/es5/* mathjax
-rm -rf MathJax
+if [ ! -d "./mathjax" ]
+then
+    git clone https://github.com/mathjax/MathJax --depth=1 -b master
+
+    mkdir mathjax
+    mv MathJax/es5/* mathjax
+    rm -rf MathJax
+fi
 
 mkdir build
 cd build

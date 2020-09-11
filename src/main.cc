@@ -29,6 +29,8 @@
 
 DEFINE_string(input, "", "Input markdown file.");
 DEFINE_string(output, "", "Output directory. Where to place rendered slide");
+DEFINE_string(i, "", "Input markdown file.");
+DEFINE_string(o, "", "Output directory. Where to place rendered slide");
 DEFINE_string(install, "", "Install extension");
 DEFINE_bool(license, false, "Output program license");
 DEFINE_bool(config, false, "Show config");
@@ -42,7 +44,7 @@ void printIcon(bool large) {
                            "|########@@@@#######|###|  │  Copyright (C) 2020 Lightening Zero\n"
                            "|#######@@@@########|###|  │\n"
                            "|######@@@@@@@######|###|  │  For Help:      --help\n"
-                           "|#####@@@@@@@#######|###|  │  Make Slide:    --input /path --output /path\n"
+                           "|#####@@@@@@@#######|###|  │  Make Slide:    --input /path --output /path (-i /path -o /path)\n"
                            "|########@@@########|###|  │  Modigy Config: --config\n"
                            "|########@@#########|###|  │  Get Path:      --path\n"
                            "|########@##########|---+  │  Get Version:   --version\n"
@@ -123,17 +125,30 @@ int main(int argc, char** argv) {
         return 0;
     }
 
+    if (FLAGS_input.size() == 0 && FLAGS_i.size() > 0) {
+        FLAGS_input = FLAGS_i;
+    } else if (FLAGS_input.size() > 0 && FLAGS_i.size() > 0) {
+        fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+        fmt::print("duplicated flags --input and -i");
+    }
+    if (FLAGS_output.size() == 0 && FLAGS_o.size() > 0) {
+        FLAGS_output = FLAGS_o;
+    } else if (FLAGS_output.size() > 0 && FLAGS_o.size() > 0) {
+        fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
+        fmt::print("duplicated flags --output and -o");
+    }
+
     if (FLAGS_input.size() > 0 && FLAGS_output.size() > 0) {
         frontend::Slide slide_maker;
 
         try {
             slide_maker.importFromMarkdownFile(FLAGS_input);
         } catch (std::invalid_argument& err) {
-            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--input]: ");
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--input (-i)]: ");
             fmt::print("{}\n", err.what());
             return 0;
         } catch (std::runtime_error& err) {
-            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--input]: ");
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--input (-i)]: ");
             fmt::print("{}\n", err.what());
             return 0;
         }
@@ -141,11 +156,11 @@ int main(int argc, char** argv) {
         try {
             slide_maker.exportSlide(FLAGS_output);
         } catch (std::invalid_argument& err) {
-            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--output]: ");
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--output (-o)]: ");
             fmt::print("{}\n", err.what());
             return 0;
         } catch (std::runtime_error& err) {
-            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--output]: ");
+            fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR [--output (-o)]: ");
             fmt::print("{}\n", err.what());
             return 0;
         }
@@ -155,11 +170,11 @@ int main(int argc, char** argv) {
         return 0;
     } else if (FLAGS_input.size() == 0 && FLAGS_output.size() > 0) {
         fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
-        fmt::print("Missing --input\n");
+        fmt::print("Missing --input or -i\n");
         return 0;
     } else if (FLAGS_output.size() == 0 && FLAGS_input.size() > 0) {
         fmt::print(fg(fmt::color::orange_red) | fmt::emphasis::bold, "ERR: ");
-        fmt::print("Missing --output\n");
+        fmt::print("Missing --output or -o\n");
         return 0;
     }
 
